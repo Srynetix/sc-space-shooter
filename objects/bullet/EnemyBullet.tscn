@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://objects/bullet/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/textures/laserRed06.png" type="Texture" id=2]
+
+[node name="EnemyBullet" instance=ExtResource( 1 )]
+collision_layer = 32
+collision_mask = 1
+target = 1
+
+[node name="Sprite" parent="." index="0"]
+rotation = 3.14159
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="." index="2"]
+visible = false
+
+[node name="Light2D" parent="." index="3"]
+rotation = 3.14159
+texture = ExtResource( 2 )
+

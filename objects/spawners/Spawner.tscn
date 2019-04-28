@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/spawners/Spawner.gd" type="Script" id=1]
+
+[node name="Spawner" type="Node"]
+script = ExtResource( 1 )
+frequency = 2
+speed = 100.0
+rand_scale = Vector2( 0.5, 1.5 )
+element = null
+disabled = false
+
+[node name="Elements" type="Node2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+

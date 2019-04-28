@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://objects/bullet/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/laserBlue06.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 19.9649
+height = 70.6576
+
+[node name="Bullet" type="Area2D" groups=[
+"bullets",
+]]
+collision_layer = 2
+collision_mask = 20
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.338905, 0 )
+scale = Vector2( 0.774064, 1 )
+texture = ExtResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0.564847, 0 )
+scale = Vector2( 0.808824, 1 )
+texture = ExtResource( 2 )
+
+[node name="SlowTimer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
