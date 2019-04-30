@@ -60,6 +60,10 @@ func add_score(value):
 func remove_life():
     """Remove a life."""
     lives = max(lives - 1, 0)
+    
+func add_life():
+    """Add a life."""
+    lives = lives + 1
 
 func update_hud(hud):
     """
