@@ -8,7 +8,8 @@ signal powerup
 
 # Powerup types
 enum PowerupType {
-    Weapon
+    Weapon,
+    Life
 }
 
 export (PowerupType) var powerup_type = PowerupType.Weapon
