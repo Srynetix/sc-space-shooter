@@ -23,6 +23,7 @@ onready var collision_shape = $CollisionShape2D
 onready var muzzle = $Position2D
 onready var fire_timer = $FireTimer
 onready var bullet_system = $BulletSystem
+onready var trail = $Trail
 
 var hit_points = 0
 var hit_count = 0
@@ -41,6 +42,8 @@ func _ready():
     fire_timer.connect("timeout", self, "_on_FireTimer_timeout")
     
     bullet_system.connect("fire", self, "_on_BulletSystem_fire")
+    
+    trail.process_material.scale = scale.x  
 
 func _process(delta):
     _move(delta)

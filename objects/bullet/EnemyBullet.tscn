@@ -8,14 +8,17 @@ collision_layer = 32
 collision_mask = 1
 target = 1
 
-[node name="Sprite" parent="." index="0"]
+[node name="Particles2D" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
 rotation = 3.14159
 texture = ExtResource( 2 )
 
-[node name="CollisionShape2D" parent="." index="2"]
+[node name="CollisionShape2D" parent="." index="3"]
 visible = false
 
-[node name="Light2D" parent="." index="3"]
+[node name="Light2D" parent="." index="4"]
 rotation = 3.14159
 texture = ExtResource( 2 )
 
