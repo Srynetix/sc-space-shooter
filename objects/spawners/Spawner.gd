@@ -5,6 +5,7 @@ extends Node
 
 export (float) var frequency = 2
 export (float) var speed = 100.0
+export (float) var time_offset = 0
 export (Vector2) var rand_scale = Vector2(0.5, 1.5)
 export (PackedScene) var element
 export (bool) var disabled = false
@@ -19,6 +20,9 @@ func _ready():
     timer.wait_time = frequency
     timer.connect("timeout", self, "_on_Timer_timeout")
     
+    if time_offset > 0:
+        yield(get_tree().create_timer(time_offset), "timeout")
+        
     timer.start()
     
 ################
