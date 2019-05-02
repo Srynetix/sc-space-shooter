@@ -9,6 +9,10 @@ fire_time = 0.5
 
 [node name="BulletSystem" parent="." index="7"]
 fire_cooldown = 0.1
-fire_speed = 400.0
-bullet_type = 5
+bullet_type = 2
+bullet_automatic = true
+
+[node name="WeaponSwap" type="Timer" parent="." index="8"]
+wait_time = 2.0
+autostart = true
 

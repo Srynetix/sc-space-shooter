@@ -45,6 +45,19 @@ func set_frequency(freq):
     """
     frequency = freq
     timer.wait_time = freq
+   
+func spawn():
+    """
+    Spawn element.
+    """
+    var vp_width = get_viewport().size.x
+    var pos = Vector2(randi() % int(vp_width), -50)
+    
+    var inst = element.instance()
+    _connect_instance(inst)
+    inst.prepare(pos, speed, rand_range(rand_scale.x, rand_scale.y))
+
+    elements.add_child(inst)
     
 #################
 # Private methods
@@ -59,11 +72,4 @@ func _on_Timer_timeout():
     if disabled:
         return
         
-    var vp_width = get_viewport().size.x
-    var pos = Vector2(randi() % int(vp_width), -50)
-    
-    var inst = element.instance()
-    _connect_instance(inst)
-    inst.prepare(pos, speed, rand_range(rand_scale.x, rand_scale.y))
-
-    elements.add_child(inst)
+    spawn()

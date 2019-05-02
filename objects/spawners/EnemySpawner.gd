@@ -6,7 +6,7 @@ extends "res://objects/spawners/Spawner.gd"
 # Sent when exploded
 signal exploded
 # Sent when fire
-signal fire(bullet, pos, speed, type)
+signal fire(bullet, pos, speed, type, target, automatic)
 
 #################
 # Private methods
@@ -21,5 +21,5 @@ func _connect_instance(inst):
 func _on_Element_exploded():
     emit_signal("exploded")
     
-func _on_Element_fire(bullet, pos, speed, type):
-    emit_signal("fire", bullet, pos, speed, type)
+func _on_Element_fire(bullet, pos, speed, type, target, automatic):
+    emit_signal("fire", bullet, pos, speed, type, target, automatic)

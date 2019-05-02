@@ -2,26 +2,26 @@
 
 [ext_resource path="res://objects/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
-[ext_resource path="res://objects/player/BulletSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.235294, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=12]
+[sub_resource type="ParticlesMaterial" id=3]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 2 )
 
-[sub_resource type="CapsuleShape2D" id=13]
+[sub_resource type="CapsuleShape2D" id=4]
 radius = 11.9289
 height = 50.806
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=5]
 resource_name = "explode"
 tracks/0/type = "value"
 tracks/0/path = NodePath("ExplosionParticles:emitting")
@@ -72,7 +72,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=6]
 resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/path = NodePath("EngineParticles:emitting")
@@ -87,7 +87,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=7]
 resource_name = "spawning"
 length = 3.0
 tracks/0/type = "value"
@@ -103,47 +103,48 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=8]
 offsets = PoolRealArray( 0, 0.75814, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 1, 0.445313, 0, 1, 1, 0.375, 0, 0.00368627 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.845893, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=9]
+[sub_resource type="ParticlesMaterial" id=12]
 emission_shape = 2
 emission_box_extents = Vector3( 1, 8, 1 )
 flag_disable_z = true
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 75.0
+angular_velocity = 1.05
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 5.0
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 6 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
 
-[sub_resource type="Gradient" id=17]
+[sub_resource type="Gradient" id=13]
 offsets = PoolRealArray( 0.362791, 0.67907, 1 )
 colors = PoolColorArray( 1, 0.210938, 0, 1, 0.879461, 0.933594, 0.240692, 1, 1, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=18]
-gradient = SubResource( 17 )
+[sub_resource type="GradientTexture" id=14]
+gradient = SubResource( 13 )
 
-[sub_resource type="Curve" id=19]
+[sub_resource type="Curve" id=15]
 max_value = 2.0
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.495782, 2 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=20]
-curve = SubResource( 19 )
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
 
-[sub_resource type="ParticlesMaterial" id=21]
+[sub_resource type="ParticlesMaterial" id=17]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -154,8 +155,8 @@ angular_velocity_random = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 10.0
-scale_curve = SubResource( 20 )
-color_ramp = SubResource( 18 )
+scale_curve = SubResource( 16 )
+color_ramp = SubResource( 14 )
 
 [node name="Player" type="Area2D" groups=[
 "player",
@@ -168,7 +169,7 @@ amount = 5
 lifetime = 0.25
 speed_scale = 2.5
 local_coords = false
-process_material = SubResource( 12 )
+process_material = SubResource( 3 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -178,13 +179,13 @@ texture = ExtResource( 2 )
 position = Vector2( 0, -37.2706 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 13 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/explode = SubResource( 14 )
-anims/idle = SubResource( 15 )
-anims/spawning = SubResource( 16 )
+anims/explode = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/spawning = SubResource( 7 )
 
 [node name="EngineParticles" type="Particles2D" parent="."]
 show_behind_parent = true
@@ -192,7 +193,7 @@ position = Vector2( -0.736099, 20.9789 )
 rotation = 1.5708
 amount = 40
 lifetime = 0.5
-process_material = SubResource( 9 )
+process_material = SubResource( 12 )
 
 [node name="ExplosionParticles" type="Particles2D" parent="."]
 emitting = false
@@ -200,7 +201,7 @@ amount = 40
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 21 )
+process_material = SubResource( 17 )
 
 [node name="Timers" type="Node" parent="."]
 

@@ -6,11 +6,8 @@ extends Area2D
 # Sent on activation
 signal powerup
 
-# Powerup types
-enum PowerupType {
-    Weapon,
-    Life
-}
+# Powerup type
+const PowerupType = preload("res://objects/powerups/PowerupType.gd").PowerupType
 
 export (PowerupType) var powerup_type = PowerupType.Weapon
 

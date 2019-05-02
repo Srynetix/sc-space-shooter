@@ -76,16 +76,19 @@ position = Vector2( 310.988, 834.589 )
 [node name="Spawners" type="Node2D" parent="."]
 
 [node name="RockSpawner" parent="Spawners" instance=ExtResource( 4 )]
+time_offset = 1.0
 
 [node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
-frequency = 10.0
+frequency = 12.0
 speed = 150.0
+time_offset = 2.0
 
 [node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 50.0
 speed = 250.0
 time_offset = 1.0
 element = ExtResource( 6 )
+disabled = true
 
 [node name="EnemySpawner" parent="Spawners" instance=ExtResource( 7 )]
 frequency = 7.0

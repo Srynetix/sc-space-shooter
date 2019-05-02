@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://objects/bullet/BulletSystem.gd" type="Script" id=1]
+[ext_resource path="res://objects/bullet/Bullet.tscn" type="PackedScene" id=2]
+
+[node name="BulletSystem" type="Node2D"]
+script = ExtResource( 1 )
+bullet_model = ExtResource( 2 )
+
+[node name="FireTimer" type="Timer" parent="."]
+

@@ -6,7 +6,7 @@ extends Area2D
 # Sent when exploded
 signal exploded
 # Sent when enemy fires
-signal fire(bullet, pos, speed, type)
+signal fire(bullet, pos, speed, type, target, automatic)
 
 # Base hit points
 const BASE_HIT_POINTS = 5
@@ -116,5 +116,5 @@ func _disable_collisions():
 func _on_FireTimer_timeout():
     firing = not firing
     
-func _on_BulletSystem_fire(bullet, pos, speed, type):
-    emit_signal("fire", bullet, pos, speed, type)
+func _on_BulletSystem_fire(bullet, pos, speed, type, target, automatic):
+    emit_signal("fire", bullet, pos, speed, type, target, automatic)

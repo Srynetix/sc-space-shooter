@@ -35,6 +35,7 @@ func _ready():
     enemy_spawner.connect("exploded", self, "_on_Enemy_exploded")
     enemy_spawner.connect("fire", self, "_on_Enemy_fire")
     wave_system.connect("timeout", self, "_on_WaveSystem_timeout")
+    life_spawner.disabled = true
     
     GameState.update_hud(hud)
     
@@ -54,7 +55,6 @@ func _load_next_wave():
     rock_spawner.reset()
     enemy_spawner.reset()
     powerup_spawner.reset()
-    life_spawner.reset()
     
     hud.show_message("Wave {w}".format({"w": wave_system.current_wave}))
     
@@ -79,15 +79,15 @@ func _load_boss():
 #################
 # Event callbacks
 
-func _on_Player_fire(bullet, pos, speed, type):
+func _on_Player_fire(bullet, pos, speed, type, target, automatic):
     var inst = bullet.instance()
-    inst.prepare(pos, speed, type)
+    inst.prepare(pos, speed, type, target, automatic)
     
     bullets.add_child(inst)
     
-func _on_Enemy_fire(bullet, pos, speed, type):
+func _on_Enemy_fire(bullet, pos, speed, type, target, automatic):
     var inst = bullet.instance()
-    inst.prepare(pos, speed, type)
+    inst.prepare(pos, speed, type, target, automatic)
     
     bullets.add_child(inst)
 
@@ -115,6 +115,8 @@ func _on_Enemy_exploded():
 func _on_Boss_exploded():
     GameState.add_score(2000)
     GameState.update_hud(hud)
+    
+    life_spawner.spawn()
     
     yield(get_tree().create_timer(1), "timeout")
     _load_next_wave()

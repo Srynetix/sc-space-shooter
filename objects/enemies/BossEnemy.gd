@@ -6,7 +6,16 @@ extends "res://objects/enemies/Enemy.gd"
 # Base hit points
 const BOSS_BASE_HIT_POINTS = 50
 
+onready var weapon_swap = $WeaponSwap
+
 var velocity = Vector2()
+
+###################
+# Lifecycle methods
+
+func _ready():
+    weapon_swap.connect("timeout", self, "_on_WeaponSwap_timeout")
+    weapon_swap.start()
 
 ################
 # Public methods
@@ -44,3 +53,9 @@ func _move(delta):
     
     if position.y > screen_size.y:
         queue_free()
+        
+#################
+# Event callbacks
+
+func _on_WeaponSwap_timeout():
+    bullet_system.switch_random_type()

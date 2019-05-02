@@ -4,7 +4,7 @@ extends Area2D
 # Player
 
 # Sent when player fires
-signal fire(bullet, pos, speed, type)
+signal fire(bullet, pos, speed, type, target, automatic)
 # Sent when dead
 signal dead
 
@@ -130,5 +130,5 @@ func _on_area_entered(area):
     elif area.is_in_group("enemies"):
         _set_state(State.DEAD)
     
-func _on_BulletSystem_fire(bullet, pos, speed, type):
-    emit_signal("fire", bullet, pos, speed, type)
+func _on_BulletSystem_fire(bullet, pos, speed, type, target, automatic):
+    emit_signal("fire", bullet, pos, speed, type, target, automatic)
