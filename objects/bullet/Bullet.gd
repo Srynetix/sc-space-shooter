@@ -47,7 +47,7 @@ func _ready():
         trail.scale *= 3
     
     elif bullet_type == BulletType.SlowFast:
-        velocity /= Vector2(4, 4)
+        velocity /= Vector2(6, 6)
         slow_timer.start()
         yield(slow_timer, "timeout")
         _handle_automatic_mode()        
