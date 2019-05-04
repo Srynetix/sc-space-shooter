@@ -10,6 +10,7 @@ signal exploded
 const BASE_HIT_POINTS = 3
 const X_VELOCITY_SPEED = 100
 
+onready var trail = $Trail
 onready var animation_player = $AnimationPlayer
 onready var collision_shape = $CollisionShape2D
 onready var sprite = $Sprite 
@@ -26,11 +27,15 @@ var _x_screen_limits = null
 # Lifecycle methods
 
 func _ready():
+    # Trail
+    trail.process_material.scale = scale.x
+    
     _cache_limits()
 
 func _process(delta):
     position += velocity * delta
     rotation += delta / 2
+    trail.process_material.angle = 360 - rad2deg(rotation)
     
     _handle_position_wrap()
 
