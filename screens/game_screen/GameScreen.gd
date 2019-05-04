@@ -99,7 +99,7 @@ func _on_Player_dead():
         lives = GameState.lives
         
         player.respawn()
-        if lives == 1:
+        if lives == 0:
             hud.show_message("LAST LIFE !")
     else:
         GameState.load_screen(GameState.Screens.GAMEOVER)
