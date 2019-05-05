@@ -50,17 +50,17 @@ func _process(delta):
     if state == State.DEAD:
         return
 
-    if not Utils.is_mobile_platform():
-        var movement = _handle_movement()
-        if movement == Vector2():
-            # Damp velocity if idle
-            velocity *= damping
-        else:
-            # Update velocity
-            velocity = movement * move_speed
+    var movement = _handle_movement()
+    if movement == Vector2():
+        # Damp velocity if idle
+        velocity *= damping
     else:
-        if is_touching:
-            position = last_touch_position + TOUCH_OFFSET
+        # Update velocity
+        velocity = movement * move_speed
+            
+    if is_touching:
+        velocity = Vector2()
+        position = last_touch_position + TOUCH_OFFSET
             
     # Handle fire
     _handle_fire()
