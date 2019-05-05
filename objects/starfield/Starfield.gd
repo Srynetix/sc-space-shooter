@@ -3,15 +3,9 @@ extends Control
 ###########
 # Starfield
 
+export (int) var velocity = 500
+
 onready var particles = $Particles2D
 
-################
-# Public methods
-
-func update_velocity(vel):
-    """
-    Update starfield velocity.
-    
-    :param vel:     Velocity
-    """
-    particles.process_material.initial_velocity = vel
+func _ready():
+    particles.process_material.initial_velocity = velocity

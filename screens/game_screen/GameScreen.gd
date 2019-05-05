@@ -5,7 +5,6 @@ extends Control
 const PowerupType = preload("res://objects/powerups/Powerup.gd").PowerupType
 const BossModel = preload("res://objects/enemies/BossEnemy.tscn")
 
-onready var starfield = $Starfield
 onready var player = $Player
 onready var bullets = $Bullets
 onready var hud = $CanvasLayer/HUD
@@ -17,15 +16,10 @@ onready var powerup_spawner = $Spawners/PowerupSpawner
 onready var enemy_spawner = $Spawners/EnemySpawner
 onready var life_spawner = $Spawners/LifePowerupSpawner
 
-var starfield_velocity = 500
-
 ###################
 # Lifecycle methods
 
 func _ready():
-    randomize()
-    
-    starfield.update_velocity(starfield_velocity)
     player.connect("fire", self, "_on_Player_fire")
     player.connect("dead", self, "_on_Player_dead")
     

@@ -196,6 +196,6 @@ func _insert_high_score(idx):
 # Lifecycle methods
 
 func _ready():
-    print("Loading game save ...")
+    randomize()
     var game_save = load_game_save()
     apply_game_save(game_save)
