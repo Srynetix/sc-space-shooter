@@ -16,7 +16,8 @@ func _ready():
     else:
         instructions.text = "Press X to start"
         
-    high_score.text = str(GameState.high_score)
+    var high_score_entry = GameState.get_high_score()
+    high_score.text = "{name} {score}".format({"name": high_score_entry[0], "score": high_score_entry[1]})
     
     animation_player.play("title")
     yield(animation_player, "animation_finished")

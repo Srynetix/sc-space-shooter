@@ -4,7 +4,8 @@ extends Control
 # HUD
 
 onready var score_value = $MarginContainer/HBoxContainer/VBoxContainer/ScoreValue
-onready var lives_value = $MarginContainer/HBoxContainer/VBoxContainer2/LivesValue
+onready var high_value = $MarginContainer/HBoxContainer/VBoxContainer2/HighValue
+onready var lives_value = $MarginContainer/HBoxContainer/VBoxContainer3/LivesValue
 onready var notification = $MarginContainer/HBoxContainer2/Notification
 onready var animation_player = $AnimationPlayer
 
@@ -36,3 +37,12 @@ func show_message(msg):
     notification.text = msg
     animation_player.stop()
     animation_player.play("message")
+
+func update_high_score(name, score):
+    """
+    Update high score.
+    
+    :param name:    Name
+    :param score:   Score
+    """
+    high_value.text = "{name} {score}".format({"name": name, "score": score})
