@@ -15,6 +15,8 @@ enum State {
     DEAD
 }
 
+const TOUCH_OFFSET = Vector2(0, -100)
+
 export (Vector2) var move_speed = Vector2(500, 500)
 export (float) var damping = 0.9
 export (float) var spawning_time = 3
@@ -28,6 +30,9 @@ onready var bullet_system = $BulletSystem
 var initial_position = Vector2()
 var velocity = Vector2()
 var state = State.IDLE
+
+var is_touching = false
+var last_touch_position = Vector2()
 
 ###################
 # Lifecycle methods
@@ -45,20 +50,37 @@ func _process(delta):
     if state == State.DEAD:
         return
 
-    var movement = _handle_movement()
-    _handle_fire()
-    
-    if movement == Vector2():
-        # Damp velocity if idle
-        velocity *= damping
+    if not Utils.is_mobile_platform():
+        var movement = _handle_movement()
+        if movement == Vector2():
+            # Damp velocity if idle
+            velocity *= damping
+        else:
+            # Update velocity
+            velocity = movement * move_speed
     else:
-        # Update velocity
-        velocity = movement * move_speed
+        if is_touching:
+            position = last_touch_position + TOUCH_OFFSET
+            
+    # Handle fire
+    _handle_fire()
     
     # Update position
     position += velocity * delta
     _clamp_position()
     
+func _input(event):
+    if event is InputEventScreenTouch:
+        last_touch_position = event.position
+        is_touching = event.pressed
+        
+        # Screen released
+        if not event.pressed:
+            velocity = Vector2()
+        
+    elif event is InputEventScreenDrag:
+        last_touch_position = event.position
+        
 ################
 # Public methods
 
@@ -110,11 +132,11 @@ func _handle_movement():
         movement.y -= 1
     if Input.is_action_pressed("player_down"):
         movement.y += 1
-        
+            
     return movement
 
 func _handle_fire():
-    if Input.is_action_pressed("player_shoot"):
+    if Input.is_action_pressed("player_shoot") || is_touching:
         bullet_system.fire(muzzle.global_position)
         
 #################
