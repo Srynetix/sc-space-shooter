@@ -36,7 +36,7 @@ var firing = false
 # Lifecycle methods
 
 func _ready():
-    screen_size = get_viewport().size
+    screen_size = Utils.get_game_size()
     
     fire_timer.wait_time = fire_time
     fire_timer.connect("timeout", self, "_on_FireTimer_timeout")

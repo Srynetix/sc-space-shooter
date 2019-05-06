@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://objects/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.235294, 1, 1, 1, 0 )
@@ -195,6 +196,12 @@ scale = 10.0
 scale_curve = SubResource( 16 )
 color_ramp = SubResource( 14 )
 
+[sub_resource type="DynamicFont" id=18]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 4 )
+
 [node name="Player" type="Area2D" groups=[
 "player",
 ]]
@@ -245,4 +252,14 @@ process_material = SubResource( 17 )
 [node name="SpawningTimer" type="Timer" parent="Timers"]
 
 [node name="BulletSystem" parent="." instance=ExtResource( 3 )]
+
+[node name="Label" type="Label" parent="."]
+margin_left = -100.0
+margin_top = -3.68356
+margin_right = 100.0
+margin_bottom = 14.3164
+custom_fonts/font = SubResource( 18 )
+text = "[STATUS]"
+align = 1
+valign = 1
 

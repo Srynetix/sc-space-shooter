@@ -14,7 +14,7 @@ onready var trail = $Trail
 onready var animation_player = $AnimationPlayer
 onready var collision_shape = $CollisionShape2D
 onready var sprite = $Sprite 
-onready var game_size = get_viewport().size
+onready var game_size = Utils.get_game_size()
 
 var velocity = Vector2()
 var hit_points = 0

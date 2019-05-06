@@ -35,6 +35,11 @@ func _ready():
     
     _load_next_wave()
     
+
+func _notification(what):
+    if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+        GameState.load_screen(GameState.Screens.TITLE)
+    
 #################
 # Private methods
 
@@ -56,7 +61,7 @@ func _load_boss():
     rock_spawner.disabled = true
     enemy_spawner.disabled = true
     
-    var screen_size = get_viewport().size
+    var screen_size = Utils.get_game_size()
     
     animation_player.play("warning")
     hud.show_message("WARNING !")

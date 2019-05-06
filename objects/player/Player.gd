@@ -26,6 +26,7 @@ onready var muzzle = $Position2D
 onready var animation_player = $AnimationPlayer
 onready var collision_shape = $CollisionShape2D
 onready var bullet_system = $BulletSystem
+onready var status_label = $Label
 
 var initial_position = Vector2()
 var velocity = Vector2()
@@ -43,6 +44,7 @@ func _ready():
     spawning_timer.wait_time = spawning_time
     spawning_timer.connect("timeout", self, "_on_SpawningTimer_timeout")
     bullet_system.connect("fire", self, "_on_BulletSystem_fire")
+    status_label.text = ""
     
     initial_position = position
 
@@ -99,11 +101,10 @@ func hit():
 # Private methods
 
 func _clamp_position():
-    var vp_width = get_viewport().size.x
-    var vp_height = get_viewport().size.y
+    var game_size = get_viewport().size
     
-    position.x = clamp(position.x, 0, vp_width)
-    position.y = clamp(position.y, 0, vp_height)
+    position.x = clamp(position.x, 0, game_size.x)
+    position.y = clamp(position.y, 0, game_size.y)
 
 func _set_state(new_state):    
     if state != new_state:

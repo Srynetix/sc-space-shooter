@@ -197,5 +197,7 @@ func _insert_high_score(idx):
 
 func _ready():
     randomize()
+    get_tree().set_auto_accept_quit(false)
+    
     var game_save = load_game_save()
     apply_game_save(game_save)

@@ -50,8 +50,8 @@ func spawn():
     """
     Spawn element.
     """
-    var vp_width = get_viewport().size.x
-    var pos = Vector2(randi() % int(vp_width), -50)
+    var game_size = Utils.get_game_size()
+    var pos = Vector2(game_size.x / 4 + (randi() % int(game_size.x - game_size.x / 4)), -50)
     
     var inst = element.instance()
     _connect_instance(inst)
