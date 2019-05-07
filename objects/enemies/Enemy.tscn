@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://objects/enemies/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemyBlack1.png" type="Texture" id=2]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.145098, 1, 1, 1, 0 )
@@ -156,4 +157,8 @@ autostart = true
 fire_cooldown = 0.15
 fire_speed = 600.0
 bullet_target = 1
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = -15.0
 

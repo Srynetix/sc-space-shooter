@@ -14,6 +14,7 @@ onready var trail = $Trail
 onready var animation_player = $AnimationPlayer
 onready var collision_shape = $CollisionShape2D
 onready var sprite = $Sprite 
+onready var explosion_sound = $ExplosionSound
 onready var game_size = Utils.get_game_size()
 
 var velocity = Vector2()
@@ -90,6 +91,7 @@ func _disable_shape():
 func _explode():
     emit_signal("exploded")
     call_deferred("_disable_shape")
+    explosion_sound.play()
     animation_player.play("explode")
     yield(animation_player, "animation_finished")
     queue_free()

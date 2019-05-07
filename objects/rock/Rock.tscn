@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://objects/rock/Rock.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/meteorGrey_big4.png" type="Texture" id=2]
+[ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=3]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.160784, 1, 1, 1, 0 )
@@ -13,6 +14,7 @@ gradient = SubResource( 1 )
 resource_local_to_scene = true
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
+angular_velocity = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color_ramp = SubResource( 2 )
@@ -148,4 +150,8 @@ texture = ExtResource( 2 )
 anims/explode = SubResource( 10 )
 anims/idle = SubResource( 11 )
 anims/tint = SubResource( 12 )
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -20.0
 

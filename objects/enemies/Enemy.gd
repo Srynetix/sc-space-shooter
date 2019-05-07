@@ -24,6 +24,7 @@ onready var muzzle = $Position2D
 onready var fire_timer = $FireTimer
 onready var bullet_system = $BulletSystem
 onready var trail = $Trail
+onready var explosion_sound = $ExplosionSound
 
 var hit_points = 0
 var hit_count = 0
@@ -103,6 +104,7 @@ func _explode():
     # Explode
     emit_signal("exploded")
     call_deferred("_disable_collisions")
+    explosion_sound.play()
     animation_player.play("explode")
     yield(animation_player, "animation_finished")
     queue_free()
