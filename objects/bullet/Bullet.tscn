@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://objects/bullet/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/laserBlue06.png" type="Texture" id=2]
-[ext_resource path="res://assets/sounds/laser.wav" type="AudioStream" id=3]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.498039, 0, 0, 0, 0 )
@@ -55,10 +54,4 @@ shape = SubResource( 5 )
 [node name="SlowTimer" type="Timer" parent="."]
 wait_time = 0.75
 one_shot = true
-
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 3 )
-volume_db = -20.0
-pitch_scale = 0.75
-autoplay = true
 

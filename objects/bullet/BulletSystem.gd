@@ -19,6 +19,7 @@ export (BulletTarget) var bullet_target = BulletTarget.Enemy
 export (bool) var bullet_automatic = false
 
 onready var fire_timer = $FireTimer
+onready var sound = $Sound
 
 var can_shoot = true
 
@@ -99,6 +100,7 @@ func fire(pos):
         elif bullet_type == BulletType.SlowFast:
             emit_signal("fire", bullet_model, pos, fire_speed, bullet_type, bullet_target, bullet_automatic)
             
+        sound.play()
         fire_timer.start()
         
 #################
