@@ -50,14 +50,14 @@ func load_screen(screen):
     
     :param screen:  Screen enum value
     """
-    _change_scene(screen_map[screen])
+    self._change_scene(self.screen_map[screen])
 
 # State update methods
 
 func reset_state_values():
     """Reset state values."""
-    score = 0
-    lives = 5
+    self.score = 0
+    self.lives = 5
 
 func add_score(value):
     """
@@ -65,15 +65,15 @@ func add_score(value):
     
     :param value:   Score to add
     """
-    score += value
+    self.score += value
 
 func remove_life():
     """Remove a life."""
-    lives = max(lives - 1, 0)
+    self.lives = max(self.lives - 1, 0)
     
 func add_life():
     """Add a life."""
-    lives = lives + 1
+    self.lives = self.lives + 1
 
 func update_hud(hud):
     """
@@ -81,24 +81,24 @@ func update_hud(hud):
     
     :param hud: HUD node
     """
-    var high_score = get_high_score()
-    hud.update_score(score)
-    hud.update_lives(lives)
+    var high_score = self.get_high_score()
+    hud.update_score(self.score)
+    hud.update_lives(self.lives)
     hud.update_high_score(high_score[0], high_score[1])
     
 func get_high_score():
     """Get high score."""
-    var _high_scores = get_high_scores()
+    var _high_scores = self.get_high_scores()
     var _high_score = _high_scores[0]
-    if score > _high_score[1]:
-        return [YOUR_NAME, score]
+    if self.score > _high_score[1]:
+        return [YOUR_NAME, self.score]
     return _high_score
     
 func get_high_scores():
     """Get high scores."""
-    if high_scores == null:
+    if self.high_scores == null:
         return DEFAULT_HIGH_SCORES
-    return high_scores
+    return self.high_scores
 
 ############################
 # User data handling methods
@@ -113,7 +113,7 @@ func load_game_save():
     """Load game save."""
     var file_path = File.new()
     if not file_path.file_exists("user://save.dat"):
-        return load_empty_game_save()
+        return self.load_empty_game_save()
 
     var game_save = null
     file_path.open("user://save.dat", File.READ)
@@ -123,7 +123,7 @@ func load_game_save():
     file_path.close()
 
     if not game_save:
-        game_save = load_empty_game_save()
+        game_save = self.load_empty_game_save()
 
     return game_save
 
@@ -144,16 +144,16 @@ func apply_game_save(game_save):
     
     :param game_save:    Game save
     """
-    high_scores = game_save["high_scores"]
-    current_game_save = game_save
+    self.high_scores = game_save["high_scores"]
+    self.current_game_save = game_save
 
 func save_game_over():
     """Save after game over."""
-    if _has_high_score():
-        var idx = _get_high_score_pos()
-        _insert_high_score(idx)
-        current_game_save["high_scores"] = high_scores
-        save_game_save(current_game_save)
+    if self._has_high_score():
+        var idx = self._get_high_score_pos()
+        self._insert_high_score(idx)
+        self.current_game_save["high_scores"] = self.high_scores
+        self.save_game_save(self.current_game_save)
 
 #################
 # Private methods
@@ -163,20 +163,20 @@ func _change_scene(path, transition_speed=1):
     
 func _get_high_score_pos():
     var idx = 0
-    for entry in high_scores:
+    for entry in self.high_scores:
         var high_score = entry[1]
-        if score > high_score:
+        if self.score > high_score:
            return idx
         idx += 1
         
     return -1
     
 func _has_high_score():
-    var pos = _get_high_score_pos()
+    var pos = self._get_high_score_pos()
     if pos != -1:
         return true
     else:
-        if len(high_scores) < MAX_HIGH_SCORES:
+        if len(self.high_scores) < MAX_HIGH_SCORES:
             return true
         else:
             return false
@@ -184,12 +184,12 @@ func _has_high_score():
     
 func _insert_high_score(idx):
     if idx == -1:
-        if len(high_scores) < MAX_HIGH_SCORES:
-            high_scores.push_back([YOUR_NAME, score])
+        if len(self.high_scores) < MAX_HIGH_SCORES:
+            self.high_scores.push_back([YOUR_NAME, self.score])
     else:
-        high_scores.insert(idx, [YOUR_NAME, score])
-        if len(high_scores) > MAX_HIGH_SCORES:
-            high_scores.pop_back()
+        self.high_scores.insert(idx, [YOUR_NAME, self.score])
+        if len(self.high_scores) > MAX_HIGH_SCORES:
+            self.high_scores.pop_back()
     
 
 ###################
@@ -198,5 +198,5 @@ func _insert_high_score(idx):
 func _ready():
     randomize()
     
-    var game_save = load_game_save()
-    apply_game_save(game_save)
+    var game_save = self.load_game_save()
+    self.apply_game_save(game_save)

@@ -14,19 +14,18 @@ var current_wave = 0
 
 func _ready():
     # Load waves
-    waves = _load_wave_file()
-    
-    wave_timer.connect("timeout", self, "_on_WaveTimer_timeout")    
+    self.waves = self._load_wave_file()
+    self.wave_timer.connect("timeout", self, "_on_WaveTimer_timeout")    
 
 ################
 # Public methods
 
 func load_next_wave() -> Dictionary:
-    current_wave += 1
-    var wave_info = _get_current_wave_info()
+    self.current_wave += 1
+    var wave_info = self._get_current_wave_info()
     
-    wave_timer.wait_time = wave_info["duration"]
-    wave_timer.start()
+    self.wave_timer.wait_time = wave_info["duration"]
+    self.wave_timer.start()
     
     return wave_info
     
@@ -44,12 +43,12 @@ func _load_wave_file():
     return wave_list
     
 func _get_current_wave_info() -> Dictionary:
-    if len(waves) < current_wave:
-        return waves[len(waves) - 1]
-    return waves[current_wave - 1]
+    if len(self.waves) < self.current_wave:
+        return self.waves[len(self.waves) - 1]
+    return self.waves[self.current_wave - 1]
     
 #################
 # Event callbacks
 
 func _on_WaveTimer_timeout():
-    emit_signal("timeout")
+    self.emit_signal("timeout")

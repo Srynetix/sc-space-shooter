@@ -39,89 +39,89 @@ var last_touch_position = Vector2()
 # Lifecycle methods
 
 func _ready():
-    connect("area_entered", self, "_on_area_entered")
+    self.connect("area_entered", self, "_on_area_entered")
     
-    spawning_timer.wait_time = spawning_time
-    spawning_timer.connect("timeout", self, "_on_SpawningTimer_timeout")
-    bullet_system.connect("fire", self, "_on_BulletSystem_fire")
-    status_label.text = ""
+    self.spawning_timer.wait_time = self.spawning_time
+    self.spawning_timer.connect("timeout", self, "_on_SpawningTimer_timeout")
+    self.bullet_system.connect("fire", self, "_on_BulletSystem_fire")
+    self.status_label.text = ""
     
-    initial_position = position
+    self.initial_position = self.position
 
 func _process(delta):
-    if state == State.DEAD:
+    if self.state == State.DEAD:
         return
 
-    var movement = _handle_movement()
+    var movement = self._handle_movement()
     if movement == Vector2():
         # Damp velocity if idle
-        velocity *= damping
+        self.velocity *= self.damping
     else:
         # Update velocity
-        velocity = movement * move_speed
+        self.velocity = movement * self.move_speed
             
-    if is_touching:
-        velocity = Vector2()
-        position = last_touch_position + TOUCH_OFFSET
+    if self.is_touching:
+        self.velocity = Vector2()
+        self.position = self.last_touch_position + TOUCH_OFFSET
             
     # Handle fire
-    _handle_fire()
+    self._handle_fire()
     
     # Update position
-    position += velocity * delta
-    _clamp_position()
+    self.position += self.velocity * delta
+    self._clamp_position()
     
 func _input(event):
     if event is InputEventScreenTouch:
-        last_touch_position = event.position
-        is_touching = event.pressed
+        self.last_touch_position = event.position
+        self.is_touching = event.pressed
         
         # Screen released
         if not event.pressed:
-            velocity = Vector2()
+            self.velocity = Vector2()
         
     elif event is InputEventScreenDrag:
-        last_touch_position = event.position
+        self.last_touch_position = event.position
         
 ################
 # Public methods
 
 func respawn():
     """Respawn player."""
-    _set_state(State.SPAWNING)
-    velocity = Vector2()
-    position = initial_position    
-    bullet_system.reset_weapons()
+    self._set_state(State.SPAWNING)
+    self.velocity = Vector2()
+    self.position = self.initial_position    
+    self.bullet_system.reset_weapons()
     
 func hit():
     """Hit player."""
-    _set_state(State.DEAD)
+    self._set_state(State.DEAD)
 
 #################
 # Private methods
 
 func _clamp_position():
-    var game_size = get_viewport().size
+    var game_size = self.get_viewport().size
     
-    position.x = clamp(position.x, 0, game_size.x)
-    position.y = clamp(position.y, 0, game_size.y)
+    self.position.x = clamp(self.position.x, 0, game_size.x)
+    self.position.y = clamp(self.position.y, 0, game_size.y)
 
 func _set_state(new_state):    
-    if state != new_state:
-        state = new_state
+    if self.state != new_state:
+        self.state = new_state
     
         match new_state:
             State.DEAD:
-                collision_shape.set_deferred("disabled", true)
-                animation_player.play("explode")
-                yield(animation_player, "animation_finished")
-                emit_signal("dead")
+                self.collision_shape.set_deferred("disabled", true)
+                self.animation_player.play("explode")
+                yield(self.animation_player, "animation_finished")
+                self.emit_signal("dead")
             State.IDLE:
-                collision_shape.set_deferred("disabled", false)
-                animation_player.play("idle")
+                self.collision_shape.set_deferred("disabled", false)
+                self.animation_player.play("idle")
             State.SPAWNING:
-                spawning_timer.start()
-                animation_player.play("spawning")                
+                self.spawning_timer.start()
+                self.animation_player.play("spawning")                
 
 func _handle_movement():
     var movement = Vector2()
@@ -137,21 +137,21 @@ func _handle_movement():
     return movement
 
 func _handle_fire():
-    if Input.is_action_pressed("player_shoot") || is_touching:
-        bullet_system.fire(muzzle.global_position)
+    if Input.is_action_pressed("player_shoot") || self.is_touching:
+        self.bullet_system.fire(self.muzzle.global_position)
         
 #################
 # Event callbacks
     
 func _on_SpawningTimer_timeout():
-    _set_state(State.IDLE)
+    self._set_state(State.IDLE)
     
 func _on_area_entered(area):
     if area.is_in_group("rocks"):
         area.explode()
-        _set_state(State.DEAD)        
+        self._set_state(State.DEAD)        
     elif area.is_in_group("enemies"):
-        _set_state(State.DEAD)
+        self._set_state(State.DEAD)
     
 func _on_BulletSystem_fire(bullet, pos, speed, type, target, automatic):
-    emit_signal("fire", bullet, pos, speed, type, target, automatic)
+    self.emit_signal("fire", bullet, pos, speed, type, target, automatic)

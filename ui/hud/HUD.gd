@@ -18,7 +18,7 @@ func update_lives(lives):
     
     :param lives:   Lives
     """
-    lives_value.text = str(lives)
+    self.lives_value.text = str(lives)
     
 func update_score(score):
     """
@@ -26,7 +26,7 @@ func update_score(score):
     
     :param score:   Score
     """
-    score_value.text = str(score)
+    self.score_value.text = str(score)
     
 func show_message(msg):
     """
@@ -34,9 +34,9 @@ func show_message(msg):
     
     :param msg:     Message
     """
-    notification.text = msg
-    animation_player.stop()
-    animation_player.play("message")
+    self.notification.text = msg
+    self.animation_player.stop()
+    self.animation_player.play("message")
 
 func update_high_score(name, score):
     """
@@ -45,4 +45,4 @@ func update_high_score(name, score):
     :param name:    Name
     :param score:   Score
     """
-    high_value.text = "{name} {score}".format({"name": name, "score": score})
+    self.high_value.text = "{name} {score}".format({"name": name, "score": score})

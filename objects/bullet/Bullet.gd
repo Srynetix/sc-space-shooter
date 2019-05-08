@@ -26,35 +26,35 @@ var base_speed = 0
 # Lifecycle methods
 
 func _ready():
-    connect("area_entered", self, "_on_area_entered")
-    visibility_notifier.connect("screen_exited", self, "_on_VisibilityNotifier2D_screen_exited")
+    self.connect("area_entered", self, "_on_area_entered")
+    self.visibility_notifier.connect("screen_exited", self, "_on_VisibilityNotifier2D_screen_exited")
     
     # Prepare for player target
-    if bullet_target == BulletTarget.Player:
-        sprite.texture = EnemyBulletSprite
-        trail.texture = EnemyBulletSprite
-        set_collision_layer_bit(1, false)
-        set_collision_layer_bit(5, true)
-        set_collision_mask_bit(2, false)
-        set_collision_mask_bit(4, false)
-        set_collision_mask_bit(0, true)
+    if self.bullet_target == BulletTarget.Player:
+        self.sprite.texture = EnemyBulletSprite
+        self.trail.texture = EnemyBulletSprite
+        self.set_collision_layer_bit(1, false)
+        self.set_collision_layer_bit(5, true)
+        self.set_collision_mask_bit(2, false)
+        self.set_collision_mask_bit(4, false)
+        self.set_collision_mask_bit(0, true)
         
-    if bullet_automatic:
-        _handle_automatic_mode()
+    if self.bullet_automatic:
+        self._handle_automatic_mode()
     
-    if bullet_type == BulletType.Laser:
-        sprite.scale *= 3
-        trail.scale *= 3
+    if self.bullet_type == BulletType.Laser:
+        self.sprite.scale *= 3
+        self.trail.scale *= 3
     
-    elif bullet_type == BulletType.SlowFast:
-        velocity /= Vector2(6, 6)
-        slow_timer.start()
-        yield(slow_timer, "timeout")
-        _handle_automatic_mode()        
-        velocity *= Vector2(1.5, 1.5)
+    elif self.bullet_type == BulletType.SlowFast:
+        self.velocity /= Vector2(6, 6)
+        self.slow_timer.start()
+        yield(self.slow_timer, "timeout")
+        self._handle_automatic_mode()        
+        self.velocity *= Vector2(1.5, 1.5)
 
 func _process(delta):
-    position += velocity * delta
+    self.position += self.velocity * delta
 
 ################
 # Public methods
@@ -68,54 +68,54 @@ func prepare(pos, speed, type, target, automatic):
     :param type:    Bullet type
     :param target:  Bullet target
     """
-    position = pos
-    bullet_target = target
-    bullet_automatic = automatic
-    base_speed = speed
+    self.position = pos
+    self.bullet_target = target
+    self.bullet_automatic = automatic
+    self.base_speed = speed
     
     if target == BulletTarget.Player:
-        velocity = Vector2(0, speed)
+        self.velocity = Vector2(0, speed)
     else:
-        velocity = Vector2(0, -speed)
+        self.velocity = Vector2(0, -speed)
         
-    bullet_type = type
+    self.bullet_type = type
 
 #################
 # Private methods
 
 func _handle_automatic_mode():
-    if bullet_target == BulletTarget.Player:
-        var players = get_tree().get_nodes_in_group("player")
+    if self.bullet_target == BulletTarget.Player:
+        var players = self.get_tree().get_nodes_in_group("player")
         if len(players) > 0:
-            _rotate_to_target(players[0])
-    elif bullet_target == BulletTarget.Enemy:
-        var enemies = get_tree().get_nodes_in_group("enemies")
+            self._rotate_to_target(players[0])
+    elif self.bullet_target == BulletTarget.Enemy:
+        var enemies = self.get_tree().get_nodes_in_group("enemies")
         if len(enemies) > 0:
-            _rotate_to_target(enemies[0])
+            self._rotate_to_target(enemies[0])
 
 func _rotate_to_target(target):
-    var direction = (target.position - position).normalized()
+    var direction = (target.position - self.position).normalized()
     var angle = Vector2(0, 1).angle_to(direction)
-    rotation = angle
-    trail.process_material.angle = 360 - rad2deg(angle)
-    velocity = direction * base_speed
+    self.rotation = angle
+    self.trail.process_material.angle = 360 - rad2deg(angle)
+    self.velocity = direction * self.base_speed
     
 #################
 # Event callbacks
 
 func _on_VisibilityNotifier2D_screen_exited():
-    queue_free()
+    self.queue_free()
 
 func _on_area_entered(area):
     if area.is_in_group("rocks") or area.is_in_group("enemies") or area.is_in_group("player"):
-        var sparkles_position = position
+        var sparkles_position = self.position
         var sparkles = Sparkles.instance()
         sparkles.position = sparkles_position
         sparkles.z_index = 10
         
         # Add child
-        get_parent().add_child(sparkles)
+        self.get_parent().add_child(sparkles)
         
         area.hit()
         
-    queue_free()
+    self.queue_free()

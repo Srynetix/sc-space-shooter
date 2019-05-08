@@ -3,7 +3,7 @@ extends Node
 ###########
 # Utilities
 
-var FORCE_MOBILE = false
+const FORCE_MOBILE = false
 
 ################
 # Public methods

@@ -27,14 +27,14 @@ func _ready():
     self.instructions_loaded = true
     
 func _process(delta):
-    if !self.instructions_loaded:
+    if not self.instructions_loaded:
         return
         
     if Input.is_action_just_pressed("player_shoot"):
         self._load_next()
 
 func _input(event):
-    if !self.instructions_loaded:
+    if not self.instructions_loaded:
         return
         
     if event is InputEventScreenTouch:

@@ -8,5 +8,5 @@ extends Control
 
 func _ready():
     GameState.save_game_over()
-    yield(get_tree().create_timer(2), "timeout")
+    yield(self.get_tree().create_timer(2), "timeout")
     GameState.load_screen(GameState.Screens.SCORE)

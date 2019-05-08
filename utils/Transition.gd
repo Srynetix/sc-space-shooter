@@ -3,6 +3,8 @@ extends CanvasLayer
 ###################
 # Transition system
 
+onready var animation_player = $AnimationPlayer
+
 ################
 # Public methods
 
@@ -15,9 +17,9 @@ func fade_to_scene(scene_path, transition_speed=1):
     """
     var scene = load(scene_path)
 
-    $AnimationPlayer.playback_speed = transition_speed
-    $AnimationPlayer.play("fadeout")
-    yield($AnimationPlayer, "animation_finished")
+    self.animation_player.playback_speed = transition_speed
+    self.animation_player.play("fadeout")
+    yield(self.animation_player, "animation_finished")
 
-    get_tree().change_scene_to(scene)
-    $AnimationPlayer.play("fadein")
+    self.get_tree().change_scene_to(scene)
+    self.animation_player.play("fadein")

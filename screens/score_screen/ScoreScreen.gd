@@ -14,7 +14,7 @@ func _ready():
         var high_score = entry[1]
         high_scores_str += "{name} {high_score}\n".format({"name": name, "high_score": high_score})
         
-    scores.text = high_scores_str
+    self.scores.text = high_scores_str
     
-    yield(get_tree().create_timer(3), "timeout")
+    yield(self.get_tree().create_timer(3), "timeout")
     GameState.load_screen(GameState.Screens.TITLE)    

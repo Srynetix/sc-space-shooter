@@ -7,11 +7,11 @@ onready var timer = $Timer
 # Lifecycle methods
 
 func _ready():
-    timer.connect("timeout", self, "_on_Timer_timeout")
-    particles.emitting = true
+    self.timer.connect("timeout", self, "_on_Timer_timeout")
+    self.particles.emitting = true
     
 #################
 # Event callbacks
 
 func _on_Timer_timeout():
-    queue_free()
+    self.queue_free()

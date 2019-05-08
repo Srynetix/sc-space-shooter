@@ -37,17 +37,17 @@ var firing = false
 # Lifecycle methods
 
 func _ready():
-    screen_size = Utils.get_game_size()
+    self.screen_size = Utils.get_game_size()
     
-    fire_timer.wait_time = fire_time
-    fire_timer.connect("timeout", self, "_on_FireTimer_timeout")
+    self.fire_timer.wait_time = self.fire_time
+    self.fire_timer.connect("timeout", self, "_on_FireTimer_timeout")
     
-    bullet_system.connect("fire", self, "_on_BulletSystem_fire")
+    self.bullet_system.connect("fire", self, "_on_BulletSystem_fire")
     
-    trail.process_material.scale = scale.x  
+    self.trail.process_material.scale = self.scale.x
 
 func _process(delta):
-    _move(delta)
+    self._move(delta)
         
 ################
 # Public methods
@@ -60,63 +60,63 @@ func prepare(pos, speed, scl):
     :param speed:   Y speed
     :param scl:     Scale
     """
-    position = pos
-    down_speed = speed
-    scale = Vector2(scl, scl)
+    self.position = pos
+    self.down_speed = speed
+    self.scale = Vector2(scl, scl)
     
     # Calculate hit points based on scale factor
-    hit_points = int(ceil(scl * BASE_HIT_POINTS))
+    self.hit_points = int(ceil(scl * BASE_HIT_POINTS))
 
 func hit():
     """Hit enemy."""
-    if not exploded:
-        animation_player.play("tint")
-        hit_count += 1
-        if hit_count == hit_points:
-            exploded = true
-            _explode()
+    if not self.exploded:
+        self.animation_player.play("tint")
+        self.hit_count += 1
+        if self.hit_count == self.hit_points:
+            self.exploded = true
+            self._explode()
 
 #################
 # Private methods
 
 func _detect_player():
-    var player = get_tree().get_nodes_in_group("player")
+    var player = self.get_tree().get_nodes_in_group("player")
     if len(player) > 0:
         return player[0]
     else:
         return null
         
 func _move(delta):
-    acc += delta
-    position += Vector2(move_speed, down_speed) * Vector2(delta, delta) * Vector2(cos(acc), 1)
+    self.acc += delta
+    self.position += Vector2(self.move_speed, self.down_speed) * Vector2(delta, delta) * Vector2(cos(self.acc), 1)
     
-    if firing:
-        bullet_system.fire(muzzle.global_position)
+    if self.firing:
+        self.bullet_system.fire(self.muzzle.global_position)
     
-    if position.y > screen_size.y:
-        queue_free()
+    if self.position.y > self.screen_size.y:
+        self.queue_free()
         
 func _explode():
     # Stop fire
-    firing = false
-    fire_timer.stop()
+    self.firing = false
+    self.fire_timer.stop()
     
     # Explode
-    emit_signal("exploded")
-    call_deferred("_disable_collisions")
-    explosion_sound.play()
-    animation_player.play("explode")
-    yield(animation_player, "animation_finished")
-    queue_free()
+    self.emit_signal("exploded")
+    self.call_deferred("_disable_collisions")
+    self.explosion_sound.play()
+    self.animation_player.play("explode")
+    yield(self.animation_player, "animation_finished")
+    self.queue_free()
     
 func _disable_collisions():
-    collision_shape.disabled = true    
+    self.collision_shape.disabled = true    
 
 #################
 # Event callbacks
 
 func _on_FireTimer_timeout():
-    firing = not firing
+    self.firing = not self.firing
     
 func _on_BulletSystem_fire(bullet, pos, speed, type, target, automatic):
-    emit_signal("fire", bullet, pos, speed, type, target, automatic)
+    self.emit_signal("fire", bullet, pos, speed, type, target, automatic)

@@ -8,4 +8,4 @@ export (int) var velocity = 500
 onready var particles = $Particles2D
 
 func _ready():
-    particles.process_material.initial_velocity = velocity
+    self.particles.process_material.initial_velocity = self.velocity

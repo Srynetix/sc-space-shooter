@@ -20,29 +20,29 @@ onready var life_spawner = $Spawners/LifePowerupSpawner
 # Lifecycle methods
 
 func _ready():
-    player.connect("fire", self, "_on_Player_fire")
-    player.connect("dead", self, "_on_Player_dead")
+    self.player.connect("fire", self, "_on_fire")
+    self.player.connect("dead", self, "_on_Player_dead")
     
-    rock_spawner.connect_target_scene(self, {
+    self.rock_spawner.connect_target_scene(self, {
         "exploded": "_on_Rock_exploded"
     })
-    powerup_spawner.connect_target_scene(self, {
+    self.powerup_spawner.connect_target_scene(self, {
         "powerup": "_on_Powerup_powerup"
     })
-    life_spawner.connect_target_scene(self, {
+    self.life_spawner.connect_target_scene(self, {
         "powerup": "_on_Powerup_powerup"
     })
-    enemy_spawner.connect_target_scene(self, {
+    self.enemy_spawner.connect_target_scene(self, {
         "exploded": "_on_Enemy_exploded",
-        "fire": "_on_Enemy_fire"
+        "fire": "_on_fire"
     })
     
-    wave_system.connect("timeout", self, "_on_WaveSystem_timeout")
-    life_spawner.disabled = true
+    self.wave_system.connect("timeout", self, "_on_WaveSystem_timeout")
+    self.life_spawner.disabled = true
     
-    GameState.update_hud(hud)
+    GameState.update_hud(self.hud)
     
-    _load_next_wave()
+    self._load_next_wave()
     
 
 func _notification(what):
@@ -53,89 +53,81 @@ func _notification(what):
 # Private methods
 
 func _load_next_wave():
-    var wave_info = wave_system.load_next_wave()
+    var wave_info = self.wave_system.load_next_wave()
      
-    rock_spawner.set_frequency(wave_info["rocks_spawn_time"])
-    enemy_spawner.set_frequency(wave_info["enemies_spawn_time"])
-    powerup_spawner.set_frequency(wave_info["powerup_spawn_time"])
-    life_spawner.set_frequency(wave_info["life_spawn_time"])
+    self.rock_spawner.set_frequency(wave_info["rocks_spawn_time"])
+    self.enemy_spawner.set_frequency(wave_info["enemies_spawn_time"])
+    self.powerup_spawner.set_frequency(wave_info["powerup_spawn_time"])
+    self.life_spawner.set_frequency(wave_info["life_spawn_time"])
     
-    rock_spawner.reset()
-    enemy_spawner.reset()
-    powerup_spawner.reset()
+    self.rock_spawner.reset()
+    self.enemy_spawner.reset()
+    self.powerup_spawner.reset()
     
-    hud.show_message("Wave {w}".format({"w": wave_system.current_wave}))
+    self.hud.show_message("Wave {w}".format({"w": self.wave_system.current_wave}))
     
 func _load_boss():
-    rock_spawner.disabled = true
-    enemy_spawner.disabled = true
+    self.rock_spawner.disabled = true
+    self.enemy_spawner.disabled = true
     
     var screen_size = Utils.get_game_size()
     
-    animation_player.play("warning")
-    hud.show_message("WARNING !")
+    self.animation_player.play("warning")
+    self.hud.show_message("WARNING !")
     
-    yield(get_tree().create_timer(2), "timeout")
+    yield(self.get_tree().create_timer(2), "timeout")
     
     var boss_inst = BossModel.instance()
     boss_inst.connect("exploded", self, "_on_Boss_exploded")
-    boss_inst.connect("fire", self, "_on_Enemy_fire")
+    boss_inst.connect("fire", self, "_on_fire")
     boss_inst.prepare(Vector2(screen_size.x / 2, -100), 100, 1.0)
-    
-    add_child(boss_inst)
+    self.add_child(boss_inst)
     
 #################
 # Event callbacks
 
-func _on_Player_fire(bullet, pos, speed, type, target, automatic):
+func _on_fire(bullet, pos, speed, type, target, automatic):
     var inst = bullet.instance()
     inst.prepare(pos, speed, type, target, automatic)
+    self.bullets.add_child(inst)
     
-    bullets.add_child(inst)
-    
-func _on_Enemy_fire(bullet, pos, speed, type, target, automatic):
-    var inst = bullet.instance()
-    inst.prepare(pos, speed, type, target, automatic)
-    
-    bullets.add_child(inst)
-
 func _on_Player_dead():
     var lives = GameState.lives
     if lives > 0:
         GameState.remove_life()
-        GameState.update_hud(hud)
+        GameState.update_hud(self.hud)
         lives = GameState.lives
         
-        player.respawn()
+        self.player.respawn()
         if lives == 0:
-            hud.show_message("LAST LIFE !")
+            self.hud.show_message("LAST LIFE !")
     else:
         GameState.load_screen(GameState.Screens.GAMEOVER)
     
 func _on_Rock_exploded():
     GameState.add_score(100)
-    GameState.update_hud(hud)
+    GameState.update_hud(self.hud)
     
 func _on_Enemy_exploded():
     GameState.add_score(200)
-    GameState.update_hud(hud)
+    GameState.update_hud(self.hud)
     
 func _on_Boss_exploded():
     GameState.add_score(2000)
-    GameState.update_hud(hud)
+    GameState.update_hud(self.hud)
     
     var game_size = Utils.get_game_size()    
-    life_spawner.spawn_at_position(Vector2(game_size.x / 2, -50))
+    self.life_spawner.spawn_at_position(Vector2(game_size.x / 2, -50))
     
-    yield(get_tree().create_timer(1), "timeout")
-    _load_next_wave()
+    yield(self.get_tree().create_timer(1), "timeout")
+    self._load_next_wave()
    
 func _on_Powerup_powerup(powerup_type):
     if powerup_type == PowerupType.Weapon:
-        player.bullet_system.upgrade_weapon()
+        self.player.bullet_system.upgrade_weapon()
     elif powerup_type == PowerupType.Life:
         GameState.add_life()
-        GameState.update_hud(hud)
+        GameState.update_hud(self.hud)
         
 func _on_WaveSystem_timeout():
-    _load_boss()
+    self._load_boss()

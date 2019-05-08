@@ -14,8 +14,8 @@ var velocity = Vector2()
 # Lifecycle methods
 
 func _ready():
-    weapon_swap.connect("timeout", self, "_on_WeaponSwap_timeout")
-    weapon_swap.start()
+    self.weapon_swap.connect("timeout", self, "_on_WeaponSwap_timeout")
+    self.weapon_swap.start()
 
 ################
 # Public methods
@@ -28,34 +28,34 @@ func prepare(pos, speed, scl):
     :param speed:   Y Speed
     :param scl:     Scale
     """
-    position = pos
-    down_speed = speed
-    move_speed *= 1.5
-    scale = Vector2(scl * 2, scl * 2)
-    velocity = Vector2(move_speed, down_speed)
+    self.position = pos
+    self.down_speed = speed
+    self.move_speed *= 1.5
+    self.scale = Vector2(scl * 2, scl * 2)
+    self.velocity = Vector2(self.move_speed, self.down_speed)
     
     # Calculate hit points based on scale factor
-    hit_points = int(ceil(scl * BOSS_BASE_HIT_POINTS))
+    self.hit_points = int(ceil(scl * BOSS_BASE_HIT_POINTS))
     
 #################
 # Private methods
 
 func _move(delta):
-    acc += delta
-    position += velocity * Vector2(delta, delta) * Vector2(cos(acc), 1)
+    self.acc += delta
+    self.position += self.velocity * Vector2(delta, delta) * Vector2(cos(self.acc), 1)
     
-    velocity.y *= 0.992
-    if velocity.y <= 0.01:
-        velocity.y = 0
+    self.velocity.y *= 0.992
+    if self.velocity.y <= 0.01:
+        self.velocity.y = 0
  
-    if firing:
-        bullet_system.fire(muzzle.global_position)
+    if self.firing:
+        self.bullet_system.fire(self.muzzle.global_position)
     
-    if position.y > screen_size.y:
-        queue_free()
+    if self.position.y > self.screen_size.y:
+        self.queue_free()
         
 #################
 # Event callbacks
 
 func _on_WeaponSwap_timeout():
-    bullet_system.switch_random_type()
+    self.bullet_system.switch_random_type()
