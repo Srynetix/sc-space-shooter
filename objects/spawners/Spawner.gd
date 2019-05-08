@@ -13,29 +13,37 @@ export (bool) var disabled = false
 onready var timer = $Timer
 onready var elements = $Elements
 
+var parent_scene = null
+var signals = {}
+
 ###################
 # Lifecycle methods
 
 func _ready():
-    timer.wait_time = frequency
-    timer.connect("timeout", self, "_on_Timer_timeout")
+    self.timer.wait_time = self.frequency
+    self.timer.connect("timeout", self, "_on_Timer_timeout")
     
-    if time_offset > 0:
-        yield(get_tree().create_timer(time_offset), "timeout")
+    if self.time_offset > 0:
+        yield(get_tree().create_timer(self.time_offset), "timeout")
         
-    timer.start()
+    self.timer.start()
     
 ################
 # Public methods
 
+func connect_target_scene(scene, signals):
+    """Set parent scene."""
+    self.parent_scene = scene
+    self.signals = signals
+
 func reset():
     """Reset spawner."""
-    disabled = false
-    timer.start()
+    self.disabled = false
+    self.timer.start()
     
 func disable():
     """Disable spawner."""
-    disabled = true
+    self.disabled = true
     
 func set_frequency(freq):
     """
@@ -43,33 +51,37 @@ func set_frequency(freq):
     
     :param freq:    Frequency
     """
-    frequency = freq
-    timer.wait_time = freq
-   
+    self.frequency = freq
+    self.timer.wait_time = freq
+    
+func spawn_at_position(pos):
+    """
+    Spawn at position.
+    
+    :param pos: Position
+    """
+    var inst = self.element.instance()
+    inst.prepare(pos, self.speed, rand_range(self.rand_scale.x, self.rand_scale.y))
+
+    for signal_name in self.signals:
+        var fn_name = self.signals[signal_name]
+        inst.connect(signal_name, self.parent_scene, fn_name)
+
+    self.elements.add_child(inst)
+    
 func spawn():
     """
     Spawn element.
     """
     var game_size = Utils.get_game_size()
     var pos = Vector2(game_size.x / 4 + (randi() % int(game_size.x - game_size.x / 4)), -50)
-    
-    var inst = element.instance()
-    _connect_instance(inst)
-    inst.prepare(pos, speed, rand_range(rand_scale.x, rand_scale.y))
-
-    elements.add_child(inst)
-    
-#################
-# Private methods
-
-func _connect_instance(inst):
-    pass
+    self.spawn_at_position(pos)
     
 #################
 # Event callbacks
 
 func _on_Timer_timeout():
-    if disabled:
+    if self.disabled:
         return
         
-    spawn()
+    self.spawn()

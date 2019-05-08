@@ -23,11 +23,20 @@ func _ready():
     player.connect("fire", self, "_on_Player_fire")
     player.connect("dead", self, "_on_Player_dead")
     
-    rock_spawner.connect("exploded", self, "_on_Rock_exploded")
-    powerup_spawner.connect("powerup", self, "_on_Powerup_powerup")
-    life_spawner.connect("powerup", self, "_on_Powerup_powerup")
-    enemy_spawner.connect("exploded", self, "_on_Enemy_exploded")
-    enemy_spawner.connect("fire", self, "_on_Enemy_fire")
+    rock_spawner.connect_target_scene(self, {
+        "exploded": "_on_Rock_exploded"
+    })
+    powerup_spawner.connect_target_scene(self, {
+        "powerup": "_on_Powerup_powerup"
+    })
+    life_spawner.connect_target_scene(self, {
+        "powerup": "_on_Powerup_powerup"
+    })
+    enemy_spawner.connect_target_scene(self, {
+        "exploded": "_on_Enemy_exploded",
+        "fire": "_on_Enemy_fire"
+    })
+    
     wave_system.connect("timeout", self, "_on_WaveSystem_timeout")
     life_spawner.disabled = true
     
@@ -115,7 +124,8 @@ func _on_Boss_exploded():
     GameState.add_score(2000)
     GameState.update_hud(hud)
     
-    life_spawner.spawn()
+    var game_size = Utils.get_game_size()    
+    life_spawner.spawn_at_position(Vector2(game_size.x / 2, -50))
     
     yield(get_tree().create_timer(1), "timeout")
     _load_next_wave()

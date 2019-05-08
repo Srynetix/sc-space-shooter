@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://screens/game_screen/GameScreen.gd" type="Script" id=1]
 [ext_resource path="res://objects/starfield/Starfield.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://objects/spawners/RockSpawner.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/spawners/PowerupSpawner.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/powerups/LifePowerup.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/spawners/EnemySpawner.tscn" type="PackedScene" id=7]
-[ext_resource path="res://utils/WaveSystem.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ui/hud/HUD.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/spawners/Spawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/rock/Rock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/powerups/Powerup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/powerups/LifePowerup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/enemies/Enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://utils/WaveSystem.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/hud/HUD.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -74,25 +75,29 @@ position = Vector2( 310.988, 834.589 )
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Spawners" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="RockSpawner" parent="Spawners" instance=ExtResource( 4 )]
+speed = 300.0
 time_offset = 1.0
+element = ExtResource( 5 )
 
-[node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
+[node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 4 )]
 frequency = 12.0
 speed = 150.0
-time_offset = 2.0
+time_offset = 1.0
+rand_scale = Vector2( 1, 1 )
+element = ExtResource( 6 )
 
-[node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
+[node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 4 )]
 frequency = 50.0
 speed = 250.0
-time_offset = 1.0
-element = ExtResource( 6 )
+rand_scale = Vector2( 1, 1 )
+element = ExtResource( 7 )
 disabled = true
 
-[node name="EnemySpawner" parent="Spawners" instance=ExtResource( 7 )]
+[node name="EnemySpawner" parent="Spawners" instance=ExtResource( 4 )]
 frequency = 7.0
+element = ExtResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 1 )
@@ -101,10 +106,10 @@ anims/warning = SubResource( 2 )
 [node name="WaveTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="WaveSystem" parent="." instance=ExtResource( 8 )]
+[node name="WaveSystem" parent="." instance=ExtResource( 9 )]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 editor/display_folded = true
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource( 9 )]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 10 )]
 
