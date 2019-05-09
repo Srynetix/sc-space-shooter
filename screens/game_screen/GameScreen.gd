@@ -10,6 +10,7 @@ onready var bullets = $Bullets
 onready var hud = $CanvasLayer/HUD
 onready var animation_player = $AnimationPlayer
 onready var wave_system = $WaveSystem
+onready var alarm = $Alarm
 
 onready var rock_spawner = $Spawners/RockSpawner
 onready var powerup_spawner = $Spawners/PowerupSpawner
@@ -58,7 +59,6 @@ func _load_next_wave():
     self.rock_spawner.set_frequency(wave_info["rocks_spawn_time"])
     self.enemy_spawner.set_frequency(wave_info["enemies_spawn_time"])
     self.powerup_spawner.set_frequency(wave_info["powerup_spawn_time"])
-    self.life_spawner.set_frequency(wave_info["life_spawn_time"])
     
     self.rock_spawner.reset()
     self.enemy_spawner.reset()
@@ -75,9 +75,13 @@ func _load_boss():
     self.animation_player.play("warning")
     self.hud.show_message("WARNING !")
     
-    yield(self.get_tree().create_timer(2), "timeout")
-    
+    self.alarm.play()
+    yield(get_tree().create_timer(1), "timeout")
+    self.alarm.play()
+    yield(get_tree().create_timer(1), "timeout")
+        
     var boss_inst = BossModel.instance()
+    boss_inst.fire_time = 0.25 + 0.25 * self.wave_system.current_wave
     boss_inst.connect("exploded", self, "_on_Boss_exploded")
     boss_inst.connect("fire", self, "_on_fire")
     boss_inst.prepare(Vector2(screen_size.x / 2, -100), 100, 1.0)
@@ -113,7 +117,7 @@ func _on_Enemy_exploded():
     GameState.update_hud(self.hud)
     
 func _on_Boss_exploded():
-    GameState.add_score(2000)
+    GameState.add_score(2000 * self.wave_system.current_wave)
     GameState.update_hud(self.hud)
     
     var game_size = Utils.get_game_size()    

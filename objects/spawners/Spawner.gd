@@ -74,7 +74,9 @@ func spawn():
     Spawn element.
     """
     var game_size = Utils.get_game_size()
-    var pos = Vector2(game_size.x / 4 + (randi() % int(game_size.x - game_size.x / 4)), -50)
+    var min_pos = game_size.x / 4
+    var max_pos = game_size.x - game_size.x / 4
+    var pos = Vector2(int(rand_range(min_pos, max_pos)), -50)
     self.spawn_at_position(pos)
     
 #################

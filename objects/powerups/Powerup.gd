@@ -14,6 +14,7 @@ export (PowerupType) var powerup_type = PowerupType.Weapon
 onready var visibility_notifier = $VisibilityNotifier2D
 onready var animation_player = $AnimationPlayer
 onready var collision_shape = $CollisionShape2D
+onready var sound = $Sound
 
 var velocity = Vector2()
 
@@ -48,9 +49,10 @@ func prepare(pos, speed, scl):
 func _on_area_entered(area):
     if area.is_in_group("player"):
         self.collision_shape.set_deferred("disabled", true)
+        self.sound.play()
         self.emit_signal("powerup", self.powerup_type)
         self.animation_player.play("fade")
-        yield(self.animation_player, "animation_finished")
+        yield(self.sound, "finished")
         self.queue_free()
         
 func _on_VisibilityNotifier2D_screen_exited():

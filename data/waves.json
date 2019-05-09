@@ -3,14 +3,18 @@
         "duration": 30,
         "rocks_spawn_time": 3,
         "enemies_spawn_time": 8,
-        "powerup_spawn_time": 10,
-        "life_spawn_time": 20
+        "powerup_spawn_time": 10
     },
     {
         "duration": 30,
         "rocks_spawn_time": 0.5,
         "enemies_spawn_time": 8,
-        "powerup_spawn_time": 10,
-        "life_spawn_time": 20            
+        "powerup_spawn_time": 10
+    },
+    {
+        "duration": 30,
+        "rocks_spawn_time": 0.25,
+        "enemies_spawn_time": 5,
+        "powerup_spawn_time": 10
     }
 ]

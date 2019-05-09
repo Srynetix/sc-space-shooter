@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://screens/game_screen/GameScreen.gd" type="Script" id=1]
 [ext_resource path="res://objects/starfield/Starfield.tscn" type="PackedScene" id=2]
@@ -9,7 +9,9 @@
 [ext_resource path="res://objects/powerups/LifePowerup.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/enemies/Enemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://utils/WaveSystem.tscn" type="PackedScene" id=9]
-[ext_resource path="res://ui/hud/HUD.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/sounds/alarm.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/sounds/ambient.wav" type="AudioStream" id=11]
+[ext_resource path="res://ui/hud/HUD.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -108,8 +110,20 @@ one_shot = true
 
 [node name="WaveSystem" parent="." instance=ExtResource( 9 )]
 
+[node name="Alarm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -15.0
+pitch_scale = 0.5
+bus = "Effects"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -20.0
+autoplay = true
+bus = "Music"
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 editor/display_folded = true
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource( 10 )]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 12 )]
 

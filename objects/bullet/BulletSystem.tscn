@@ -12,6 +12,6 @@ bullet_model = ExtResource( 2 )
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
-volume_db = -20.0
-pitch_scale = 0.8
+volume_db = -25.0
+bus = "Effects"
 

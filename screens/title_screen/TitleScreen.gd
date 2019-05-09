@@ -6,6 +6,7 @@ extends Control
 onready var instructions = $Instructions
 onready var animation_player = $AnimationPlayer
 onready var high_score = $VBoxContainer/HSValue
+onready var sound = $Sound
 
 var instructions_loaded = false
 
@@ -48,6 +49,7 @@ func _notification(what):
 # Private methods
         
 func _load_next():
+    self.sound.play()
     self.set_process(false)
     self.set_process_input(false)
     GameState.load_screen(GameState.Screens.GAME)
