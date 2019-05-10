@@ -24,17 +24,17 @@ var velocity = Vector2()
 func _ready():
     self.visibility_notifier.connect("screen_exited", self, "_on_VisibilityNotifier2D_screen_exited")
     self.connect("area_entered", self, "_on_area_entered")
-    
+
 func _process(delta):
     self.position += self.velocity * delta
-    
+
 ################
 # Public methods
 
 func prepare(pos, speed, scl):
     """
     Prepare powerup.
-    
+
     :param pos:     Position
     :param speed:   Y Speed
     :param scl:     Scale
@@ -42,7 +42,7 @@ func prepare(pos, speed, scl):
     self.position = pos
     self.scale = Vector2(scl, scl)
     self.velocity = Vector2(0, speed)
-    
+
 #################
 # Event callbacks
 
@@ -54,6 +54,6 @@ func _on_area_entered(area):
         self.animation_player.play("fade")
         yield(self.sound, "finished")
         self.queue_free()
-        
+
 func _on_VisibilityNotifier2D_screen_exited():
     self.queue_free()

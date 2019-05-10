@@ -15,23 +15,23 @@ onready var animation_player = $AnimationPlayer
 func update_lives(lives):
     """
     Update lives.
-    
+
     :param lives:   Lives
     """
     self.lives_value.text = str(lives)
-    
+
 func update_score(score):
     """
     Update score.
-    
+
     :param score:   Score
     """
     self.score_value.text = str(score)
-    
+
 func show_message(msg):
     """
     Show message.
-    
+
     :param msg:     Message
     """
     self.notification.text = msg
@@ -41,7 +41,7 @@ func show_message(msg):
 func update_high_score(name, score):
     """
     Update high score.
-    
+
     :param name:    Name
     :param score:   Score
     """

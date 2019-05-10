@@ -13,7 +13,7 @@ func is_mobile_platform():
     if FORCE_MOBILE:
         return true
     return OS.get_name() in ["Android", "iOS"]
-    
+
 func get_game_size():
     """Get game size."""
     var width = ProjectSettings.get_setting("display/window/size/width")

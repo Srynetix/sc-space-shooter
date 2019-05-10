@@ -29,7 +29,7 @@ var can_shoot = true
 func _ready():
     self.fire_timer.wait_time = self.fire_cooldown
     self.fire_timer.connect("timeout", self, "_on_FireTimer_timeout")
-    
+
     self.switch_type(self.bullet_type)
 
 ################
@@ -47,20 +47,20 @@ func upgrade_weapon():
         self.switch_type(BulletType.Triple)
     elif self.bullet_type == BulletType.Triple:
         self.switch_type(BulletType.Laser)
-        
+
 func switch_type(type):
     """
     Switch type to another.
-    
+
     :param type:    New type
     """
     if type == BulletType.Laser:
         self.fire_timer.wait_time = self.fire_cooldown / 4
     else:
         self.fire_timer.wait_time = self.fire_cooldown
-        
+
     self.bullet_type = type
-    
+
 func switch_random_type():
     """
     Switch to random type.
@@ -80,12 +80,12 @@ func switch_random_type():
 func fire(pos):
     """
     Fire from position.
-    
+
     :param pos:     Position
     """
     if self.can_shoot:
         self.can_shoot = false
-        
+
         if self.bullet_type == BulletType.Simple:
             self.emit_signal("fire", self.bullet_model, pos, self.fire_speed, self.bullet_type, self.bullet_target, self.bullet_automatic)
         elif self.bullet_type == BulletType.Double:
@@ -99,10 +99,10 @@ func fire(pos):
             self.emit_signal("fire", self.bullet_model, pos, self.fire_speed, self.bullet_type, self.bullet_target, self.bullet_automatic)
         elif bullet_type == BulletType.SlowFast:
             self.emit_signal("fire", self.bullet_model, pos, self.fire_speed, self.bullet_type, self.bullet_target, self.bullet_automatic)
-            
+
         self.sound.play()
         self.fire_timer.start()
-        
+
 #################
 # Event callbacks
 

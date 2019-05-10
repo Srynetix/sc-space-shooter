@@ -11,7 +11,7 @@ onready var animation_player = $AnimationPlayer
 func fade_to_scene(scene_path, transition_speed=1):
     """
     Fade screen to another scene.
-    
+
     :param scene_path:          Scene path
     :param transition_speed:    Transition speed
     """

@@ -30,6 +30,9 @@ var lives = 3
 # Current game save
 var current_game_save = null
 
+# Current configuration
+var configuration = {}
+
 # Screen map
 var screen_map = {
     Screens.BOOT: "res://screens/boot_screen/BootScreen.tscn",
@@ -47,7 +50,7 @@ var screen_map = {
 func load_screen(screen):
     """
     Load screen.
-    
+
     :param screen:  Screen enum value
     """
     self._change_scene(self.screen_map[screen])
@@ -62,7 +65,7 @@ func reset_state_values():
 func add_score(value):
     """
     Add value to score.
-    
+
     :param value:   Score to add
     """
     self.score += value
@@ -70,7 +73,7 @@ func add_score(value):
 func remove_life():
     """Remove a life."""
     self.lives = max(self.lives - 1, 0)
-    
+
 func add_life():
     """Add a life."""
     self.lives = self.lives + 1
@@ -78,14 +81,14 @@ func add_life():
 func update_hud(hud):
     """
     Update HUD.
-    
+
     :param hud: HUD node
     """
     var high_score = self.get_high_score()
     hud.update_score(self.score)
     hud.update_lives(self.lives)
     hud.update_high_score(high_score[0], high_score[1])
-    
+
 func get_high_score():
     """Get high score."""
     var _high_scores = self.get_high_scores()
@@ -93,12 +96,16 @@ func get_high_score():
     if self.score > _high_score[1]:
         return [YOUR_NAME, self.score]
     return _high_score
-    
+
 func get_high_scores():
     """Get high scores."""
     if self.high_scores == null:
         return DEFAULT_HIGH_SCORES
     return self.high_scores
+
+func get_version_number():
+    """Get version number."""
+    return self.configuration["version"]
 
 ############################
 # User data handling methods
@@ -130,7 +137,7 @@ func load_game_save():
 func save_game_save(game_save):
     """
     Save game save.
-    
+
     :param game_save:    Game save
     """
     var file_path = File.new()
@@ -141,7 +148,7 @@ func save_game_save(game_save):
 func apply_game_save(game_save):
     """
     Apply game save to current state.
-    
+
     :param game_save:    Game save
     """
     self.high_scores = game_save["high_scores"]
@@ -160,17 +167,17 @@ func save_game_over():
 
 func _change_scene(path, transition_speed=1):
     Transition.fade_to_scene(path, transition_speed)
-    
+
 func _get_high_score_pos():
     var idx = 0
     for entry in self.high_scores:
         var high_score = entry[1]
         if self.score > high_score:
-           return idx
+            return idx
         idx += 1
-        
+
     return -1
-    
+
 func _has_high_score():
     var pos = self._get_high_score_pos()
     if pos != -1:
@@ -180,8 +187,7 @@ func _has_high_score():
             return true
         else:
             return false
-    
-    
+
 func _insert_high_score(idx):
     if idx == -1:
         if len(self.high_scores) < MAX_HIGH_SCORES:
@@ -190,13 +196,21 @@ func _insert_high_score(idx):
         self.high_scores.insert(idx, [YOUR_NAME, self.score])
         if len(self.high_scores) > MAX_HIGH_SCORES:
             self.high_scores.pop_back()
-    
+
+func _load_config():
+    var file_path = File.new()
+    file_path.open("res://data/config.json", File.READ)
+    self.configuration = parse_json(file_path.get_as_text())
+    file_path.close()
 
 ###################
 # Lifecycle methods
 
 func _ready():
     randomize()
-    
+
+    # Load configuration
+    self._load_config()
+
     var game_save = self.load_game_save()
     self.apply_game_save(game_save)

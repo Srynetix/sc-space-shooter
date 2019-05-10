@@ -38,24 +38,22 @@ var firing = false
 
 func _ready():
     self.screen_size = Utils.get_game_size()
-    
+
     self.fire_timer.wait_time = self.fire_time
     self.fire_timer.connect("timeout", self, "_on_FireTimer_timeout")
-    
     self.bullet_system.connect("fire", self, "_on_BulletSystem_fire")
-    
     self.trail.process_material.scale = self.scale.x
 
 func _process(delta):
     self._move(delta)
-        
+
 ################
 # Public methods
 
 func prepare(pos, speed, scl):
     """
     Prepare enemy.
-    
+
     :param pos:     Position
     :param speed:   Y speed
     :param scl:     Scale
@@ -63,7 +61,7 @@ func prepare(pos, speed, scl):
     self.position = pos
     self.down_speed = speed
     self.scale = Vector2(scl, scl)
-    
+
     # Calculate hit points based on scale factor
     self.hit_points = int(ceil(scl * BASE_HIT_POINTS))
 
@@ -85,22 +83,22 @@ func _detect_player():
         return player[0]
     else:
         return null
-        
+
 func _move(delta):
     self.acc += delta
     self.position += Vector2(self.move_speed, self.down_speed) * Vector2(delta, delta) * Vector2(cos(self.acc), 1)
-    
+
     if self.firing:
         self.bullet_system.fire(self.muzzle.global_position)
-    
+
     if self.position.y > self.screen_size.y:
         self.queue_free()
-        
+
 func _explode():
     # Stop fire
     self.firing = false
     self.fire_timer.stop()
-    
+
     # Explode
     self.emit_signal("exploded")
     self.call_deferred("_disable_collisions")
@@ -108,15 +106,15 @@ func _explode():
     self.animation_player.play("explode")
     yield(self.animation_player, "animation_finished")
     self.queue_free()
-    
+
 func _disable_collisions():
-    self.collision_shape.disabled = true    
+    self.collision_shape.disabled = true
 
 #################
 # Event callbacks
 
 func _on_FireTimer_timeout():
     self.firing = not self.firing
-    
+
 func _on_BulletSystem_fire(bullet, pos, speed, type, target, automatic):
     self.emit_signal("fire", bullet, pos, speed, type, target, automatic)

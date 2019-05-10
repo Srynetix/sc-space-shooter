@@ -9,7 +9,7 @@ onready var timer = $Timer
 func _ready():
     self.timer.connect("timeout", self, "_on_Timer_timeout")
     self.particles.emitting = true
-    
+
 #################
 # Event callbacks
 

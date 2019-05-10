@@ -22,12 +22,12 @@ var signals = {}
 func _ready():
     self.timer.wait_time = self.frequency
     self.timer.connect("timeout", self, "_on_Timer_timeout")
-    
+
     if self.time_offset > 0:
         yield(get_tree().create_timer(self.time_offset), "timeout")
-        
+
     self.timer.start()
-    
+
 ################
 # Public methods
 
@@ -40,24 +40,24 @@ func reset():
     """Reset spawner."""
     self.disabled = false
     self.timer.start()
-    
+
 func disable():
     """Disable spawner."""
     self.disabled = true
-    
+
 func set_frequency(freq):
     """
     Set spawner frequency.
-    
+
     :param freq:    Frequency
     """
     self.frequency = freq
     self.timer.wait_time = freq
-    
+
 func spawn_at_position(pos):
     """
     Spawn at position.
-    
+
     :param pos: Position
     """
     var inst = self.element.instance()
@@ -68,7 +68,7 @@ func spawn_at_position(pos):
         inst.connect(signal_name, self.parent_scene, fn_name)
 
     self.elements.add_child(inst)
-    
+
 func spawn():
     """
     Spawn element.
@@ -78,12 +78,12 @@ func spawn():
     var max_pos = game_size.x - game_size.x / 4
     var pos = Vector2(int(rand_range(min_pos, max_pos)), -50)
     self.spawn_at_position(pos)
-    
+
 #################
 # Event callbacks
 
 func _on_Timer_timeout():
     if self.disabled:
         return
-        
+
     self.spawn()

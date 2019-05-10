@@ -28,7 +28,7 @@ var base_speed = 0
 func _ready():
     self.connect("area_entered", self, "_on_area_entered")
     self.visibility_notifier.connect("screen_exited", self, "_on_VisibilityNotifier2D_screen_exited")
-    
+
     # Prepare for player target
     if self.bullet_target == BulletTarget.Player:
         self.sprite.texture = EnemyBulletSprite
@@ -38,19 +38,19 @@ func _ready():
         self.set_collision_mask_bit(2, false)
         self.set_collision_mask_bit(4, false)
         self.set_collision_mask_bit(0, true)
-        
+
     if self.bullet_automatic:
         self._handle_automatic_mode()
-    
+
     if self.bullet_type == BulletType.Laser:
         self.sprite.scale *= 3
         self.trail.scale *= 3
-    
+
     elif self.bullet_type == BulletType.SlowFast:
         self.velocity /= Vector2(6, 6)
         self.slow_timer.start()
         yield(self.slow_timer, "timeout")
-        self._handle_automatic_mode()        
+        self._handle_automatic_mode()
         self.velocity *= Vector2(1.5, 1.5)
 
 func _process(delta):
@@ -62,7 +62,7 @@ func _process(delta):
 func prepare(pos, speed, type, target, automatic):
     """
     Prepare bullet.
-    
+
     :param pos:     Position
     :param speed:   Y Speed
     :param type:    Bullet type
@@ -72,12 +72,12 @@ func prepare(pos, speed, type, target, automatic):
     self.bullet_target = target
     self.bullet_automatic = automatic
     self.base_speed = speed
-    
+
     if target == BulletTarget.Player:
         self.velocity = Vector2(0, speed)
     else:
         self.velocity = Vector2(0, -speed)
-        
+
     self.bullet_type = type
 
 #################
@@ -99,7 +99,7 @@ func _rotate_to_target(target):
     self.rotation = angle
     self.trail.process_material.angle = 360 - rad2deg(angle)
     self.velocity = direction * self.base_speed
-    
+
 #################
 # Event callbacks
 
@@ -112,10 +112,10 @@ func _on_area_entered(area):
         var sparkles = Sparkles.instance()
         sparkles.position = sparkles_position
         sparkles.z_index = 10
-        
+
         # Add child
         self.get_parent().add_child(sparkles)
-        
+
         area.hit()
-        
+
     self.queue_free()

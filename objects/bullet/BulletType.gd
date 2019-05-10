@@ -10,7 +10,7 @@ enum BulletType {
     Triple,
     # Laser bullets
     Laser,
-    
+
     # Slow/Fast bullets
     SlowFast,
 }

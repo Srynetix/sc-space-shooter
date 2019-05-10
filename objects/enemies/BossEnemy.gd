@@ -23,7 +23,7 @@ func _ready():
 func prepare(pos, speed, scl):
     """
     Prepare boss enemy.
-    
+
     :param pos:     Position
     :param speed:   Y Speed
     :param scl:     Scale
@@ -33,27 +33,27 @@ func prepare(pos, speed, scl):
     self.move_speed *= 1.5
     self.scale = Vector2(scl * 2, scl * 2)
     self.velocity = Vector2(self.move_speed, self.down_speed)
-    
+
     # Calculate hit points based on scale factor
     self.hit_points = int(ceil(scl * BOSS_BASE_HIT_POINTS))
-    
+
 #################
 # Private methods
 
 func _move(delta):
     self.acc += delta
     self.position += self.velocity * Vector2(delta, delta) * Vector2(cos(self.acc), 1)
-    
+
     self.velocity.y *= 0.992
     if self.velocity.y <= 0.01:
         self.velocity.y = 0
- 
+
     if self.firing:
         self.bullet_system.fire(self.muzzle.global_position)
-    
+
     if self.position.y > self.screen_size.y:
         self.queue_free()
-        
+
 #################
 # Event callbacks
 
