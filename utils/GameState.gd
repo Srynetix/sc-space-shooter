@@ -57,11 +57,6 @@ func load_screen(screen):
 
 # State update methods
 
-func reset_state_values():
-    """Reset state values."""
-    self.score = 0
-    self.lives = 5
-
 func add_score(value):
     """
     Add value to score.
@@ -77,6 +72,11 @@ func remove_life():
 func add_life():
     """Add a life."""
     self.lives = self.lives + 1
+
+func reset_game_state():
+    """Reset game state."""
+    self.lives = 3
+    self.score = 0
 
 func update_hud(hud):
     """

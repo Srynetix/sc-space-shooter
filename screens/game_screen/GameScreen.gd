@@ -41,6 +41,7 @@ func _ready():
     self.wave_system.connect("timeout", self, "_on_WaveSystem_timeout")
     self.life_spawner.disabled = true
 
+    GameState.reset_game_state()
     GameState.update_hud(self.hud)
 
     self._load_next_wave()
@@ -97,13 +98,13 @@ func _on_fire(bullet, pos, speed, type, target, automatic):
 
 func _on_Player_dead():
     var lives = GameState.lives
-    if lives > 0:
+    if lives > 1:
         GameState.remove_life()
         GameState.update_hud(self.hud)
         lives = GameState.lives
 
         self.player.respawn()
-        if lives == 0:
+        if lives == 1:
             self.hud.show_message("LAST LIFE !")
     else:
         GameState.load_screen(GameState.Screens.GAMEOVER)
