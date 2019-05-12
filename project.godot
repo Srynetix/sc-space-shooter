@@ -83,6 +83,10 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_5="enemies"
 2d_physics/layer_6="enemybullets"
 
+[locale]
+
+translations=PoolStringArray( "res://locales/translations.en.translation", "res://locales/translations.fr.translation" )
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

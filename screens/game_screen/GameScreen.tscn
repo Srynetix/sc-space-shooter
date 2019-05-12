@@ -123,7 +123,5 @@ autoplay = true
 bus = "Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 12 )]
-
