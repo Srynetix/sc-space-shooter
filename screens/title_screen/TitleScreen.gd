@@ -7,7 +7,7 @@ onready var instructions = $Instructions
 onready var animation_player = $AnimationPlayer
 onready var high_score = $VBoxContainer/HSValue
 onready var sound = $Sound
-onready var version = $Version
+onready var version = $MarginContainer/Version
 
 var instructions_loaded = false
 
