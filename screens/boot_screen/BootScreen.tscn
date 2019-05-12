@@ -48,4 +48,3 @@ text = "Loading ..."
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "show"
 anims/show = SubResource( 2 )
-
