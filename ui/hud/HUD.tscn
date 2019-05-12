@@ -65,59 +65,59 @@ margin_right = 580.0
 margin_bottom = 880.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 189.0
+margin_right = 192.0
 margin_bottom = 860.0
 size_flags_horizontal = 3
 
 [node name="ScoreText" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-margin_right = 189.0
+margin_right = 192.0
 margin_bottom = 44.0
 custom_fonts/font = SubResource( 1 )
-text = "Score"
+text = "SCORE"
 
 [node name="ScoreValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 48.0
-margin_right = 189.0
+margin_right = 192.0
 margin_bottom = 87.0
 custom_fonts/font = SubResource( 2 )
 text = "0"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 193.0
-margin_right = 367.0
+margin_left = 196.0
+margin_right = 364.0
 margin_bottom = 860.0
 
 [node name="HighText" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
-margin_right = 174.0
+margin_right = 168.0
 margin_bottom = 27.0
 custom_fonts/font = SubResource( 3 )
-text = "HIGH SCORE"
+text = "HIGHSCORE"
 align = 1
 
 [node name="HighValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 31.0
-margin_right = 174.0
+margin_right = 168.0
 margin_bottom = 49.0
 custom_fonts/font = SubResource( 4 )
 text = "[SCORE]"
 align = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 371.0
+margin_left = 368.0
 margin_right = 560.0
 margin_bottom = 860.0
 size_flags_horizontal = 3
 
 [node name="LivesText" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
-margin_right = 189.0
+margin_right = 192.0
 margin_bottom = 44.0
 custom_fonts/font = SubResource( 5 )
-text = "Lives"
+text = "LIVES"
 align = 2
 
 [node name="LivesValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_top = 48.0
-margin_right = 189.0
+margin_right = 192.0
 margin_bottom = 84.0
 custom_fonts/font = SubResource( 6 )
 text = "0"
@@ -142,4 +142,3 @@ valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/message = SubResource( 8 )
-

@@ -65,7 +65,7 @@ func _load_next_wave():
     self.enemy_spawner.reset()
     self.powerup_spawner.reset()
 
-    self.hud.show_message("Wave {w}".format({"w": self.wave_system.current_wave}))
+    self.hud.show_message(tr("WAVE") + " " +str(self.wave_system.current_wave))
 
 func _load_boss():
     self.rock_spawner.disabled = true
@@ -74,7 +74,7 @@ func _load_boss():
     var screen_size = Utils.get_game_size()
 
     self.animation_player.play("warning")
-    self.hud.show_message("WARNING !")
+    self.hud.show_message(tr("WARNING"))
 
     self.alarm.play()
     yield(get_tree().create_timer(1), "timeout")
@@ -105,7 +105,7 @@ func _on_Player_dead():
 
         self.player.respawn()
         if lives == 1:
-            self.hud.show_message("LAST LIFE !")
+            self.hud.show_message(tr("LASTLIFE"))
     else:
         GameState.load_screen(GameState.Screens.GAMEOVER)
 

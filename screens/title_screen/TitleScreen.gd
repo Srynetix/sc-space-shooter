@@ -16,12 +16,12 @@ var instructions_loaded = false
 
 func _ready():
     if Utils.is_mobile_platform():
-        self.instructions.text = "Touch to start"
+        self.instructions.text = tr("TITLE_START_MOBILE")
     else:
-        self.instructions.text = "Press X to start"
+        self.instructions.text = tr("TITLE_START_DESKTOP")
 
     # Set version
-    self.version.text = "Version " + GameState.get_version_number()
+    self.version.text = tr("VERSION") + " " + GameState.get_version_number()
 
     var high_score_entry = GameState.get_high_score()
     self.high_score.text = "{name} {score}".format({"name": high_score_entry[0], "score": high_score_entry[1]})
