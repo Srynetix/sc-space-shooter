@@ -11,6 +11,7 @@ onready var hud = $CanvasLayer/HUD
 onready var animation_player = $AnimationPlayer
 onready var wave_system = $WaveSystem
 onready var alarm = $Alarm
+onready var camera = $FXCamera
 
 onready var rock_spawner = $Spawners/RockSpawner
 onready var powerup_spawner = $Spawners/PowerupSpawner
@@ -21,6 +22,8 @@ onready var life_spawner = $Spawners/LifePowerupSpawner
 # Lifecycle methods
 
 func _ready():
+    VisualServer.set_default_clear_color(Color(0.0, 0.0, 0.0, 1.0))
+
     self.player.connect("fire", self, "_on_fire")
     self.player.connect("dead", self, "_on_Player_dead")
 
@@ -97,6 +100,7 @@ func _on_fire(bullet, pos, speed, type, target, automatic):
     self.bullets.add_child(inst)
 
 func _on_Player_dead():
+    camera.shake()
     var lives = GameState.lives
     if lives > 1:
         GameState.remove_life()
@@ -120,6 +124,7 @@ func _on_Enemy_exploded():
 func _on_Boss_exploded():
     GameState.add_score(2000 * self.wave_system.current_wave)
     GameState.update_hud(self.hud)
+    camera.shake()
 
     var game_size = Utils.get_game_size()
     self.life_spawner.spawn_at_position(Vector2(game_size.x / 2, -50))

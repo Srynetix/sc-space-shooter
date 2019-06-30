@@ -114,8 +114,8 @@ func _set_state(new_state):
             State.DEAD:
                 self.collision_shape.set_deferred("disabled", true)
                 self.animation_player.play("explode")
-                yield(self.animation_player, "animation_finished")
                 self.emit_signal("dead")
+                yield(self.animation_player, "animation_finished")
             State.IDLE:
                 self.collision_shape.set_deferred("disabled", false)
                 self.animation_player.play("idle")
