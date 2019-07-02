@@ -22,10 +22,9 @@ onready var life_spawner = $Spawners/LifePowerupSpawner
 # Lifecycle methods
 
 func _ready():
-    VisualServer.set_default_clear_color(Color(0.0, 0.0, 0.0, 1.0))
-
     self.player.connect("fire", self, "_on_fire")
     self.player.connect("dead", self, "_on_Player_dead")
+    self.player.connect("respawn", self, "_on_Player_respawn")
 
     self.rock_spawner.connect_target_scene(self, {
         "exploded": "_on_Rock_exploded"
@@ -101,6 +100,8 @@ func _on_fire(bullet, pos, speed, type, target, automatic):
 
 func _on_Player_dead():
     camera.shake()
+
+func _on_Player_respawn():
     var lives = GameState.lives
     if lives > 1:
         GameState.remove_life()

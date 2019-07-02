@@ -53,3 +53,4 @@ custom_fonts/font = SubResource( 2 )
 text = "[TEST]"
 align = 2
 valign = 1
+

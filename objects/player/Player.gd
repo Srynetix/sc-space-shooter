@@ -7,6 +7,8 @@ extends Area2D
 signal fire(bullet, pos, speed, type, target, automatic)
 # Sent when dead
 signal dead
+# Sent when respawn
+signal respawn
 
 # Player state
 enum State {
@@ -116,6 +118,7 @@ func _set_state(new_state):
                 self.animation_player.play("explode")
                 self.emit_signal("dead")
                 yield(self.animation_player, "animation_finished")
+                self.emit_signal("respawn")
             State.IDLE:
                 self.collision_shape.set_deferred("disabled", false)
                 self.animation_player.play("idle")

@@ -9,7 +9,7 @@ func _ready():
     var screen_size = Utils.get_game_size()
 
     self.player.connect("fire", self, "_on_fire")
-    self.player.connect("dead", self, "_on_Player_dead")
+    self.player.connect("respawn", self, "_on_Player_respawn")
 
     var boss_inst = BossModel.instance()
     boss_inst.connect("fire", self, "_on_fire")
@@ -21,5 +21,5 @@ func _on_fire(bullet, pos, speed, type, target, automatic):
     inst.prepare(pos, speed, type, target, automatic)
     self.add_child(inst)
 
-func _on_Player_dead():
+func _on_Player_respawn():
     self.player.respawn()

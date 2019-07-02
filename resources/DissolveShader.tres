@@ -1,0 +1,42 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+resource_local_to_scene = true
+resource_name = "Dissolve"
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform sampler2D noise;
+uniform float dissolution_level: hint_range(0, 1) = 0.0;
+uniform float edge_width: hint_range(0, 1) = 0.0;
+uniform vec4 edge_color1: hint_color = vec4(1, 1, 1, 1);
+uniform vec4 edge_color2: hint_color = vec4(1, 1, 1, 1);
+
+void fragment() {
+    float cutout = texture(noise, UV.xy).r;
+    vec4 color = texture(TEXTURE, UV.xy);
+    
+    if (cutout < dissolution_level) {
+       discard;
+    }
+    
+    if (cutout < color.a && cutout < dissolution_level + edge_width) {
+       color = mix(edge_color1, edge_color2, (cutout - dissolution_level) / edge_width);
+    }
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+resource_local_to_scene = true
+noise = SubResource( 2 )
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/dissolution_level = 0.0
+shader_param/edge_width = 0.0
+shader_param/edge_color1 = Color( 1, 1, 1, 1 )
+shader_param/edge_color2 = Color( 1, 1, 1, 1 )
+shader_param/noise = SubResource( 3 )
+
