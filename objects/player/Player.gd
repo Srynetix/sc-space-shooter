@@ -17,8 +17,6 @@ enum State {
     DEAD
 }
 
-const TOUCH_OFFSET = Vector2(0, -100)
-
 export (Vector2) var move_speed = Vector2(500, 500)
 export (float) var damping = 0.9
 export (float) var spawning_time = 3
@@ -36,6 +34,7 @@ var state = State.IDLE
 
 var is_touching = false
 var last_touch_position = Vector2()
+var touch_distance = 0
 
 ###################
 # Lifecycle methods
@@ -64,7 +63,7 @@ func _process(delta):
 
     if self.is_touching:
         self.velocity = Vector2()
-        self.position = self.last_touch_position + TOUCH_OFFSET
+        self.position = self.last_touch_position + self.touch_distance
 
     # Handle fire
     self._handle_fire()
@@ -77,6 +76,7 @@ func _input(event):
     if event is InputEventScreenTouch:
         self.last_touch_position = event.position
         self.is_touching = event.pressed
+        self.touch_distance = self.position - event.position
 
         # Screen released
         if not event.pressed:
