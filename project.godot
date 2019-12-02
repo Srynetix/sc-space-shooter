@@ -8,10 +8,10 @@
 
 config_version=4
 
-_global_script_classes=[  ]
 _global_script_class_icons={
 
 }
+_global_script_classes=[  ]
 
 [application]
 
@@ -25,13 +25,21 @@ config/quit_on_go_back=false
 
 [autoload]
 
-Transition="*res://utils/Transition.tscn"
 GameState="*res://utils/GameState.gd"
+Transition="*res://utils/Transition.tscn"
 Utils="*res://utils/Utils.gd"
 
 [debug]
 
 gdscript/warnings/return_value_discarded=false
+
+[dependencies]
+
+scenerunner={
+"name": "scenerunner",
+"source": "git@github.com:Srynetix/godot-plugin-scenerunner",
+"version": "1.0.0"
+}
 
 [display]
 
@@ -42,13 +50,12 @@ window/handheld/orientation="portrait"
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 
+[engine]
+
+version="3.2beta2"
+
 [input]
 
-player_up={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
- ]
-}
 player_down={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
@@ -67,6 +74,11 @@ player_right={
 player_shoot={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
  ]
 }
 

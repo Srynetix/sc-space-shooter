@@ -99,4 +99,3 @@ bus = "Music"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 13 )]
-

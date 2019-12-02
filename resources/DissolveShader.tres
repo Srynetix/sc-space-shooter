@@ -39,4 +39,3 @@ shader_param/edge_width = 0.0
 shader_param/edge_color1 = Color( 1, 1, 1, 1 )
 shader_param/edge_color2 = Color( 1, 1, 1, 1 )
 shader_param/noise = SubResource( 3 )
-

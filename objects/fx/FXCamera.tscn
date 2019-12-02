@@ -42,4 +42,3 @@ drag_margin_v_enabled = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/shake = SubResource( 1 )
-

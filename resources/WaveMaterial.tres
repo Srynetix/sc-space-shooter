@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+// render_mode unshaded;
+render_mode blend_add, unshaded;
+
+uniform vec2 resolution;
+uniform sampler2D noise;
+uniform float radius: hint_range(0, 1) = 0.5;
+uniform float border: hint_range(0.01, 0.2) = 0.01;
+
+float aa_circle(vec2 _st, float _radius, float _border) {
+    vec2 center = vec2(0.5);
+    float dist = length(_st - center);
+    float t = 1.0 + smoothstep(_radius, _radius + _border, dist) - smoothstep(_radius - _border, _radius, dist);
+    
+    return 1.0 - t;
+}
+
+void fragment() {
+    vec4 noise_uv = texture(noise, UV);
+    vec3 color = vec3(aa_circle(UV, radius, border));    
+    COLOR = vec4(color, 1.0);
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+noise = SubResource( 2 )
+
+[resource]
+shader = SubResource( 1 )
+shader_param/resolution = Vector2( 512, 512 )
+shader_param/radius = 0.0
+shader_param/border = 0.01
+shader_param/noise = SubResource( 3 )
+

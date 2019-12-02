@@ -49,4 +49,3 @@ rotation = 1.5708
 amount = 48
 lifetime = 2.0
 process_material = SubResource( 5 )
-

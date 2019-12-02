@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://tests/TestBullets.gd" type="Script" id=1]
+[ext_resource path="res://tests/scenes/TestBullets.gd" type="Script" id=1]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=2]
+
 
 [node name="TestBullets" type="Node2D"]
 position = Vector2( -15.1155, 2.51926 )
@@ -19,4 +20,3 @@ bullet_target = 1
 [node name="LaserBullets" parent="." instance=ExtResource( 2 )]
 position = Vector2( 319.945, 433.312 )
 bullet_type = 3
-
