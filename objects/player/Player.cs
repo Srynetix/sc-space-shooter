@@ -9,7 +9,7 @@ public class Player : Area2D, IHittable {
     }
     
     // Signals
-    [Signal] public delegate void fire(Bullet bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
+    [Signal] public delegate void fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
     [Signal] public delegate void dead();
     [Signal] public delegate void respawn();
    
@@ -178,7 +178,7 @@ public class Player : Area2D, IHittable {
         }
     }
     
-    private void _On_BulletSystem_Fire(Bullet bullet, Vector2 pos, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        EmitSignal("fire", bullet, pos, bulletType, bulletTarget, automatic);
+    private void _On_BulletSystem_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
+        EmitSignal("fire", bullet, speed, pos, bulletType, bulletTarget, automatic);
     }
 }

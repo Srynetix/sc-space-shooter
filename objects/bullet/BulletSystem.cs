@@ -3,7 +3,7 @@ using Godot;
 public class BulletSystem : Node2D
 {
     // Signals
-    [Signal] public delegate void fire(Bullet bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
+    [Signal] public delegate void fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
     
     // Exports
     [Export] public float fireCooldown = 0.2f;

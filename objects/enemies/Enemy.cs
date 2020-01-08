@@ -4,7 +4,7 @@ public class Enemy : Area2D, IHittable, IPreparable
 {
     // Signals
     [Signal] public delegate void exploded();
-    [Signal] public delegate void fire(Bullet bullet, Vector2 pos, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
+    [Signal] public delegate void fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
     
     // Constants
     public const int BASE_HIT_POINTS = 5;
@@ -115,7 +115,7 @@ public class Enemy : Area2D, IHittable, IPreparable
         isFiring = !isFiring;
     }
     
-    private void _On_BulletSystem_Fire(Bullet bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
+    private void _On_BulletSystem_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
         EmitSignal("fire", bullet, pos, speed, bulletType, bulletTarget, automatic);
     }
 }

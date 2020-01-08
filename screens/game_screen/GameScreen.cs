@@ -10,7 +10,7 @@ public class GameScreen : Control
     private HUD hud;
     private AnimationPlayer animationPlayer;
     private WaveSystem waveSystem;
-    private AudioStreamPlayer2D alarm;
+    private AudioStreamPlayer alarm;
     private FXCamera camera;
     private Spawner rockSpawner;
     private Spawner powerupSpawner;
@@ -25,7 +25,7 @@ public class GameScreen : Control
         hud = GetNode<HUD>("CanvasLayer/HUD");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         waveSystem = GetNode<WaveSystem>("WaveSystem");
-        alarm = GetNode<AudioStreamPlayer2D>("Alarm");
+        alarm = GetNode<AudioStreamPlayer>("Alarm");
         camera = GetNode<FXCamera>("FXCamera");
         rockSpawner = GetNode<Spawner>("Spawners/RockSpawner");
         powerupSpawner = GetNode<Spawner>("Spawners/PowerupSpawner");
