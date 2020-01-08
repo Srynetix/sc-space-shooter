@@ -1,6 +1,6 @@
 using Godot;
 
-public class Rock : Area2D
+public class Rock : Area2D, IExplodable, IHittable, IPreparable
 {
     // On ready
     private Particles2D trail;

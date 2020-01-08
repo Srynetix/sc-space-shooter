@@ -1,6 +1,6 @@
 using Godot;
 
-public class Powerup : Area2D
+public class Powerup : Area2D, IPreparable
 {
     public enum PowerupType {
         Weapon,

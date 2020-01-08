@@ -1,6 +1,6 @@
 using Godot;
 
-public class Enemy : Area2D
+public class Enemy : Area2D, IHittable, IPreparable
 {
     // Signals
     [Signal] public delegate void exploded();

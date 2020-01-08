@@ -148,8 +148,8 @@ public class GameState : Node
     }
     
     private void _ChangeScene(String path, float transitionSpeed = 1.0f) {
-        Node transition = GetTree().Root.GetNode("Transition");
-        transition.Call("fade_to_scene", path, transitionSpeed);
+        var transition = GetTree().Root.GetNode<Transition>("Transition");
+        transition.FadeToScene(path, transitionSpeed);
     }
     
     private int _GetHighScorePos() {

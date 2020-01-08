@@ -55,6 +55,9 @@
   <ItemGroup>
     <Compile Include="objects\bullet\Bullet.cs" />
     <Compile Include="objects\bullet\BulletSystem.cs" />
+    <Compile Include="objects\common\IExplodable.cs" />
+    <Compile Include="objects\common\IHittable.cs" />
+    <Compile Include="objects\common\IPreparable.cs" />
     <Compile Include="objects\enemies\BossEnemy.cs" />
     <Compile Include="objects\enemies\Enemy.cs" />
     <Compile Include="objects\fx\FXCamera.cs" />

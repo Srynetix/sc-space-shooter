@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://screens/game_screen/GameScreen.gd" type="Script" id=1]
+[ext_resource path="res://screens/game_screen/GameScreen.cs" type="Script" id=1]
 [ext_resource path="res://objects/fx/FXCamera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/starfield/Starfield.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=4]
@@ -37,6 +37,9 @@ tracks/0/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FXCamera" parent="." instance=ExtResource( 2 )]
 
@@ -53,20 +56,16 @@ position = Vector2( 310.988, 834.589 )
 
 [node name="RockSpawner" parent="Spawners" instance=ExtResource( 5 )]
 speed = 300.0
-time_offset = 1.0
 element = ExtResource( 6 )
 
 [node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 12.0
 speed = 150.0
-time_offset = 1.0
-rand_scale = Vector2( 1, 1 )
 element = ExtResource( 7 )
 
 [node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 50.0
 speed = 250.0
-rand_scale = Vector2( 1, 1 )
 element = ExtResource( 8 )
 disabled = true
 

@@ -1,6 +1,6 @@
 using Godot;
 
-public class Player : Area2D {
+public class Player : Area2D, IHittable {
     
     public enum State {
         Idle,
@@ -171,7 +171,7 @@ public class Player : Area2D {
     
     private void _On_Area_Entered(Area2D area) {
         if (area.IsInGroup("rocks")) {
-            area.Call("Explode");
+            ((IExplodable)area).Explode();
             _SetState(State.Dead);
         } else if (area.IsInGroup("enemies")) {
             _SetState(State.Dead);

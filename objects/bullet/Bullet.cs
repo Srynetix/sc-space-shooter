@@ -119,7 +119,8 @@ public class Bullet : Area2D
             sparkles.ZIndex = 10;
             
             GetParent().AddChild(sparkles);
-            area.Call("Hit");
+            var hittable = (IHittable)area;
+            hittable.Hit();
         }
         
         QueueFree();

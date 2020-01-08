@@ -6,6 +6,6 @@ public class BootScreen : Control
     {
         GameState gameState = GetTree().Root.GetNode<GameState>("GameState");
         await ToSignal(GetTree().CreateTimer(1), "timeout");
-        gameState.LoadScreen(GameState.Screens.TITLE);   
+        gameState.LoadScreen(GameState.Screens.TITLE);
     }
 }

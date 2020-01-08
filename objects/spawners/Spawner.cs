@@ -58,7 +58,7 @@ public class Spawner : Node2D
     public void SpawnAtPosition(Vector2 pos) {
         var instance = element.Instance();
         
-        instance.Call("Prepare", pos, speed, GD.RandRange(randScale.x, randScale.y));
+        ((IPreparable)instance).Prepare(pos, speed, (float)GD.RandRange(randScale.x, randScale.y));
         
         foreach (string signalName in signals.Keys) {
             var fnName = (string)signals[signalName];
