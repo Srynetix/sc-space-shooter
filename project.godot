@@ -9,9 +9,14 @@
 config_version=4
 
 _global_script_class_icons={
-
+"Player": ""
 }
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://objects/player/Player.gd"
+} ]
 
 [application]
 
@@ -25,9 +30,9 @@ config/quit_on_go_back=false
 
 [autoload]
 
-GameState="*res://utils/GameState.gd"
+GameState="*res://utils/GameState.cs"
 Transition="*res://utils/Transition.tscn"
-Utils="*res://utils/Utils.gd"
+Utils="*res://utils/Utils.cs"
 
 [debug]
 
@@ -52,7 +57,7 @@ window/stretch/aspect="expand"
 
 [engine]
 
-version="3.2beta2"
+version="3.2beta5"
 
 [input]
 

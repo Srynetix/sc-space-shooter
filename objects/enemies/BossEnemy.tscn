@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/enemies/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://objects/enemies/BossEnemy.gd" type="Script" id=2]
+[ext_resource path="res://objects/enemies/BossEnemy.cs" type="Script" id=2]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.145098, 1, 1, 1, 0 )
@@ -18,19 +18,18 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color_ramp = SubResource( 2 )
 
-[node name="BossEnemy" index="0" instance=ExtResource( 1 )]
+[node name="BossEnemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-fire_time = 0.5
+fireTime = 0.5
 
 [node name="Trail" parent="." index="0"]
 process_material = SubResource( 3 )
 
 [node name="BulletSystem" parent="." index="7"]
-fire_cooldown = 0.1
-bullet_type = 2
-bullet_automatic = true
+fireCooldown = 0.1
+bulletType = 2
+bulletAutomatic = true
 
 [node name="WeaponSwap" type="Timer" parent="." index="8"]
 wait_time = 2.0
 autostart = true
-

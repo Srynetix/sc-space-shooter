@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://objects/fx/FXWave.gd" type="Script" id=1]
+[ext_resource path="res://objects/fx/FXWave.cs" type="Script" id=1]
 [ext_resource path="res://resources/WaveMaterial.tres" type="Material" id=2]
 [ext_resource path="res://assets/textures/white.png" type="Texture" id=3]
 
@@ -30,4 +30,3 @@ texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/wave = SubResource( 1 )
-

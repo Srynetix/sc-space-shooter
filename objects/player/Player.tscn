@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://objects/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://objects/player/Player.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=4]
@@ -274,7 +274,6 @@ explosiveness = 1.0
 process_material = SubResource( 17 )
 
 [node name="Timers" type="Node" parent="."]
-editor/display_folded = true
 
 [node name="SpawningTimer" type="Timer" parent="Timers"]
 

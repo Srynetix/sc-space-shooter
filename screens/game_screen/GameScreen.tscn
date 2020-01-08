@@ -50,7 +50,6 @@ position = Vector2( 310.988, 834.589 )
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Spawners" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="RockSpawner" parent="Spawners" instance=ExtResource( 5 )]
 speed = 300.0
