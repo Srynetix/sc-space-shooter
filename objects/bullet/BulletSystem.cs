@@ -7,7 +7,7 @@ public class BulletSystem : Node2D
     
     // Exports
     [Export] public float fireCooldown = 0.2f;
-    [Export] public float fireSpeed = 1000.0f;
+    [Export] public float fireSpeed = 500.0f;
     [Export] public PackedScene bulletModel = null;
     [Export] public Bullet.BulletType bulletType = Bullet.BulletType.Simple;
     [Export] public Bullet.BulletTarget bulletTarget = Bullet.BulletTarget.Enemy;

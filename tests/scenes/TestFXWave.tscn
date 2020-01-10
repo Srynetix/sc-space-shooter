@@ -12,6 +12,9 @@ noise = SubResource( 1 )
 [node name="TestFXWave" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 298.963, 450.949 )
@@ -20,4 +23,3 @@ texture = SubResource( 2 )
 
 [node name="FXWave" parent="." instance=ExtResource( 1 )]
 position = Vector2( 296.394, 447.171 )
-

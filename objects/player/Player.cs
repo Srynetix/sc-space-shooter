@@ -138,6 +138,8 @@ public class Player : Area2D, IHittable {
                 animationPlayer.Play("spawning");
                 break;
         }
+        
+        state = newState;
     }
     
     private Vector2 _HandleMovement() {
@@ -179,6 +181,6 @@ public class Player : Area2D, IHittable {
     }
     
     private void _On_BulletSystem_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        EmitSignal("fire", bullet, speed, pos, bulletType, bulletTarget, automatic);
+        EmitSignal("fire", bullet, pos, speed, bulletType, bulletTarget, automatic);
     }
 }

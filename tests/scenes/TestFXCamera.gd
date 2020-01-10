@@ -7,4 +7,4 @@ func _ready():
     timer.connect("timeout", self, "_on_timeout")
 
 func _on_timeout():
-    camera.shake()
+    camera.Shake()

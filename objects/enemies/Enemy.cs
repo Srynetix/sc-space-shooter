@@ -50,7 +50,10 @@ public class Enemy : Area2D, IHittable, IPreparable
     }
     
     public override void _Process(float delta) {
+        acc += delta;
+    
         _Move(delta);
+        _HandleState();
     }
     
     public virtual void Prepare(Vector2 pos, float speed, float scale) {
@@ -99,9 +102,10 @@ public class Enemy : Area2D, IHittable, IPreparable
     }
     
     protected virtual void _Move(float delta) {
-        acc += delta;
         Position += new Vector2(moveSpeed, downSpeed) * delta * new Vector2(Mathf.Cos(acc), 1);
-     
+    }
+    
+    private void _HandleState() {
         if (isFiring) {
             bulletSystem.Fire(muzzle.GlobalPosition);
         }

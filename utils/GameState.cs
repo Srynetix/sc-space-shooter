@@ -27,7 +27,7 @@ public class GameState : Node
         {Screens.TITLE, "res://screens/title_screen/TitleScreen.tscn"},
         {Screens.GAME, "res://screens/game_screen/GameScreen.tscn"},
         {Screens.GAMEOVER, "res://screens/game_over_screen/GameOverScreen.tscn"},
-        {Screens.SCORE, "res://screens/score_scree,/ScoreScreen.tscn"},
+        {Screens.SCORE, "res://screens/score_screen/ScoreScreen.tscn"},
     };
     
     private int score = 0;
@@ -122,9 +122,6 @@ public class GameState : Node
             gameSave = _LoadEmptyGameSave();
         }
         
-        GD.Print("Loading save:");
-        GD.Print(gameSave);
-            
         return gameSave;
     }
     

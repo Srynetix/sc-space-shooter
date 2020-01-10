@@ -89,6 +89,10 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
         } else if (Position.x < xScreenLimits.x) {
             Position = new Vector2(xScreenLimits.y, Position.y);
         }
+        
+        if (Position.y - sprite.Texture.GetSize().y > gameSize.y) {
+            QueueFree();
+        }
     }
     
     private void _CacheLimits() {

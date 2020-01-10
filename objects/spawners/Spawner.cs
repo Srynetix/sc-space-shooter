@@ -6,7 +6,7 @@ public class Spawner : Node2D
 {
     // On ready
     private Timer timer;
-    private Node elements;
+    private Node2D elements;
     
     // Exports
     [Export] public float frequency = 2.0f;
@@ -24,7 +24,7 @@ public class Spawner : Node2D
     {
         // On ready
         timer = GetNode<Timer>("Timer");
-        elements = GetNode<Node>("Elements");
+        elements = GetNode<Node2D>("Elements");
         
         timer.WaitTime = frequency;
         timer.Connect("timeout", this, nameof(_On_Timer_Timeout));
@@ -64,6 +64,8 @@ public class Spawner : Node2D
             var fnName = (string)signals[signalName];
             instance.Connect(signalName, parentScene, fnName);
         }
+        
+        elements.AddChild(instance);
     }
     
     public void Spawn() {
