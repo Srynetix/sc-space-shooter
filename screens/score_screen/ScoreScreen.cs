@@ -17,8 +17,8 @@ public class ScoreScreen : Control
         var highScoresStr = "";
         
         foreach (Array entry in highScores) {
-            var name = (String)entry[0];
-            var score = (int)(Single)entry[1];
+            var name = (string)entry[0];
+            var score = (int)entry[1];
             highScoresStr += $"{name} {score}\n";
         }
         

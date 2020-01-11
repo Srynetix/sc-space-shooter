@@ -15,14 +15,14 @@ public class GameState : Node
     }
     
     private const int MAX_HIGH_SCORES = 5;
-    private const String YOUR_NAME = "YOU";
+    private const string YOUR_NAME = "YOU";
     
     private Array DEFAULT_HIGH_SCORES = new Array {
         new Array { "ZZZ", 30000 },
         new Array { "AAA", 10000 },
         new Array { "BBB", 7000 }
     };
-    private Dictionary<Screens, String> SCREEN_MAP = new Dictionary<Screens, String> {
+    private Dictionary<Screens, string> SCREEN_MAP = new Dictionary<Screens, string> {
         {Screens.BOOT, "res://screens/boot_screen/BootScreen.tscn"},
         {Screens.TITLE, "res://screens/title_screen/TitleScreen.tscn"},
         {Screens.GAME, "res://screens/game_screen/GameScreen.tscn"},
@@ -65,14 +65,14 @@ public class GameState : Node
         Array highScore = GetHighScore();
         hud.UpdateScore(score);
         hud.UpdateLives(lives);
-        hud.UpdateHighScore((String)highScore[0], (int)(Single)highScore[1]);
+        hud.UpdateHighScore((string)highScore[0], (int)highScore[1]);
     }
     
     public Array GetHighScore() {
         var highScores = GetHighScores();
         var firstScore = (Array)highScores[0];
         
-        if (score > (int)(Single)firstScore[1]) {
+        if (score > (int)firstScore[1]) {
             return new Array { YOUR_NAME, score };
         } else {
             return firstScore;
@@ -114,6 +114,15 @@ public class GameState : Node
                 continue;
             
             gameSave = currentLine;
+            
+            // Handle game save
+            var loadedScores = (Array)gameSave["high_scores"];
+            var newScores = new Array();
+            foreach (Array entry in loadedScores) {
+                newScores.Add(new Array { (string)entry[0], (int)(float)entry[1] } );
+            }
+            gameSave["high_scores"] = newScores;
+            
             break;
         }
         file.Close();
@@ -144,7 +153,7 @@ public class GameState : Node
         };
     }
     
-    private void _ChangeScene(String path, float transitionSpeed = 1.0f) {
+    private void _ChangeScene(string path, float transitionSpeed = 1.0f) {
         var transition = GetTree().Root.GetNode<Transition>("Transition");
         transition.FadeToScene(path, transitionSpeed);
     }
@@ -152,7 +161,7 @@ public class GameState : Node
     private int _GetHighScorePos() {
         int idx = 0;
         foreach (Array entry in highScores) {
-            int highScore = (int)(Single)entry[1];
+            int highScore = (int)entry[1];
             if (score > highScore) {
                 return idx;
             }
