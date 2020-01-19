@@ -6,6 +6,7 @@
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=4]
 
 
+
 [node name="TestFXCamera" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0

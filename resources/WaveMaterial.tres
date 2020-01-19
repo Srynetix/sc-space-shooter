@@ -35,4 +35,3 @@ shader_param/resolution = Vector2( 512, 512 )
 shader_param/radius = 0.0
 shader_param/border = 0.01
 shader_param/noise = SubResource( 3 )
-

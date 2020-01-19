@@ -25,9 +25,10 @@ config/quit_on_go_back=false
 
 [autoload]
 
-GameState="*res://utils/GameState.gd"
+Debug="*res://ui/debug/Debug.tscn"
+GameState="*res://utils/GameState.cs"
 Transition="*res://utils/Transition.tscn"
-Utils="*res://utils/Utils.gd"
+Utils="*res://utils/Utils.cs"
 
 [debug]
 
@@ -43,16 +44,15 @@ scenerunner={
 
 [display]
 
-window/size/width=600
-window/size/height=900
-window/size/resizable=false
+window/size/width=540
+window/size/height=960
 window/handheld/orientation="portrait"
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
 [engine]
 
-version="3.2beta2"
+version="3.2rc1"
 
 [input]
 
@@ -101,4 +101,5 @@ translations=PoolStringArray( "res://locales/translations.en.translation", "res:
 
 [rendering]
 
+quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"

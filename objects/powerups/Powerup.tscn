@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://objects/powerups/Powerup.gd" type="Script" id=1]
+[ext_resource path="res://objects/powerups/Powerup.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/powerupRed_bolt.png" type="Texture" id=2]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=3]
 
@@ -27,7 +27,7 @@ flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 30.0
-angular_velocity = 1.64205e+035
+angular_velocity = 1.64205e+35
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 50.0
@@ -119,4 +119,3 @@ anims/idle = SubResource( 8 )
 stream = ExtResource( 3 )
 volume_db = -20.0
 pitch_scale = 1.5
-

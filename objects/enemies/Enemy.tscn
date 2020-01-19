@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://objects/enemies/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://objects/enemies/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemyBlack1.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=4]
@@ -149,15 +149,15 @@ anims/idle = SubResource( 11 )
 anims/tint = SubResource( 12 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 1.52588e-005, 41.7735 )
+position = Vector2( 1.52588e-05, 41.7735 )
 
 [node name="FireTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="BulletSystem" parent="." instance=ExtResource( 4 )]
-fire_cooldown = 0.15
-fire_speed = 600.0
-bullet_target = 1
+fireCooldown = 0.15
+fireSpeed = 600.0
+bulletTarget = 1
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )

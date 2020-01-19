@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://objects/bullet/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://objects/bullet/Bullet.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/laserBlue06.png" type="Texture" id=2]
 
 [sub_resource type="Gradient" id=1]
@@ -13,7 +13,6 @@ gradient = SubResource( 1 )
 resource_local_to_scene = true
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
-angular_velocity = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color_ramp = SubResource( 2 )
@@ -54,4 +53,3 @@ shape = SubResource( 5 )
 [node name="SlowTimer" type="Timer" parent="."]
 wait_time = 0.75
 one_shot = true
-

@@ -1,36 +1,78 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://objects/enemies/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://objects/enemies/BossEnemy.gd" type="Script" id=2]
+[ext_resource path="res://objects/enemies/BossEnemy.cs" type="Script" id=2]
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 1, 1, 0.145098, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=5]
 resource_local_to_scene = true
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 angular_velocity = 1.05
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-color_ramp = SubResource( 2 )
+color_ramp = SubResource( 4 )
 
-[node name="BossEnemy" index="0" instance=ExtResource( 1 )]
+[sub_resource type="Shader" id=6]
+resource_local_to_scene = true
+resource_name = "Dissolve"
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform sampler2D noise;
+uniform float dissolution_level: hint_range(0, 1) = 0.0;
+uniform float edge_width: hint_range(0, 1) = 0.0;
+uniform vec4 edge_color1: hint_color = vec4(1, 1, 1, 1);
+uniform vec4 edge_color2: hint_color = vec4(1, 1, 1, 1);
+
+void fragment() {
+    float cutout = texture(noise, UV.xy).r;
+    vec4 color = texture(TEXTURE, UV.xy);
+    
+    if (cutout < dissolution_level) {
+       discard;
+    }
+    
+    if (cutout < color.a && cutout < dissolution_level + edge_width) {
+       color = mix(edge_color1, edge_color2, (cutout - dissolution_level) / edge_width);
+    }
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=7]
+resource_local_to_scene = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=8]
+resource_local_to_scene = true
+shader = SubResource( 6 )
+shader_param/dissolution_level = 0.0
+shader_param/edge_width = 0.0
+shader_param/edge_color1 = Color( 1, 1, 1, 1 )
+shader_param/edge_color2 = Color( 1, 1, 1, 1 )
+shader_param/noise = SubResource( 7 )
+
+[node name="BossEnemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-fire_time = 0.5
+fireTime = 0.5
 
 [node name="Trail" parent="." index="0"]
-process_material = SubResource( 3 )
+process_material = SubResource( 5 )
+
+[node name="Sprite" parent="." index="1"]
+material = SubResource( 8 )
 
 [node name="BulletSystem" parent="." index="7"]
-fire_cooldown = 0.1
-bullet_type = 2
-bullet_automatic = true
+fireCooldown = 0.1
+bulletType = 2
+bulletAutomatic = true
 
 [node name="WeaponSwap" type="Timer" parent="." index="8"]
 wait_time = 2.0
 autostart = true
-

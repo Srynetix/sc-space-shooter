@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://objects/rock/Rock.gd" type="Script" id=1]
+[ext_resource path="res://objects/rock/Rock.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/meteorGrey_big4.png" type="Texture" id=2]
 [ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=3]
 
@@ -58,7 +58,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2.79397e-007 ),
+"times": PoolRealArray( 0, 2.79397e-07 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, true ]

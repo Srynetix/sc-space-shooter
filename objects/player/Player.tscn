@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://objects/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://objects/player/Player.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=4]
@@ -234,6 +234,7 @@ collision_mask = 21
 script = ExtResource( 1 )
 
 [node name="Trail" type="Particles2D" parent="."]
+emitting = false
 amount = 5
 lifetime = 0.25
 speed_scale = 2.5
@@ -261,6 +262,7 @@ anims/spawning = SubResource( 7 )
 show_behind_parent = true
 position = Vector2( -0.736099, 20.9789 )
 rotation = 1.5708
+emitting = false
 amount = 40
 lifetime = 0.5
 process_material = SubResource( 12 )
@@ -274,7 +276,6 @@ explosiveness = 1.0
 process_material = SubResource( 17 )
 
 [node name="Timers" type="Node" parent="."]
-editor/display_folded = true
 
 [node name="SpawningTimer" type="Timer" parent="Timers"]
 

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Tools</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BF52FAC0-DEFA-400C-AB08-409EAB191B93}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <OutputPath>.mono\temp\bin\$(Configuration)</OutputPath>
+    <RootNamespace>SCSpaceShooter</RootNamespace>
+    <AssemblyName>SC Space Shooter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <GodotProjectGeneratorVersion>1.0.7307.26123</GodotProjectGeneratorVersion>
+    <BaseIntermediateOutputPath>.mono\temp\obj</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\$(Configuration)</IntermediateOutputPath>
+    <ApiConfiguration Condition=" '$(Configuration)' != 'Release' ">Debug</ApiConfiguration>
+    <ApiConfiguration Condition=" '$(Configuration)' == 'Release' ">Release</ApiConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Tools|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(GodotDefineConstants);GODOT;DEBUG;TOOLS;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GodotSharp">
+      <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Tools' ">
+      <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="objects\bullet\Bullet.cs" />
+    <Compile Include="objects\bullet\BulletSystem.cs" />
+    <Compile Include="objects\common\IExplodable.cs" />
+    <Compile Include="objects\common\IHittable.cs" />
+    <Compile Include="objects\common\IPreparable.cs" />
+    <Compile Include="objects\enemies\BossEnemy.cs" />
+    <Compile Include="objects\enemies\Enemy.cs" />
+    <Compile Include="objects\fx\FXCamera.cs" />
+    <Compile Include="objects\fx\FXWave.cs" />
+    <Compile Include="objects\fx\Sparkles.cs" />
+    <Compile Include="objects\player\Player.cs" />
+    <Compile Include="objects\powerups\Powerup.cs" />
+    <Compile Include="objects\rock\Rock.cs" />
+    <Compile Include="objects\spawners\Spawner.cs" />
+    <Compile Include="objects\starfield\Starfield.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="screens\boot_screen\BootScreen.cs" />
+    <Compile Include="screens\game_over_screen\GameOverScreen.cs" />
+    <Compile Include="screens\game_screen\GameScreen.cs" />
+    <Compile Include="screens\score_screen\ScoreScreen.cs" />
+    <Compile Include="screens\title_screen\TitleScreen.cs" />
+    <Compile Include="tests\scenes\TestGameState.cs" />
+    <Compile Include="tests\scenes\TestViewport.cs" />
+    <Compile Include="ui\debug\Debug.cs" />
+    <Compile Include="ui\hud\HUD.cs" />
+    <Compile Include="utils\GameState.cs" />
+    <Compile Include="utils\Transition.cs" />
+    <Compile Include="utils\Utils.cs" />
+    <Compile Include="utils\WaveSystem.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
