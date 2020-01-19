@@ -3,6 +3,8 @@
 [ext_resource path="res://tests/scenes/TestBoss.gd" type="Script" id=1]
 [ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=2]
 
+
+
 [node name="TestBoss" type="Node2D"]
 script = ExtResource( 1 )
 

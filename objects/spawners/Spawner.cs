@@ -7,6 +7,7 @@ public class Spawner : Node2D
     // On ready
     private Timer timer;
     private Node2D elements;
+    private GameState gameState;
     
     // Exports
     [Export] public float frequency = 2.0f;
@@ -25,6 +26,7 @@ public class Spawner : Node2D
         // On ready
         timer = GetNode<Timer>("Timer");
         elements = GetNode<Node2D>("Elements");
+        gameState = GetTree().Root.GetNode<GameState>("GameState");
         
         timer.WaitTime = frequency;
         timer.Connect("timeout", this, nameof(_On_Timer_Timeout));
@@ -69,9 +71,9 @@ public class Spawner : Node2D
     }
     
     public void Spawn() {
-        var gameSize = Utils.GetGameSize();
+        var gameSize = gameState.GetGameSize();
         var minPos = gameSize.x / 4.0f;
-        var maxPos = gameSize.y / 4.0f;
+        var maxPos = gameSize.x - gameSize.x / 4.0f;
         var pos = new Vector2((int)GD.RandRange(minPos, maxPos), -50.0f);
         
         SpawnAtPosition(pos);

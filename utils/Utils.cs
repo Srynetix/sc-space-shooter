@@ -11,10 +11,4 @@ public class Utils : Node
         
         return OS.GetName() == "Android" || OS.GetName() == "iOS";
     }
-    
-    public static Vector2 GetGameSize() {
-        var width = (int)ProjectSettings.GetSetting("display/window/size/width");
-        var height = (int)ProjectSettings.GetSetting("display/window/size/height");
-        return new Vector2(width, height);
-    }
 }

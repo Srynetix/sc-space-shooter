@@ -74,6 +74,9 @@
     <Compile Include="screens\game_screen\GameScreen.cs" />
     <Compile Include="screens\score_screen\ScoreScreen.cs" />
     <Compile Include="screens\title_screen\TitleScreen.cs" />
+    <Compile Include="tests\scenes\TestGameState.cs" />
+    <Compile Include="tests\scenes\TestViewport.cs" />
+    <Compile Include="ui\debug\Debug.cs" />
     <Compile Include="ui\hud\HUD.cs" />
     <Compile Include="utils\GameState.cs" />
     <Compile Include="utils\Transition.cs" />

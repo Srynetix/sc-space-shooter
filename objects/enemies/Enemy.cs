@@ -22,7 +22,7 @@ public class Enemy : Area2D, IHittable, IPreparable
     protected BulletSystem bulletSystem;
     protected Particles2D trail;
     protected AudioStreamPlayer2D explosionSound;
-    protected Vector2 gameSize;
+    protected GameState gameState;
     
     // Data
     protected int hitPoints = 0;
@@ -41,7 +41,7 @@ public class Enemy : Area2D, IHittable, IPreparable
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
         trail = GetNode<Particles2D>("Particles2D");
         explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
-        gameSize = Utils.GetGameSize();
+        gameState = GetTree().Root.GetNode<GameState>("GameState");
         
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
@@ -89,7 +89,7 @@ public class Enemy : Area2D, IHittable, IPreparable
         fireTimer.Stop();
         
         EmitSignal(nameof(exploded));
-        CallDeferred("_DisableCollisions");
+        _DisableCollisions();
         explosionSound.Play();
         animationPlayer.Play("explode");
         
@@ -98,7 +98,7 @@ public class Enemy : Area2D, IHittable, IPreparable
     }
     
     private void _DisableCollisions() {
-        collisionShape.Disabled = true;
+        collisionShape.SetDeferred("disabled", true);
     }
     
     protected virtual void _Move(float delta) {
@@ -106,6 +106,8 @@ public class Enemy : Area2D, IHittable, IPreparable
     }
     
     private void _HandleState() {
+        var gameSize = gameState.GetGameSize();
+        
         if (isFiring) {
             bulletSystem.Fire(muzzle.GlobalPosition);
         }

@@ -13,11 +13,6 @@ public class Player : Area2D, IHittable {
     [Signal] public delegate void dead();
     [Signal] public delegate void respawn();
    
-    // Exports
-    [Export] public Vector2 moveSpeed = new Vector2(500, 500);
-    [Export] public float damping = 0.9f;
-    [Export] public float spawnTime = 3.0f;
-    
     // On ready
     private Timer spawnTimer;
     private Position2D muzzle;
@@ -25,6 +20,7 @@ public class Player : Area2D, IHittable {
     private CollisionShape2D collisionShape;
     private BulletSystem bulletSystem;
     private Label statusLabel;
+    private GameState gameState;
     
     // Data
     private Vector2 initialPosition = new Vector2();
@@ -33,7 +29,10 @@ public class Player : Area2D, IHittable {
     private bool isTouching = false;
     private Vector2 lastTouchPosition = new Vector2();
     private Vector2 touchDistance = new Vector2();
-    
+    private Vector2 moveSpeed = new Vector2(500, 500);
+    private float damping = 0.9f;
+    private float spawnTime = 3.0f;
+     
     public override void _Ready() {
         spawnTimer = GetNode<Timer>("Timers/SpawningTimer");
         muzzle = GetNode<Position2D>("Position2D");
@@ -41,6 +40,7 @@ public class Player : Area2D, IHittable {
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
         statusLabel = GetNode<Label>("Label");
+        gameState = GetTree().Root.GetNode<GameState>("GameState");
         
         Connect("area_entered", this, nameof(_On_Area_Entered));
         
@@ -49,7 +49,9 @@ public class Player : Area2D, IHittable {
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
         statusLabel.Text = "";
         
-        initialPosition = Position;
+        var gameSize = gameState.GetGameSize();
+        initialPosition = new Vector2(gameSize.x / 2.0f, gameSize.y - gameSize.y / 8.0f);
+        Position = initialPosition;
     }
     
     public override void _Process(float delta) {
@@ -76,6 +78,10 @@ public class Player : Area2D, IHittable {
     }
     
     public override void _Input(InputEvent @event) {
+        if (state == State.Dead) {
+            return;
+        }
+        
         if (@event is InputEventScreenTouch touch) {
             lastTouchPosition = touch.Position;
             isTouching = touch.Pressed;
@@ -94,6 +100,7 @@ public class Player : Area2D, IHittable {
     public void Respawn() {
         _SetState(State.Spawning);
         velocity = new Vector2();
+        isTouching = false;
         Position = initialPosition;
         bulletSystem.ResetWeapons();
     }
@@ -107,7 +114,7 @@ public class Player : Area2D, IHittable {
     }
     
     private void _ClampPosition() {
-        var gameSize = Utils.GetGameSize();
+        var gameSize = gameState.GetGameSize();
         
         Position = new Vector2(
             Mathf.Clamp(Position.x, 0, gameSize.x),
@@ -119,6 +126,8 @@ public class Player : Area2D, IHittable {
         if (state == newState) {
             return;
         }
+        
+        state = newState;
         
         switch (newState) {
             case State.Dead:
@@ -137,9 +146,7 @@ public class Player : Area2D, IHittable {
                 spawnTimer.Start();
                 animationPlayer.Play("spawning");
                 break;
-        }
-        
-        state = newState;
+        }        
     }
     
     private Vector2 _HandleMovement() {

@@ -3,6 +3,8 @@
 [ext_resource path="res://tests/scenes/TestBullets.gd" type="Script" id=1]
 [ext_resource path="res://objects/bullet/BulletSystem.tscn" type="PackedScene" id=2]
 
+
+
 [node name="TestBullets" type="Node2D"]
 position = Vector2( -15.1155, 2.51926 )
 script = ExtResource( 1 )

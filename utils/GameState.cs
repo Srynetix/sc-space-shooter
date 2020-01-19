@@ -91,16 +91,25 @@ public class GameState : Node
         return (string)configuration["version"];
     }
     
+    public Vector2 GetGameSize() {
+        return GetViewport().Size;
+    }
+    
     public void SaveGameOver() {
+        GD.Print("Trying to save at game over");
+        
         if (_HasHighScore()) {
             int idx = _GetHighScorePos();
+            GD.Print("High score found at position", idx);
             _InsertHighScore(idx);
             currentGameSave["high_scores"] = highScores;
             _SaveGameSave(currentGameSave);
+        } else {
+            GD.Print("No new high score found");
         }
     }
     
-    private Dictionary _LoadGameSave() {
+    public Dictionary LoadGameSave() {
         var file = new File();
         if (!file.FileExists("user://save.dat")) {
             return _LoadEmptyGameSave();
@@ -137,7 +146,7 @@ public class GameState : Node
     private void _SaveGameSave(Dictionary gameSave) {
         File file = new File();
         file.Open("user://save.dat", File.ModeFlags.Write);
-        file.StoreLine(gameSave.ToString());
+        file.StoreLine(JSON.Print(gameSave));
         file.Close();
     }
     
@@ -205,7 +214,7 @@ public class GameState : Node
         GD.Randomize();
         _LoadConfig();
         
-        Dictionary gameSave = _LoadGameSave();
+        Dictionary gameSave = LoadGameSave();
         _ApplyGameSave(gameSave);
     }
 }

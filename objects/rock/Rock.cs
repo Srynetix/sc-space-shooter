@@ -8,7 +8,7 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
     private CollisionShape2D collisionShape;
     private Sprite sprite;
     private AudioStreamPlayer2D explosionSound;
-    private Vector2 gameSize;
+    private GameState gameState;
     
     // Signals
     [Signal]
@@ -23,7 +23,6 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
     private int hitPoints = 0;
     private int hitCount = 0;
     private bool hasExploded = false;
-    private Vector2 xScreenLimits = new Vector2();
     
     public override void _Ready() {
         // On ready
@@ -32,10 +31,9 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         sprite = GetNode<Sprite>("Sprite");
         explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
-        gameSize = Utils.GetGameSize();
+        gameState = GetTree().Root.GetNode<GameState>("GameState");
         
         ((ParticlesMaterial)trail.ProcessMaterial).Scale = Scale.x;
-        _CacheLimits();
     }
     
     public override void _Process(float delta) {
@@ -80,10 +78,14 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
     }
     
     private void _DisableShape() {
-        collisionShape.Disabled = true;
+        collisionShape.SetDeferred("disabled", true);
     }
     
     private void _HandlePositionWrap() {
+        var spriteSize = sprite.Texture.GetSize() * Scale;
+        var gameSize = gameState.GetGameSize();
+        var xScreenLimits = new Vector2(-spriteSize.x / 2.0f, gameSize.x + spriteSize.x / 2.0f);
+        
         if (Position.x > xScreenLimits.y) {
             Position = new Vector2(xScreenLimits.x, Position.y);
         } else if (Position.x < xScreenLimits.x) {
@@ -93,10 +95,5 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
         if (Position.y - sprite.Texture.GetSize().y > gameSize.y) {
             QueueFree();
         }
-    }
-    
-    private void _CacheLimits() {
-        var spriteSize = sprite.Texture.GetSize() * Scale;
-        xScreenLimits = new Vector2(-spriteSize.x / 2.0f, gameSize.x + spriteSize.x / 2.0f);
     }
 }

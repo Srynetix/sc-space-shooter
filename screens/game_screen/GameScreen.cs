@@ -84,7 +84,7 @@ public class GameScreen : Control
         rockSpawner.disabled = true;
         enemySpawner.disabled = true;
         
-        var gameSize = Utils.GetGameSize();
+        var gameSize = gameState.GetGameSize();
         animationPlayer.Play("warning");
         hud.ShowMessage(Tr("WARNING"));
         
@@ -144,7 +144,7 @@ public class GameScreen : Control
         gameState.UpdateHUD(hud);
         camera.Shake();
         
-        var gameSize = Utils.GetGameSize();
+        var gameSize = gameState.GetGameSize();
         lifeSpawner.SpawnAtPosition(new Vector2(gameSize.x / 2.0f, -50.0f));
         
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");

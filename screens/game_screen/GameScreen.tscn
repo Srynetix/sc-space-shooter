@@ -48,7 +48,6 @@ __meta__ = {
 [node name="Starfield" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 310.988, 834.589 )
 
 [node name="Bullets" type="Node2D" parent="."]
 
@@ -61,16 +60,19 @@ element = ExtResource( 6 )
 [node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 12.0
 speed = 150.0
+randScale = Vector2( 1, 1 )
 element = ExtResource( 7 )
 
 [node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 50.0
 speed = 250.0
+randScale = Vector2( 1, 1 )
 element = ExtResource( 8 )
 disabled = true
 
 [node name="EnemySpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 7.0
+randScale = Vector2( 0.75, 1.5 )
 element = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

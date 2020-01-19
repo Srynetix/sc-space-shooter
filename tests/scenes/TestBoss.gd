@@ -5,7 +5,7 @@ const BossModel = preload("res://objects/enemies/BossEnemy.tscn")
 onready var player = $Player
 
 func _ready():
-    var screen_size = Utils.GetGameSize()
+    var screen_size = GameState.GetGameSize()
 
     self.player.connect("fire", self, "_on_fire")
     self.player.connect("respawn", self, "_on_Player_respawn")
