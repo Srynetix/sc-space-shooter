@@ -23,11 +23,11 @@ public class GameState : Node
         new Array { "BBB", 7000 }
     };
     private Dictionary<Screens, string> SCREEN_MAP = new Dictionary<Screens, string> {
-        {Screens.BOOT, "res://screens/boot_screen/BootScreen.tscn"},
-        {Screens.TITLE, "res://screens/title_screen/TitleScreen.tscn"},
-        {Screens.GAME, "res://screens/game_screen/GameScreen.tscn"},
-        {Screens.GAMEOVER, "res://screens/game_over_screen/GameOverScreen.tscn"},
-        {Screens.SCORE, "res://screens/score_screen/ScoreScreen.tscn"},
+        {Screens.BOOT, "res://screens/BootScreen.tscn"},
+        {Screens.TITLE, "res://screens/TitleScreen.tscn"},
+        {Screens.GAME, "res://screens/GameScreen.tscn"},
+        {Screens.GAMEOVER, "res://screens/GameOverScreen.tscn"},
+        {Screens.SCORE, "res://screens/ScoreScreen.tscn"},
     };
     
     private int score = 0;

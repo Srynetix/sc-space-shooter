@@ -113,7 +113,7 @@ public class Bullet : Area2D
     private void _On_Area_Entered(Area2D area) {
         if (area.IsInGroup("rocks") || area.IsInGroup("enemies") || area.IsInGroup("player")) {
             var sparklesPosition = Position;
-            var sparklesScene = (PackedScene)GD.Load("res://objects/fx/Sparkles.tscn");
+            var sparklesScene = (PackedScene)GD.Load("res://objects/Sparkles.tscn");
             var sparkles = (Sparkles)sparklesScene.Instance();
             sparkles.Position = sparklesPosition;
             sparkles.ZIndex = 10;

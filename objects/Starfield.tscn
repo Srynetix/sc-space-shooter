@@ -1,6 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://objects/starfield/Starfield.cs" type="Script" id=1]
+[ext_resource path="res://objects/Starfield.cs" type="Script" id=1]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.8, 1 )
@@ -30,7 +31,7 @@ scale = 5.0
 scale_random = 1.0
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
-hue_variation = 0.1
+hue_variation = 1.0
 hue_variation_random = 0.5
 
 [node name="Starfield" type="Control"]

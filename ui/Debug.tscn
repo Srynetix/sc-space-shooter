@@ -1,7 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://ui/debug/Debug.cs" type="Script" id=1]
+[ext_resource path="res://ui/Debug.cs" type="Script" id=1]
 [ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=2]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 12

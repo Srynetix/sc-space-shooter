@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://objects/fx/FXWave.cs" type="Script" id=1]
+[ext_resource path="res://objects/FXWave.cs" type="Script" id=1]
 [ext_resource path="res://resources/WaveMaterial.tres" type="Material" id=2]
 [ext_resource path="res://assets/textures/white.png" type="Texture" id=3]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "wave"

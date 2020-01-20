@@ -1,18 +1,18 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://screens/game_screen/GameScreen.cs" type="Script" id=1]
-[ext_resource path="res://objects/fx/FXCamera.tscn" type="PackedScene" id=2]
-[ext_resource path="res://objects/starfield/Starfield.tscn" type="PackedScene" id=3]
-[ext_resource path="res://objects/player/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/spawners/Spawner.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/rock/Rock.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/powerups/Powerup.tscn" type="PackedScene" id=7]
-[ext_resource path="res://objects/powerups/LifePowerup.tscn" type="PackedScene" id=8]
-[ext_resource path="res://objects/enemies/Enemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://screens/GameScreen.cs" type="Script" id=1]
+[ext_resource path="res://objects/FXCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Starfield.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Spawner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/Rock.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/Powerup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/LifePowerup.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/Enemy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://utils/WaveSystem.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/sounds/alarm.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/sounds/ambient.wav" type="AudioStream" id=12]
-[ext_resource path="res://ui/hud/HUD.tscn" type="PackedScene" id=13]
+[ext_resource path="res://ui/HUD.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -92,7 +92,7 @@ bus = "Effects"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -20.0
+volume_db = -30.895
 autoplay = true
 bus = "Music"
 

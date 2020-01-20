@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://screens/boot_screen/BootScreen.cs" type="Script" id=1]
-[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://screens/BootScreen.cs" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "show"
@@ -25,7 +25,7 @@ tracks/0/keys = {
 [node name="BootScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -39,7 +39,7 @@ public class Enemy : Area2D, IHittable, IPreparable
         muzzle = GetNode<Position2D>("Position2D");
         fireTimer = GetNode<Timer>("FireTimer");
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
-        trail = GetNode<Particles2D>("Particles2D");
+        trail = GetNode<Particles2D>("Trail");
         explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
         

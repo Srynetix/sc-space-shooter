@@ -93,7 +93,7 @@ public class GameScreen : Control
         alarm.Play();
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
         
-        var bossScene = (PackedScene)GD.Load("res://objects/enemies/BossEnemy.tscn");
+        var bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
         var bossInstance = (BossEnemy)bossScene.Instance();
         bossInstance.fireTime = 0.25f + 0.25f * waveSystem.GetCurrentWave();
         bossInstance.Connect("exploded", this, nameof(_On_Boss_Exploded));
