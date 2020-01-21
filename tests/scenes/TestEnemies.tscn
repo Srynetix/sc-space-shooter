@@ -21,4 +21,5 @@ __meta__ = {
 }
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 2 )]
+frequency = 1.0
 element = ExtResource( 3 )

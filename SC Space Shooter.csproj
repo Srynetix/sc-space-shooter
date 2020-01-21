@@ -74,7 +74,10 @@
     <Compile Include="screens\GameScreen.cs" />
     <Compile Include="screens\ScoreScreen.cs" />
     <Compile Include="screens\TitleScreen.cs" />
+    <Compile Include="tests\scenes\TestBoss.cs" />
+    <Compile Include="tests\scenes\TestBullets.cs" />
     <Compile Include="tests\scenes\TestEnemies.cs" />
+    <Compile Include="tests\scenes\TestFXCamera.cs" />
     <Compile Include="tests\scenes\TestGameState.cs" />
     <Compile Include="tests\scenes\TestViewport.cs" />
     <Compile Include="ui\Debug.cs" />

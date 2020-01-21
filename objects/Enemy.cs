@@ -22,6 +22,7 @@ public class Enemy : Area2D, IHittable, IPreparable
     protected BulletSystem bulletSystem;
     protected Particles2D trail;
     protected AudioStreamPlayer2D explosionSound;
+    protected Sprite sprite;
     protected GameState gameState;
     
     // Data
@@ -41,6 +42,7 @@ public class Enemy : Area2D, IHittable, IPreparable
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
         trail = GetNode<Particles2D>("Trail");
         explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
+        sprite = GetNode<Sprite>("Sprite");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
         
         fireTimer.WaitTime = fireTime;
@@ -112,7 +114,8 @@ public class Enemy : Area2D, IHittable, IPreparable
             bulletSystem.Fire(muzzle.GlobalPosition);
         }
         
-        if (Position.y > gameSize.y) {
+        var spriteSize = sprite.Texture.GetSize();
+        if (Position.y - spriteSize.y > gameSize.y) {
             QueueFree();
         }
     }
