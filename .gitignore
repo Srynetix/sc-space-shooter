@@ -3,3 +3,5 @@
 /mono
 /.mono
 /.vs
+/exports/*
+!/exports/.gdignore

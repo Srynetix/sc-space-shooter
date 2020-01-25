@@ -26,6 +26,8 @@ config/quit_on_go_back=false
 [autoload]
 
 Debug="*res://ui/Debug.tscn"
+FXCamera="*res://objects/FXCamera.tscn"
+FXGlow="*res://objects/FXGlow.tscn"
 GameState="*res://utils/GameState.cs"
 Transition="*res://utils/Transition.tscn"
 Utils="*res://utils/Utils.cs"
@@ -46,13 +48,14 @@ scenerunner={
 
 window/size/width=540
 window/size/height=960
+window/size/resizable=false
 window/handheld/orientation="portrait"
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
 window/stretch/aspect="expand"
 
 [engine]
 
-version="3.2rc2"
+version="3.2rc3"
 
 [input]
 

@@ -1,0 +1,60 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded, blend_mix;
+
+uniform float alphaFade1: hint_range(0, 3) = 1.0;
+uniform float alphaFade2: hint_range(0, 3) = 1.0;
+uniform float operationBlend: hint_range(0, 1) = 1.0;
+uniform float spriteFade: hint_range(0, 1) = 1.0;
+uniform vec4 spriteColor: hint_color = vec4(1.0);
+uniform vec4 tintColor1: hint_color = vec4(1.0);
+uniform vec4 tintColor2: hint_color = vec4(1.0);
+
+vec4 TintRGBA(vec4 txt, vec4 color) {
+    vec3 tint = vec3(dot(txt.rgb, vec3(.222, .707, .071)));
+    tint.rgb *= color.rgb;
+    txt.rgb = mix(txt.rgb, tint.rgb, color.a);
+    return txt;
+}
+
+vec4 OperationBlend(vec4 origin, vec4 overlay, float blend) {
+    vec4 o = origin; 
+    o.a = overlay.a + origin.a * (1.0 - overlay.a);
+    o.rgb = (overlay.rgb * overlay.a + origin.rgb * origin.a * (1.0 - overlay.a)) / (o.a + 0.000001);
+    // o.a = clamp(o.a, 0.0, 1.0);
+    o = mix(origin, o, blend);
+    return o;
+}
+
+vec4 AlphaIntensity(vec4 txt,float fade) {
+    if (txt.a < 1.0) txt.a = mix(0, txt.a, fade);
+    return txt;
+}
+
+void fragment() {
+    vec4 tex1 = texture(TEXTURE, UV);
+    vec4 al1 = AlphaIntensity(tex1, alphaFade1);
+    vec4 tint1 = TintRGBA(al1, tintColor1);
+    vec4 tex2 = texture(TEXTURE, UV);
+    vec4 al2 = AlphaIntensity(tex2, alphaFade2);
+    vec4 tint2 = TintRGBA(al2, tintColor2);
+    vec4 blendV = OperationBlend(tint2, tint1, operationBlend);
+    vec4 final = blendV;
+    final.rgb *= spriteColor.rgb;
+    final.a = final.a * spriteFade * spriteColor.a;
+    
+    COLOR = vec4(final.rgb + vec3(0.5f), 1.0f);
+}"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/alphaFade1 = 2.154
+shader_param/alphaFade2 = 0.89
+shader_param/operationBlend = 1.0
+shader_param/spriteFade = 1.0
+shader_param/spriteColor = Color( 0, 1, 0.972549, 1 )
+shader_param/tintColor1 = Color( 0.411765, 0.988235, 1, 1 )
+shader_param/tintColor2 = Color( 0.752941, 0.909804, 1, 1 )

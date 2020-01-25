@@ -3,8 +3,9 @@ using Godot;
 public class BulletSystem : Node2D
 {
     // Signals
-    [Signal] public delegate void fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
-    
+    [Signal] public delegate void fire(Bullet.FireData fireData);
+    [Signal] public delegate void type_switch(Bullet.BulletType prevType, Bullet.BulletType newType);
+
     // Exports
     [Export] public float fireCooldown = 0.2f;
     [Export] public float fireSpeed = 500.0f;
@@ -12,27 +13,29 @@ public class BulletSystem : Node2D
     [Export] public Bullet.BulletType bulletType = Bullet.BulletType.Simple;
     [Export] public Bullet.BulletTarget bulletTarget = Bullet.BulletTarget.Enemy;
     [Export] public bool bulletAutomatic = false;
-    
+
     // On ready
     private Timer fireTimer;
     private AudioStreamPlayer2D sound;
-    
+
     // Data
     private bool canShoot = true;
-    
+    private Bullet.BulletType previousBulletType = Bullet.BulletType.Simple;
+
     public override void _Ready() {
         // On ready
         fireTimer = GetNode<Timer>("FireTimer");
-        sound = GetNode<AudioStreamPlayer2D>("Sound");    
-        
+        sound = GetNode<AudioStreamPlayer2D>("Sound");
+
         fireTimer.WaitTime = fireCooldown;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
     }
-    
+
     public void ResetWeapons() {
+        previousBulletType = Bullet.BulletType.Simple;
         SwitchType(Bullet.BulletType.Simple);
     }
-    
+
     public void UpgradeWeapon() {
         if (bulletType == Bullet.BulletType.Simple) {
             SwitchType(Bullet.BulletType.Double);
@@ -40,19 +43,35 @@ public class BulletSystem : Node2D
             SwitchType(Bullet.BulletType.Triple);
         } else if (bulletType == Bullet.BulletType.Triple) {
             SwitchType(Bullet.BulletType.Laser);
+        } else if (bulletType == Bullet.BulletType.Laser) {
+            SwitchType(Bullet.BulletType.Bomb);
         }
     }
-    
+
     public void SwitchType(Bullet.BulletType bType) {
+        if (bType == bulletType) {
+            return;
+        }
+
         if (bType == Bullet.BulletType.Laser) {
             fireTimer.WaitTime = fireCooldown / 4.0f;
+        } else if (bType == Bullet.BulletType.Bomb) {
+            fireTimer.WaitTime = 4.0f;
         } else {
             fireTimer.WaitTime = fireCooldown;
         }
-        
+
+        // Store previous bullet type
+        previousBulletType = bulletType;
         bulletType = bType;
+
+        EmitSignal("type_switch", previousBulletType, bulletType);
     }
-    
+
+    private void _SwitchPreviousType() {
+        SwitchType(previousBulletType);
+    }
+
     public void SwitchRandomType() {
         int weaponId = (int)GD.RandRange(0, 5);
         switch (weaponId) {
@@ -73,31 +92,33 @@ public class BulletSystem : Node2D
                 break;
         }
     }
-    
-    public void Fire(Vector2 pos) {
+
+    async public void Fire(Vector2 pos) {
         if (canShoot) {
             canShoot = false;
-            
-            if (bulletType == Bullet.BulletType.Simple) {
-                EmitSignal("fire", bulletModel, pos, fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-            } else if (bulletType == Bullet.BulletType.Double) {
-                EmitSignal("fire", bulletModel, pos - new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-                EmitSignal("fire", bulletModel, pos + new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic);
+
+            if (bulletType == Bullet.BulletType.Double) {
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic));
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic));
             } else if (bulletType == Bullet.BulletType.Triple) {
-                EmitSignal("fire", bulletModel, pos - new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-                EmitSignal("fire", bulletModel, pos - new Vector2(0, 40), fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-                EmitSignal("fire", bulletModel, pos + new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-            } else if (bulletType == Bullet.BulletType.Laser) {
-                EmitSignal("fire", bulletModel, pos, fireSpeed, bulletType, bulletTarget, bulletAutomatic);
-            } else if (bulletType == Bullet.BulletType.SlowFast) {
-                EmitSignal("fire", bulletModel, pos, fireSpeed, bulletType, bulletTarget, bulletAutomatic);
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic));
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(0, 40), fireSpeed, bulletType, bulletTarget, bulletAutomatic));
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bulletType, bulletTarget, bulletAutomatic));
+            } else {
+                EmitSignal("fire", new Bullet.FireData(bulletModel, pos, fireSpeed, bulletType, bulletTarget, bulletAutomatic));
             }
-            
+
             sound.Play();
             fireTimer.Start();
+
+            if (bulletType == Bullet.BulletType.Bomb) {
+                // One bomb, swap to previous
+                await ToSignal(fireTimer, "timeout");
+                _SwitchPreviousType();
+            }
         }
     }
-    
+
     private void _On_FireTimer_Timeout() {
         canShoot = true;
     }

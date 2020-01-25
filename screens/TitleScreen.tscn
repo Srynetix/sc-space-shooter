@@ -5,70 +5,33 @@
 [ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=4]
 
-
-
 [sub_resource type="DynamicFont" id=1]
-size = 48
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 38
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=3]
 size = 24
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 12
+[sub_resource type="DynamicFont" id=3]
+size = 48
 font_data = ExtResource( 3 )
 
-[sub_resource type="Animation" id=6]
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Instructions:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1, 2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
+[sub_resource type="DynamicFont" id=4]
+size = 24
+font_data = ExtResource( 3 )
 
-[sub_resource type="Animation" id=7]
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Title:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Instructions:custom_fonts/font:outline_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ) ]
-}
+[sub_resource type="DynamicFont" id=5]
+size = 24
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 14
+font_data = ExtResource( 3 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -81,76 +44,121 @@ __meta__ = {
 [node name="Starfield" parent="." instance=ExtResource( 2 )]
 velocity = 0
 
-[node name="Title" type="Label" parent="."]
-modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -246.0
-margin_top = -55.5
-margin_right = 246.0
-margin_bottom = 55.5
-custom_fonts/font = SubResource( 1 )
-text = "SC
-Space Shooter"
-align = 1
-valign = 1
-
-[node name="Instructions" type="Label" parent="."]
-modulate = Color( 1, 1, 1, 0 )
-anchor_top = 1.0
+[node name="Margin" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -91.0
-custom_fonts/font = SubResource( 2 )
-text = "Start"
-align = 1
-valign = 1
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-margin_bottom = 36.0
+[node name="All" type="VBoxContainer" parent="Margin"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 530.0
+margin_bottom = 950.0
+size_flags_vertical = 3
 
-[node name="HSTitle" type="Label" parent="VBoxContainer"]
-margin_right = 600.0
+[node name="Top" type="VBoxContainer" parent="Margin/All"]
+margin_right = 520.0
+margin_bottom = 303.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSTitle" type="Label" parent="Margin/All/Top"]
+margin_right = 520.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "HIGHSCORE"
 align = 1
 valign = 1
 
-[node name="HSValue" type="Label" parent="VBoxContainer"]
+[node name="HSValue" type="Label" parent="Margin/All/Top"]
 margin_top = 31.0
-margin_right = 600.0
+margin_right = 520.0
 margin_bottom = 54.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 1
 valign = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = 10
-custom_constants/margin_bottom = 10
+[node name="Margin" type="MarginContainer" parent="Margin/All"]
+margin_top = 307.0
+margin_right = 520.0
+margin_bottom = 610.0
+size_flags_vertical = 7
+custom_constants/margin_top = 20
+custom_constants/margin_bottom = 80
 
-[node name="Version" type="Label" parent="MarginContainer"]
-margin_left = 448.0
-margin_top = 876.0
-margin_right = 590.0
-margin_bottom = 890.0
+[node name="Title" type="Label" parent="Margin/All/Margin"]
+margin_top = 20.0
+margin_right = 520.0
+margin_bottom = 223.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 3 )
+text = "SC
+Space Shooter"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="VBoxContainer" parent="Margin/All"]
+margin_top = 614.0
+margin_right = 520.0
+margin_bottom = 917.0
+size_flags_vertical = 3
+custom_constants/separation = 40
+
+[node name="StartGame" type="Button" parent="Margin/All/Buttons"]
+margin_right = 520.0
+margin_bottom = 33.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 4 )
+text = "MENU_START_GAME"
+
+[node name="Options" type="Button" parent="Margin/All/Buttons"]
+margin_top = 73.0
+margin_right = 520.0
+margin_bottom = 106.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 5 )
+disabled = true
+text = "MENU_OPTIONS"
+
+[node name="Tests" type="Button" parent="Margin/All/Buttons"]
+margin_top = 146.0
+margin_right = 520.0
+margin_bottom = 179.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = SubResource( 6 )
+text = "MENU_TESTS"
+
+[node name="Bottom" type="VBoxContainer" parent="Margin/All"]
+margin_top = 921.0
+margin_right = 520.0
+margin_bottom = 938.0
+
+[node name="Version" type="Label" parent="Margin/All/Bottom"]
+margin_left = 349.0
+margin_right = 520.0
+margin_bottom = 17.0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 8 )
 text = "Version [VERSION]"
 align = 2
 valign = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/instructions = SubResource( 6 )
-anims/title = SubResource( 7 )
-
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -20.0
+
+[node name="Tween" type="Tween" parent="."]

@@ -1,0 +1,50 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform bool enableBlur = false;
+uniform bool enableGlow = true;
+uniform float hdrThreshold = 1.0f;
+uniform float blurScale = 1.0f;
+
+vec4 blur(sampler2D tex, vec2 uv, vec2 ps) {
+    vec4 col0 = texture(tex, uv + vec2(-ps.x, 0));
+    vec4 col1 = texture(tex, uv + vec2(ps.x, 0));
+    vec4 col2 = texture(tex, uv + vec2(0, -ps.y));
+    vec4 col3 = texture(tex, uv + vec2(0, ps.y));
+    return 0.25 * (col0 + col1 + col2 + col3);
+}
+
+vec4 sample_glow_pixel(sampler2D tex, vec2 uv) {
+    return max(textureLod(tex, uv, 3.0) - hdrThreshold, vec4(0.0));
+}
+
+vec4 glow(sampler2D tex, vec2 uv, vec2 ps) {
+    vec4 col0 = sample_glow_pixel(tex, uv + vec2(-ps.x, 0));
+    vec4 col1 = sample_glow_pixel(tex, uv + vec2(ps.x, 0));
+    vec4 col2 = sample_glow_pixel(tex, uv + vec2(0, -ps.y));
+    vec4 col3 = sample_glow_pixel(tex, uv + vec2(0, ps.y));
+    return 0.25 * (col0 + col1 + col2 + col3);
+}
+
+void fragment() {
+    vec2 ps = SCREEN_PIXEL_SIZE * blurScale;
+    
+    if (enableBlur) {
+        COLOR = blur(SCREEN_TEXTURE, SCREEN_UV, ps);
+    } else if (enableGlow) {
+        vec4 col = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0);
+        vec4 glowing = glow(SCREEN_TEXTURE, SCREEN_UV, ps);
+        COLOR = vec4(col.rgb + glowing.rgb, col.a);
+    } else {
+        COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0);
+    }
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/enableBlur = false
+shader_param/enableGlow = true
+shader_param/hdrThreshold = 0.4
+shader_param/blurScale = 1.0

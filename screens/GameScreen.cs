@@ -29,11 +29,11 @@ public class GameScreen : Control
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         waveSystem = GetNode<WaveSystem>("WaveSystem");
         alarm = GetNode<AudioStreamPlayer>("Alarm");
-        camera = GetNode<FXCamera>("FXCamera");
         rockSpawner = GetNode<Spawner>("Spawners/RockSpawner");
         powerupSpawner = GetNode<Spawner>("Spawners/PowerupSpawner");
         enemySpawner = GetNode<Spawner>("Spawners/EnemySpawner");
         lifeSpawner = GetNode<Spawner>("Spawners/LifePowerupSpawner");
+        camera = GetTree().Root.GetNode<FXCamera>("FXCamera");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
 
         player.Connect("fire", this, nameof(_On_Fire));
@@ -105,9 +105,9 @@ public class GameScreen : Control
         AddChild(bossInstance);
     }
 
-    private void _On_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        var instance = (Bullet)bullet.Instance();
-        instance.Prepare(pos, speed, bulletType, bulletTarget, automatic);
+    private void _On_Fire(Bullet.FireData fireData) {
+        var instance = (Bullet)fireData.bullet.Instance();
+        instance.Prepare(fireData);
         bullets.AddChild(instance);
     }
 

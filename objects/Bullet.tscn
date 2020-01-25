@@ -3,7 +3,6 @@
 [ext_resource path="res://objects/Bullet.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/laserBlue06.png" type="Texture" id=2]
 
-
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 0.498039, 0, 0, 0, 0 )
 
@@ -54,3 +53,6 @@ shape = SubResource( 5 )
 [node name="SlowTimer" type="Timer" parent="."]
 wait_time = 0.75
 one_shot = true
+
+[node name="BombTimer" type="Timer" parent="."]
+wait_time = 0.75

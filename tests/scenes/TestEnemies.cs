@@ -5,7 +5,7 @@ using Dictionary = Godot.Collections.Dictionary;
 public class TestEnemies : Control
 {
     private Spawner spawner;
-    
+
     public override void _Ready() {
         // On ready
         spawner = GetNode<Spawner>("EnemySpawner");
@@ -13,10 +13,10 @@ public class TestEnemies : Control
             { "fire", nameof(_On_Spawner_Fire) }
         });
     }
-    
-    private void _On_Spawner_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        var instance = (Bullet)bullet.Instance();
-        instance.Prepare(pos, speed, bulletType, bulletTarget, automatic);
+
+    private void _On_Spawner_Fire(Bullet.FireData fireData) {
+        var instance = (Bullet)fireData.bullet.Instance();
+        instance.Prepare(fireData);
         AddChild(instance);
     }
 }

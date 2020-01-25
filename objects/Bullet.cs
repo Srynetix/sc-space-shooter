@@ -7,7 +7,8 @@ public class Bullet : Area2D
         Double,
         Triple,
         Laser,
-        SlowFast
+        SlowFast,
+        Bomb
     }
 
     public enum BulletTarget {
@@ -15,8 +16,27 @@ public class Bullet : Area2D
         Player
     }
 
+    public class FireData: Resource {
+        public PackedScene bullet;
+        public Vector2 pos;
+        public float speed;
+        public BulletType bulletType;
+        public BulletTarget bulletTarget;
+        public bool automatic;
+
+        public FireData(PackedScene bullet, Vector2 pos, float speed, BulletType bulletType, BulletTarget bulletTarget, bool automatic) {
+            this.bullet = bullet;
+            this.pos = pos;
+            this.speed = speed;
+            this.bulletType = bulletType;
+            this.bulletTarget = bulletTarget;
+            this.automatic = automatic;
+        }
+    }
+
     private static Texture enemyBulletSprite = (Texture)GD.Load("res://assets/textures/laserRed06.png");
     private static PackedScene sparklesScene = (PackedScene)GD.Load("res://objects/Sparkles.tscn");
+    private static PackedScene fxWaveScene = (PackedScene)GD.Load("res://objects/FXWave.tscn");
 
     // Exports
     [Export] public BulletTarget bulletTarget = BulletTarget.Enemy;
@@ -26,6 +46,7 @@ public class Bullet : Area2D
     // On ready
     private VisibilityNotifier2D visibilityNotifier;
     private Timer slowTimer;
+    private Timer bombTimer;
     private Particles2D trail;
     private Sprite sprite;
 
@@ -37,11 +58,13 @@ public class Bullet : Area2D
         // On ready
         visibilityNotifier = GetNode<VisibilityNotifier2D>("VisibilityNotifier2D");
         slowTimer = GetNode<Timer>("SlowTimer");
+        bombTimer = GetNode<Timer>("BombTimer");
         trail = GetNode<Particles2D>("Trail");
         sprite = GetNode<Sprite>("Sprite");
 
         Connect("area_entered", this, nameof(_On_Area_Entered));
         visibilityNotifier.Connect("screen_exited", this, nameof(_On_VisibilityNotifier2D_ScreenExited));
+        bombTimer.Connect("timeout", this, nameof(_On_BombTimer_Timeout));
 
         if (bulletTarget == BulletTarget.Player) {
             sprite.Texture = enemyBulletSprite;
@@ -67,24 +90,35 @@ public class Bullet : Area2D
             await ToSignal(slowTimer, "timeout");
             _HandleAutomaticMode();
             velocity *= 1.5f;
+        } else if (bulletType == BulletType.Bomb) {
+            bombTimer.Start();
         }
     }
 
     public override void _Process(float delta) {
         Position += velocity * delta;
+
+        if (bulletType == Bullet.BulletType.Bomb) {
+            RotationDegrees += velocity.y * delta;
+        }
     }
 
-    public void Prepare(Vector2 pos, float speed, BulletType bType, BulletTarget bTarget, bool automatic) {
-        Position = pos;
-        bulletType = bType;
-        bulletTarget = bTarget;
-        bulletAutomatic = automatic;
-        baseSpeed = speed;
+    public void Prepare(FireData fireData) {
+        Position = fireData.pos;
+        bulletType = fireData.bulletType;
+        bulletTarget = fireData.bulletTarget;
+        bulletAutomatic = fireData.automatic;
+        baseSpeed = fireData.speed;
 
-        if (bTarget == BulletTarget.Player) {
-            velocity = new Vector2(0, speed);
+        if (bulletTarget == BulletTarget.Player) {
+            velocity = new Vector2(0, baseSpeed);
         } else {
-            velocity = new Vector2(0, -speed);
+            velocity = new Vector2(0, -baseSpeed);
+        }
+
+        if (bulletType == BulletType.Bomb) {
+            // Slow down a bit
+            baseSpeed /= 2.0f;
         }
     }
 
@@ -111,22 +145,43 @@ public class Bullet : Area2D
         velocity = direction * baseSpeed;
     }
 
+    private void _TriggerWave(Vector2 position) {
+        var wave = (FXWave)fxWaveScene.Instance();
+        GetParent().AddChild(wave);
+        wave.StartThenFree(position, 0.25f);
+    }
+
+    private void _TriggerSparkles(Vector2 position) {
+        var sparkles = (Sparkles)sparklesScene.Instance();
+        sparkles.Position = position;
+        sparkles.ZIndex = 10;
+        GetParent().AddChild(sparkles);
+    }
+
     private void _On_Area_Entered(Area2D area) {
         if (area.IsInGroup("rocks") || area.IsInGroup("enemies") || area.IsInGroup("player")) {
-            var sparklesPosition = Position;
-            var sparkles = (Sparkles)sparklesScene.Instance();
-            sparkles.Position = sparklesPosition;
-            sparkles.ZIndex = 10;
+            _TriggerSparkles(Position);
 
-            GetParent().AddChild(sparkles);
             var hittable = (IHittable)area;
             hittable.Hit();
+
+            if (bulletType == BulletType.Bomb) {
+                // Explode
+                bombTimer.Stop();
+                _TriggerWave(Position);
+            }
         }
 
         QueueFree();
     }
 
     private void _On_VisibilityNotifier2D_ScreenExited() {
+        QueueFree();
+    }
+
+    private void _On_BombTimer_Timeout() {
+        _TriggerSparkles(Position);
+        _TriggerWave(Position);
         QueueFree();
     }
 }

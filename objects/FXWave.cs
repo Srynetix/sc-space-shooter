@@ -1,16 +1,96 @@
 using Godot;
 
-public class FXWave : Node2D
-{
+public class FXWave : Area2D {
+    [Signal] public delegate void finished();
+
+    private static PackedScene sparklesScene = (PackedScene)GD.Load("res://objects/Sparkles.tscn");
+
     // On ready
-    private AnimationPlayer animationPlayer;
-    
-    async public override void _Ready() {
+    private Tween tween;
+    private Sprite sprite;
+    private CollisionShape2D collisionShape;
+    private Shape2D shape;
+    private Particles2D particles;
+    private AudioStreamPlayer sound;
+    private ParticlesMaterial particlesMaterial;
+    private ShaderMaterial shaderMaterial;
+    private FXCamera fXCamera;
+    private GameState gameState;
+
+    public override void _Ready() {
         // On ready
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        animationPlayer.Play("wave");
-        
-        await ToSignal(animationPlayer, "animation_finished");
-        QueueFree();    
+        tween = GetNode<Tween>("Tween");
+        sprite = GetNode<Sprite>("Sprite");
+        particles = GetNode<Particles2D>("Particles2D");
+        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+        sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+        fXCamera = GetTree().Root.GetNode<FXCamera>("FXCamera");
+        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        shape = (CircleShape2D)collisionShape.Shape;
+        shaderMaterial = (ShaderMaterial)sprite.Material;
+        particlesMaterial = (ParticlesMaterial)particles.ProcessMaterial;
+
+        Connect("area_entered", this, nameof(_On_Area_Entered));
+
+        var gameSize = gameState.GetGameSize();
+        var maxv = Mathf.Max(gameSize.x, gameSize.y);
+        sprite.Scale = new Vector2(maxv, maxv) * 1.75f / sprite.Texture.GetSize();
+    }
+
+    async public void Start(Vector2 target, float force = 1.0f) {
+        var gameSize = gameState.GetGameSize();
+        var maxv = Mathf.Max(gameSize.x, gameSize.y) * force;
+
+        sprite.Position = target;
+        particles.Position = target;
+        collisionShape.Position = target;
+
+        var finalParticlesVelocity = maxv * 20 * force;
+
+        tween.InterpolateProperty(shaderMaterial, "shader_param/radius", 0, force, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
+        tween.InterpolateProperty(shaderMaterial, "shader_param/border", 0.001, 0.01, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
+        tween.InterpolateProperty(shape, "radius", 0, maxv * 1.75f, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
+        tween.InterpolateProperty(particlesMaterial, "initial_velocity", 10, finalParticlesVelocity, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
+        tween.Start();
+        sound.Play();
+        fXCamera.Shake(true);
+        await ToSignal(tween, "tween_all_completed");
+
+        fXCamera.StopShake();
+        sound.Stop();
+        particles.Emitting = false;
+
+        tween.InterpolateProperty(shaderMaterial, "shader_param/radius", force, 0, 1.0f, Tween.TransitionType.Elastic, Tween.EaseType.Out);
+        tween.InterpolateProperty(shaderMaterial, "shader_param/border", 0.01, 0, 1.0f, Tween.TransitionType.Elastic, Tween.EaseType.Out);
+        tween.InterpolateProperty(shape, "radius", maxv * 1.75f, 0, 1.0f, Tween.TransitionType.Elastic, Tween.EaseType.Out);
+        tween.InterpolateProperty(particlesMaterial, "initial_velocity", particlesMaterial.InitialVelocity, 0, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.InOut);
+        tween.InterpolateProperty(particlesMaterial, "orbit_velocity", particlesMaterial.OrbitVelocity, 0, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.InOut);
+        tween.InterpolateProperty(particles, "amount", 64, 1, 0.5f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
+        tween.Start();
+
+        await ToSignal(tween, "tween_all_completed");
+        EmitSignal("finished");
+    }
+
+    async public void StartThenFree(Vector2 target, float force = 1.0f) {
+        Start(target, force);
+
+        // Wait for termination
+        await ToSignal(this, "finished");
+
+        QueueFree();
+    }
+
+    private void _On_Area_Entered(Area2D area) {
+        if (area.IsInGroup("rocks") || area.IsInGroup("enemies")) {
+            var sparklesPosition = Position;
+            var sparkles = (Sparkles)sparklesScene.Instance();
+            sparkles.Position = sparklesPosition;
+            sparkles.ZIndex = 10;
+
+            GetParent().AddChild(sparkles);
+            var explodable = (IExplodable)area;
+            explodable.Explode();
+        }
     }
 }

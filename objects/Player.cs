@@ -9,13 +9,17 @@ public class Player : Area2D, IHittable {
     }
 
     // Signals
-    [Signal] public delegate void fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic);
+    [Signal] public delegate void fire(Bullet.FireData fireData);
     [Signal] public delegate void dead();
     [Signal] public delegate void respawn();
+
+    // Exports
+    [Export] public Bullet.BulletType initialBulletType = Bullet.BulletType.Simple;
 
     // On ready
     private Timer spawnTimer;
     private Position2D muzzle;
+    private Sprite sprite;
     private AnimationPlayer animationPlayer;
     private CollisionShape2D collisionShape;
     private BulletSystem bulletSystem;
@@ -40,6 +44,7 @@ public class Player : Area2D, IHittable {
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
         statusLabel = GetNode<Label>("Label");
+        sprite = GetNode<Sprite>("Sprite");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
 
         Connect("area_entered", this, nameof(_On_Area_Entered));
@@ -47,11 +52,14 @@ public class Player : Area2D, IHittable {
         spawnTimer.WaitTime = spawnTime;
         spawnTimer.Connect("timeout", this, nameof(_On_SpawningTimer_Timeout));
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
+        bulletSystem.Connect("type_switch", this, nameof(_On_BulletSystem_TypeChanged));
         statusLabel.Text = "";
 
         var gameSize = gameState.GetGameSize();
         initialPosition = new Vector2(gameSize.x / 2.0f, gameSize.y - gameSize.y / 8.0f);
         Position = initialPosition;
+
+        bulletSystem.SwitchType(initialBulletType);
     }
 
     public override void _Process(float delta) {
@@ -189,7 +197,19 @@ public class Player : Area2D, IHittable {
         }
     }
 
-    private void _On_BulletSystem_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        EmitSignal("fire", bullet, pos, speed, bulletType, bulletTarget, automatic);
+    private void _On_BulletSystem_Fire(Bullet.FireData fireData) {
+        EmitSignal("fire", fireData);
+    }
+
+    private void _On_BulletSystem_TypeChanged(Bullet.BulletType prevType, Bullet.BulletType newType) {
+        if (newType == Bullet.BulletType.Bomb && newType != prevType) {
+            // Bomb tint
+            sprite.Modulate = Colors.Yellow;
+        }
+
+        else if (prevType == Bullet.BulletType.Bomb && newType != prevType) {
+            // Reset tint
+            sprite.Modulate = Colors.White;
+        }
     }
 }

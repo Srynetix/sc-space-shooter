@@ -21,9 +21,9 @@ public class TestBoss : Node2D {
         AddChild(bossInstance);
     }
 
-    private void _On_Fire(PackedScene bullet, Vector2 pos, float speed, Bullet.BulletType bulletType, Bullet.BulletTarget bulletTarget, bool automatic) {
-        var instance = (Bullet)bullet.Instance();
-        instance.Prepare(pos, speed, bulletType, bulletTarget, automatic);
+    private void _On_Fire(Bullet.FireData fireData) {
+        var instance = (Bullet)fireData.bullet.Instance();
+        instance.Prepare(fireData);
         AddChild(instance);
     }
 
