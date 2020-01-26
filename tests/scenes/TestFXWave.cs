@@ -21,21 +21,6 @@ public class TestFXWave : Control {
         player.Connect("fire", this, nameof(_On_Fire));
         player.Connect("respawn", this, nameof(_On_Respawn));
         player.GetBulletSystem().Connect("type_switch", this, nameof(_On_TypeSwitch));
-
-        // var gameSize = gameState.GetGameSize();
-        // while (true) {
-        //     // var randPos = new Vector2((float)GD.RandRange(0.0f, gameSize.x), (float)GD.RandRange(0.0f, gameSize.y));
-        //     var randPos = gameSize / 2;
-        //     var fxWave = (FXWave)fxWaveScene.Instance();
-        //     AddChild(fxWave);
-
-        //     // Start wave
-        //     fxWave.StartThenFree(randPos, 0.25f);
-        //     await ToSignal(fxWave, "finished");
-
-        //     // Wait 2 seconds
-        //     await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
-        // }
     }
 
     private void _On_Fire(Bullet.FireData fireData) {

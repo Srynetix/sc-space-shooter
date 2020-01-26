@@ -20,7 +20,6 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
     protected Position2D muzzle;
     protected Timer fireTimer;
     protected BulletSystem bulletSystem;
-    protected Particles2D trail;
     protected AudioStreamPlayer2D explosionSound;
     protected Sprite sprite;
     protected GameState gameState;
@@ -40,7 +39,6 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
         muzzle = GetNode<Position2D>("Position2D");
         fireTimer = GetNode<Timer>("FireTimer");
         bulletSystem = GetNode<BulletSystem>("BulletSystem");
-        trail = GetNode<Particles2D>("Trail");
         explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
         sprite = GetNode<Sprite>("Sprite");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
@@ -48,7 +46,6 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
-        ((ParticlesMaterial)trail.ProcessMaterial).Scale = Scale.x;
     }
 
     public override void _Process(float delta) {

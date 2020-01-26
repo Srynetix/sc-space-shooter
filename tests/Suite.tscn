@@ -4,18 +4,3 @@
 
 [node name="Suite" instance=ExtResource( 1 )]
 scene_folder = "res://tests/scenes"
-
-[node name="HBoxContainer" parent="CanvasLayer/MarginContainer" index="0"]
-margin_right = 520.0
-margin_bottom = 940.0
-
-[node name="Instructions" parent="CanvasLayer/MarginContainer/HBoxContainer" index="0"]
-margin_top = 880.0
-margin_right = 248.0
-margin_bottom = 940.0
-
-[node name="SceneName" parent="CanvasLayer/MarginContainer/HBoxContainer" index="1"]
-margin_left = 252.0
-margin_top = 922.0
-margin_right = 500.0
-margin_bottom = 940.0

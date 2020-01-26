@@ -8,7 +8,9 @@ uniform vec2 resolution;
 uniform vec4 waveColor: hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform sampler2D noise;
 uniform float radius: hint_range(0, 1) = 0.5;
-uniform float border: hint_range(0.01, 0.2) = 0.01;
+uniform float border: hint_range(0.001, 0.2) = 0.01;
+uniform float frequency = 60;
+uniform float depth = 0.005;
 
 float aa_circle(vec2 _st, float _radius, float _border) {
     vec2 center = vec2(0.5);
@@ -23,14 +25,18 @@ float rand(vec2 uv) {
 }
 
 void fragment() {
-    float frg = aa_circle(UV, radius, border);
+    vec2 uv = UV;
+    uv.x += sin(uv.y * frequency + TIME) * depth;
+	uv.x = clamp(uv.x, 0.0, 1.0);
+    float frg = aa_circle(uv, radius, border);
+    
     vec3 bg = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
     if (frg == 0.0) {
       discard;
     }
     
     vec3 color = clamp(vec3(1.0) - bg, vec3(0.0), vec3(1.0));
-    COLOR = vec4(mix(color, waveColor.rgb, 0.5), 1.0);
+    COLOR = vec4(mix(color, waveColor.rgb, 0.5), waveColor.a);
 }"
 
 [sub_resource type="OpenSimplexNoise" id=2]
@@ -43,5 +49,7 @@ shader = SubResource( 1 )
 shader_param/resolution = Vector2( 512, 512 )
 shader_param/waveColor = Color( 0.266667, 0.94902, 1, 1 )
 shader_param/radius = 0.0
-shader_param/border = 0.01
+shader_param/border = 0.005
+shader_param/frequency = 60.0
+shader_param/depth = 0.01
 shader_param/noise = SubResource( 3 )
