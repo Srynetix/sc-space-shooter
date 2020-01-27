@@ -29,7 +29,7 @@ public class GameState : Node
         {Screens.GAME, "res://screens/GameScreen.tscn"},
         {Screens.GAMEOVER, "res://screens/GameOverScreen.tscn"},
         {Screens.SCORE, "res://screens/ScoreScreen.tscn"},
-        {Screens.TESTS, "res://tests/Suite.tscn"},
+        {Screens.TESTS, "res://tests/TestSuite.tscn"},
     };
 
     private int score = 0;

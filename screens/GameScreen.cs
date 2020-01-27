@@ -18,6 +18,7 @@ public class GameScreen : Control
     private Spawner rockSpawner;
     private Spawner powerupSpawner;
     private Spawner enemySpawner;
+    private AcceptDialog pausePopup;
     private Spawner lifeSpawner;
     private GameState gameState;
 
@@ -33,6 +34,7 @@ public class GameScreen : Control
         powerupSpawner = GetNode<Spawner>("Spawners/PowerupSpawner");
         enemySpawner = GetNode<Spawner>("Spawners/EnemySpawner");
         lifeSpawner = GetNode<Spawner>("Spawners/LifePowerupSpawner");
+        pausePopup = GetNode<AcceptDialog>("CanvasLayer/AcceptDialog");
         camera = GetTree().Root.GetNode<FXCamera>("FXCamera");
         gameState = GetTree().Root.GetNode<GameState>("GameState");
 
@@ -54,8 +56,14 @@ public class GameScreen : Control
             { "fire", nameof(_On_Fire) }
         });
 
+        pausePopup.DialogText = Tr("Game is paused.\nPress Resume to continue.").CEscape();
+        pausePopup.GetCloseButton().Hide();
+        pausePopup.GetOk().Text = Tr("Resume");
+
         waveSystem.Connect("timeout", this, nameof(_On_WaveSystem_Timeout));
         lifeSpawner.disabled = true;
+
+        pausePopup.Connect("confirmed", this, nameof(_ResumeGame));
 
         gameState.ResetGameState();
         gameState.UpdateHUD(hud);
@@ -66,6 +74,10 @@ public class GameScreen : Control
     public override void _Notification(int what) {
         if (what == MainLoop.NotificationWmGoBackRequest) {
             gameState.LoadScreen(GameState.Screens.TITLE);
+        }
+
+        else if (what == MainLoop.NotificationWmFocusOut) {
+            _PauseGame();
         }
     }
 
@@ -160,6 +172,18 @@ public class GameScreen : Control
             gameState.AddLife();
             gameState.UpdateHUD(hud);
         }
+    }
+
+    private void _PauseGame() {
+        var tree = GetTree();
+        pausePopup.PopupCentered();
+        tree.Paused = true;
+    }
+
+    private void _ResumeGame() {
+        var tree = GetTree();
+        pausePopup.Hide();
+        tree.Paused = false;
     }
 
     private void _On_WaveSystem_Timeout() {

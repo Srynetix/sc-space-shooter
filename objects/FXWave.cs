@@ -56,7 +56,7 @@ public class FXWave : Area2D {
         fXCamera.Shake(true);
         await ToSignal(tween, "tween_all_completed");
 
-        fXCamera.StopShake();
+        fXCamera.Reset();
         sound.Stop();
         particles.Emitting = false;
 

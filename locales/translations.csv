@@ -14,10 +14,12 @@ GAMEOVER;Game over...;Game over ...
 MENU_START_GAME;Start game;Démarrer le jeu
 MENU_OPTIONS;Options;Options
 MENU_TESTS;Tests;Tests
-< Previous;< Previous;< Prec.
+< Prev;< Prev;< Prec.
 Reset;Reset;Recharger
 Next >;Next >;Suiv. >
 Language;Language;Langue
 English;English;Anglais
 French;French;Français
-< Go back;< Go back;< Retour
+Back;Back;Retour
+"Game is paused.\nPress Resume to continue.";"Game is paused.\nPress Resume to continue.";"Pause.\nAppuyez sur OK pour continuer."
+Resume;Resume;OK

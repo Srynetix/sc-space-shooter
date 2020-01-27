@@ -4,6 +4,9 @@ extends Control
 Scene runner.
 """
 
+signal scene_loaded(name)
+signal go_back
+
 export(String, DIR) var scene_folder: String
 
 const SCENE_KEY_RESET = KEY_I
@@ -12,6 +15,7 @@ const SCENE_KEY_NEXT = KEY_P
 
 onready var current = $Current
 onready var scene_name = $CanvasLayer/Margin/VBox/Text/SceneName
+onready var back_button = $CanvasLayer/Margin/BackButton
 onready var previous_btn = $CanvasLayer/Margin/VBox/Margin/Buttons/Previous
 onready var reset_btn = $CanvasLayer/Margin/VBox/Margin/Buttons/Reset
 onready var next_btn = $CanvasLayer/Margin/VBox/Margin/Buttons/Next
@@ -29,6 +33,7 @@ func _ready():
     previous_btn.connect("pressed", self, "_load_prev_scene")
     reset_btn.connect("pressed", self, "_load_current_scene")
     next_btn.connect("pressed", self, "_load_next_scene")
+    back_button.connect("pressed", self, "_go_back")
 
 func _input(event):
     if event is InputEventKey:
@@ -39,6 +44,12 @@ func _input(event):
                 self._load_prev_scene()
             elif event.scancode == SCENE_KEY_RESET:
                 self._load_current_scene()
+            elif event.scancode == KEY_ESCAPE:
+                self._go_back()
+
+func _notification(what):
+    if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+        self._go_back()
 
 #################
 # Private methods
@@ -88,6 +99,7 @@ func _load_current_scene():
     var instance = entry_model.instance()
     self.scene_name.text = str(entry_idx) + " - " + entry_name + "\n" + str(entry_idx) + "/" + str(len(self.known_scenes))
     self.current.add_child(instance)
+    emit_signal("scene_loaded", entry_name)
 
 func _load_next_scene():
     if self.current_scene == len(self.known_scenes) - 1:
@@ -102,3 +114,6 @@ func _load_prev_scene():
     else:
         self.current_scene -= 1
     self._load_current_scene()
+
+func _go_back():
+    emit_signal("go_back")

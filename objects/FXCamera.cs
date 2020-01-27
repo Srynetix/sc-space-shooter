@@ -38,7 +38,8 @@ public class FXCamera : Node2D
         }
     }
 
-    public void StopShake() {
+    public void Reset() {
         animationPlayer.Stop();
+        camera.Offset = new Vector2(0, 0);
     }
 }

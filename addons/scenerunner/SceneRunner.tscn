@@ -4,19 +4,23 @@
 [ext_resource path="res://addons/scenerunner/assets/kenvector_future.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=3]
 
+[sub_resource type="DynamicFont" id=5]
+size = 24
+font_data = ExtResource( 3 )
+
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 2 )
+size = 24
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 24
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=5]
+size = 24
 font_data = ExtResource( 3 )
 
 [node name="SceneRunner" type="Control"]
@@ -43,77 +47,76 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 20
+custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BackButton" type="Button" parent="CanvasLayer/Margin"]
+margin_left = 428.0
+margin_top = 20.0
+margin_right = 520.0
+margin_bottom = 53.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 5 )
+text = "Back"
+
 [node name="VBox" type="VBoxContainer" parent="CanvasLayer/Margin"]
 margin_left = 20.0
-margin_top = 832.0
+margin_top = 865.0
 margin_right = 520.0
 margin_bottom = 940.0
 size_flags_vertical = 8
 
 [node name="Text" type="HBoxContainer" parent="CanvasLayer/Margin/VBox"]
 margin_right = 500.0
-margin_bottom = 60.0
+margin_bottom = 18.0
 
-[node name="Instructions" type="Label" parent="CanvasLayer/Margin/VBox/Text"]
-margin_right = 248.0
-margin_bottom = 60.0
+[node name="SceneName" type="Label" parent="CanvasLayer/Margin/VBox/Text"]
+margin_right = 500.0
+margin_bottom = 18.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 custom_fonts/font = SubResource( 1 )
-text = "I - Reset screen
-O - Previous screen
-P - Next screen"
-
-[node name="SceneName" type="Label" parent="CanvasLayer/Margin/VBox/Text"]
-margin_left = 252.0
-margin_top = 42.0
-margin_right = 500.0
-margin_bottom = 60.0
-size_flags_horizontal = 3
-size_flags_vertical = 8
-custom_fonts/font = SubResource( 2 )
 text = "Scene name"
 align = 2
 
 [node name="Margin" type="MarginContainer" parent="CanvasLayer/Margin/VBox"]
-margin_top = 64.0
+margin_top = 22.0
 margin_right = 500.0
-margin_bottom = 108.0
-custom_constants/margin_right = 20
+margin_bottom = 75.0
+custom_constants/margin_right = 10
 custom_constants/margin_top = 20
-custom_constants/margin_left = 20
+custom_constants/margin_left = 10
 custom_constants/margin_bottom = 0
 
 [node name="Buttons" type="HBoxContainer" parent="CanvasLayer/Margin/VBox/Margin"]
-margin_left = 40.0
+margin_left = 50.0
 margin_top = 20.0
-margin_right = 459.0
-margin_bottom = 44.0
+margin_right = 450.0
+margin_bottom = 53.0
 size_flags_horizontal = 4
-custom_constants/separation = 72
+custom_constants/separation = 32
 
 [node name="Previous" type="Button" parent="CanvasLayer/Margin/VBox/Margin/Buttons"]
-margin_right = 121.0
-margin_bottom = 24.0
-custom_fonts/font = SubResource( 3 )
-text = "< Previous"
+margin_right = 112.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 2 )
+text = "< Prev"
 
 [node name="Reset" type="Button" parent="CanvasLayer/Margin/VBox/Margin/Buttons"]
-margin_left = 193.0
-margin_right = 270.0
-margin_bottom = 24.0
-custom_fonts/font = SubResource( 4 )
+margin_left = 144.0
+margin_right = 256.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 3 )
 text = "Reset"
 
 [node name="Next" type="Button" parent="CanvasLayer/Margin/VBox/Margin/Buttons"]
-margin_left = 342.0
-margin_right = 419.0
-margin_bottom = 24.0
-custom_fonts/font = SubResource( 5 )
+margin_left = 288.0
+margin_right = 400.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 4 )
 text = "Next >"

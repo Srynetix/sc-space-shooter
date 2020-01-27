@@ -38,7 +38,9 @@ public class TitleScreen : Control
 
         // Define language button
         var locale = OS.GetLocale();
-        if (locale == "fr") {
+        GD.Print(locale);
+
+        if (locale.BeginsWith("fr")) {
             languagesButton.Select(1);
         } else {
             languagesButton.Select(0);
