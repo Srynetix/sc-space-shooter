@@ -6,26 +6,28 @@ public class FXWave : Area2D {
     private static PackedScene sparklesScene = (PackedScene)GD.Load("res://objects/Sparkles.tscn");
 
     // On ready
+    [BindNode]
     private Tween tween;
+    [BindNode]
     private Sprite sprite;
+    [BindNode]
     private CollisionShape2D collisionShape;
-    private Shape2D shape;
+    [BindNode]
     private Particles2D particles;
+    [BindNode]
     private AudioStreamPlayer sound;
-    private ParticlesMaterial particlesMaterial;
-    private ShaderMaterial shaderMaterial;
+    [BindNodeRoot]
     private FXCamera fXCamera;
+    [BindNodeRoot]
     private GameState gameState;
 
+    private Shape2D shape;
+    private ParticlesMaterial particlesMaterial;
+    private ShaderMaterial shaderMaterial;
+
     public override void _Ready() {
-        // On ready
-        tween = GetNode<Tween>("Tween");
-        sprite = GetNode<Sprite>("Sprite");
-        particles = GetNode<Particles2D>("Particles2D");
-        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
-        sound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-        fXCamera = GetTree().Root.GetNode<FXCamera>("FXCamera");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
+
         shape = (CircleShape2D)collisionShape.Shape;
         shaderMaterial = (ShaderMaterial)sprite.Material;
         particlesMaterial = (ParticlesMaterial)particles.ProcessMaterial;

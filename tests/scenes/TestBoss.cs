@@ -2,14 +2,15 @@ using Godot;
 
 public class TestBoss : Node2D {
 
+    [BindNode]
     private Player player;
+    [BindNodeRoot]
     private GameState gameState;
 
     private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
 
     public override void _Ready() {
-        player = GetNode<Player>("Player");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         var gameSize = gameState.GetGameSize();
         player.Connect("fire", this, nameof(_On_Fire));

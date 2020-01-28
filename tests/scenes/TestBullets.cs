@@ -1,16 +1,18 @@
 using Godot;
 
 public class TestBullets : Node2D {
+
+    [BindNode("PlayerBullets")]
     private BulletSystem playerBullets;
+    [BindNode("EnemyBullets")]
     private BulletSystem enemyBullets;
+    [BindNode("LaserBullets")]
     private BulletSystem laserBullets;
+    [BindNodeRoot]
     private GameState gameState;
 
     async public override void _Ready() {
-        playerBullets = GetNode<BulletSystem>("PlayerBullets");
-        enemyBullets = GetNode<BulletSystem>("EnemyBullets");
-        laserBullets = GetNode<BulletSystem>("LaserBullets");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         var gameSize = gameState.GetGameSize();
         playerBullets.Position = new Vector2(gameSize.x / 4, gameSize.y / 2);

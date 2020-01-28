@@ -3,11 +3,17 @@ using Godot;
 public class Rock : Area2D, IExplodable, IHittable, IPreparable
 {
     // On ready
+    [BindNode("Sprite/Trail")]
     private Particles2D trail;
+    [BindNode]
     private AnimationPlayer animationPlayer;
+    [BindNode]
     private CollisionShape2D collisionShape;
+    [BindNode]
     private Sprite sprite;
+    [BindNode("ExplosionSound")]
     private AudioStreamPlayer2D explosionSound;
+    [BindNodeRoot]
     private GameState gameState;
 
     // Signals
@@ -25,13 +31,7 @@ public class Rock : Area2D, IExplodable, IHittable, IPreparable
     private bool hasExploded = false;
 
     public override void _Ready() {
-        // On ready
-        trail = GetNode<Particles2D>("Sprite/Trail");
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
-        sprite = GetNode<Sprite>("Sprite");
-        explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         ((ParticlesMaterial)trail.ProcessMaterial).Scale = Scale.x;
     }

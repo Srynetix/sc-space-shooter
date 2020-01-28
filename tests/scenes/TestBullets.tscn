@@ -14,5 +14,4 @@ fireSpeed = 250.0
 bulletTarget = 1
 
 [node name="LaserBullets" parent="." instance=ExtResource( 2 )]
-fireSpeed = 500.0
 bulletType = 3

@@ -15,7 +15,9 @@ public class BulletSystem : Node2D
     [Export] public bool bulletAutomatic = false;
 
     // On ready
+    [BindNode("FireTimer")]
     private Timer fireTimer;
+    [BindNode("Sound")]
     private AudioStreamPlayer2D sound;
 
     // Data
@@ -23,9 +25,7 @@ public class BulletSystem : Node2D
     private Bullet.BulletType previousBulletType = Bullet.BulletType.Simple;
 
     public override void _Ready() {
-        // On ready
-        fireTimer = GetNode<Timer>("FireTimer");
-        sound = GetNode<AudioStreamPlayer2D>("Sound");
+        this.BindNodes();
 
         fireTimer.WaitTime = fireCooldown;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));

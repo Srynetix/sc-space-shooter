@@ -4,16 +4,18 @@ using Dictionary = Godot.Collections.Dictionary;
 
 public class TestFXWave : Control {
     private static PackedScene fxWaveScene = (PackedScene)GD.Load("res://objects/FXWave.tscn");
+
+    [BindNode]
     private Spawner spawner;
+    [BindNode]
     private Player player;
+    [BindNodeRoot]
     private GameState gameState;
 
     public override void _Ready() {
-        GD.Randomize();
+        this.BindNodes();
 
-        spawner = GetNode<Spawner>("Spawner");
-        player = GetNode<Player>("Player");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        GD.Randomize();
 
         spawner.ConnectTargetScene(this, new Dictionary {
             { "fire", nameof(_On_Fire) }

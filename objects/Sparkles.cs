@@ -2,19 +2,18 @@ using Godot;
 
 public class Sparkles : Node2D
 {
-    // On ready
+    [BindNode]
     private Particles2D particles;
+    [BindNode]
     private Timer timer;
-    
+
     public override void _Ready() {
-        // On ready
-        particles = GetNode<Particles2D>("Particles2D");
-        timer = GetNode<Timer>("Timer");
-        
+        this.BindNodes();
+
         timer.Connect("timeout", this, nameof(_On_Timer_Timeout));
-        particles.Emitting = true;    
+        particles.Emitting = true;
     }
-    
+
     private void _On_Timer_Timeout() {
         QueueFree();
     }

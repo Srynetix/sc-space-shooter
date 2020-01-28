@@ -44,10 +44,15 @@ public class Bullet : Area2D
     [Export] public bool bulletAutomatic = false;
 
     // On ready
+    [BindNode]
     private VisibilityNotifier2D visibilityNotifier;
+    [BindNode("SlowTimer")]
     private Timer slowTimer;
+    [BindNode("BombTimer")]
     private Timer bombTimer;
+    [BindNode("Trail")]
     private Particles2D trail;
+    [BindNode("Sprite")]
     private Sprite sprite;
 
     // Data
@@ -55,12 +60,7 @@ public class Bullet : Area2D
     private float baseSpeed = 0.0f;
 
     async public override void _Ready() {
-        // On ready
-        visibilityNotifier = GetNode<VisibilityNotifier2D>("VisibilityNotifier2D");
-        slowTimer = GetNode<Timer>("SlowTimer");
-        bombTimer = GetNode<Timer>("BombTimer");
-        trail = GetNode<Particles2D>("Trail");
-        sprite = GetNode<Sprite>("Sprite");
+        this.BindNodes();
 
         Connect("area_entered", this, nameof(_On_Area_Entered));
         visibilityNotifier.Connect("screen_exited", this, nameof(_On_VisibilityNotifier2D_ScreenExited));

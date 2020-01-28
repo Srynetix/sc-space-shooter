@@ -1,35 +1,34 @@
 using Godot;
 
-public class TitleScreen : Control
-{
-    private GameState gameState;
+public class TitleScreen : Control {
+
+    [BindNode("Margin/All/Top/HSValue")]
     private Label highScore;
-    private Button startGameButton;
-    private Button optionsButton;
+    [BindNode("Margin/All/Buttons")]
     private VBoxContainer buttons;
-    private VBoxContainer optionsButtons;
-    private Button optionsBackButton;
-    private OptionButton languagesButton;
+    [BindNode("Margin/All/Buttons/StartGame")]
+    private Button startGameButton;
+    [BindNode("Margin/All/Buttons/Options")]
+    private Button optionsButton;
+    [BindNode("Margin/All/Buttons/Tests")]
     private Button testsButton;
+    [BindNode("Margin/All/OptionsButtons")]
+    private VBoxContainer optionsButtons;
+    [BindNode("Margin/All/OptionsButtons/BackButton")]
+    private Button optionsBackButton;
+    [BindNode("Margin/All/OptionsButtons/Languages")]
+    private OptionButton languagesButton;
+    [BindNode("Sound")]
     private AudioStreamPlayer sound;
+    [BindNode("Margin/All/Bottom/Version")]
     private Label version;
+    [BindNode]
     private Tween tween;
+    [BindNodeRoot]
+    private GameState gameState;
 
     async public override void _Ready() {
-        // On ready
-        sound = GetNode<AudioStreamPlayer>("Sound");
-        tween = GetNode<Tween>("Tween");
-        highScore = GetNode<Label>("Margin/All/Top/HSValue");
-        buttons = GetNode<VBoxContainer>("Margin/All/Buttons");
-        startGameButton = GetNode<Button>("Margin/All/Buttons/StartGame");
-        optionsButton = GetNode<Button>("Margin/All/Buttons/Options");
-        optionsButtons = GetNode<VBoxContainer>("Margin/All/OptionsButtons");
-        optionsBackButton = optionsButtons.GetNode<Button>("BackButton");
-        languagesButton = optionsButtons.GetNode<OptionButton>("Languages");
-        testsButton = GetNode<Button>("Margin/All/Buttons/Tests");
-        buttons = GetNode<VBoxContainer>("Margin/All/Buttons");
-        version = GetNode<Label>("Margin/All/Bottom/Version");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         version.Text = Tr("VERSION") + " " + gameState.GetVersionNumber();
 
@@ -38,8 +37,6 @@ public class TitleScreen : Control
 
         // Define language button
         var locale = OS.GetLocale();
-        GD.Print(locale);
-
         if (locale.BeginsWith("fr")) {
             languagesButton.Select(1);
         } else {

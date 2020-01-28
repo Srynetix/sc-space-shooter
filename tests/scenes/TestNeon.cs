@@ -1,15 +1,19 @@
 using Godot;
 
 public class TestNeon : Control {
+
+    [BindNode]
     private Sprite sprite;
+    [BindNode]
     private Tween tween;
-    private ShaderMaterial shaderMaterial;
+    [BindNodeRoot]
     private GameState gameState;
 
+    private ShaderMaterial shaderMaterial;
+
     async public override void _Ready() {
-        sprite = GetNode<Sprite>("Sprite");
-        tween = GetNode<Tween>("Tween");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
+
         shaderMaterial = (ShaderMaterial)sprite.Material;
 
         var gameSize = gameState.GetGameSize();

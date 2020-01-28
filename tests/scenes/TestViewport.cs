@@ -2,11 +2,11 @@ using Godot;
 
 public class TestViewport : Control
 {
+    [BindNode]
     private Player player;
 
     public override void _Ready() {
-        // On ready
-        player = GetNode<Player>("Player");
+        this.BindNodes();
 
         player.Connect("fire", this, nameof(_On_Fire));
         player.Connect("respawn", this, nameof(_On_Respawn));

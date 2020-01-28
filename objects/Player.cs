@@ -17,13 +17,21 @@ public class Player : Area2D, IHittable {
     [Export] public Bullet.BulletType initialBulletType = Bullet.BulletType.Simple;
 
     // On ready
+    [BindNode("Timers/SpawningTimer")]
     private Timer spawnTimer;
+    [BindNode]
     private Position2D muzzle;
+    [BindNode]
     private Sprite sprite;
+    [BindNode]
     private AnimationPlayer animationPlayer;
+    [BindNode]
     private CollisionShape2D collisionShape;
+    [BindNode]
     private BulletSystem bulletSystem;
+    [BindNode]
     private Label statusLabel;
+    [BindNodeRoot]
     private GameState gameState;
 
     // Data
@@ -38,14 +46,7 @@ public class Player : Area2D, IHittable {
     private float spawnTime = 3.0f;
 
     public override void _Ready() {
-        spawnTimer = GetNode<Timer>("Timers/SpawningTimer");
-        muzzle = GetNode<Position2D>("Position2D");
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
-        bulletSystem = GetNode<BulletSystem>("BulletSystem");
-        statusLabel = GetNode<Label>("Label");
-        sprite = GetNode<Sprite>("Sprite");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         Connect("area_entered", this, nameof(_On_Area_Entered));
 

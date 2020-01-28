@@ -5,8 +5,11 @@ public class Debug : CanvasLayer
     private const int MAX_TAP_COUNT = 10;
     private const float TAP_TIME_LIMIT_MS = 500;
 
+    [BindNode("Margin/VBox/Label")]
     private Label label;
+    [BindNodeRoot]
     private GameState gameState;
+
     private Vector2 touchPosition;
     private bool isTouching;
     private Vector2 dragPosition;
@@ -16,9 +19,8 @@ public class Debug : CanvasLayer
     private bool enabled;
 
     public override void _Ready() {
-        // On ready
-        label = GetNode<Label>("Margin/VBox/Label");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
+
         touchPosition = new Vector2();
         dragPosition = new Vector2();
         dragRelative = new Vector2();

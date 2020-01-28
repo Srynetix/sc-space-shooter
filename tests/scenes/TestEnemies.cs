@@ -4,11 +4,12 @@ using Dictionary = Godot.Collections.Dictionary;
 
 public class TestEnemies : Control
 {
+    [BindNode("EnemySpawner")]
     private Spawner spawner;
 
     public override void _Ready() {
-        // On ready
-        spawner = GetNode<Spawner>("EnemySpawner");
+        this.BindNodes();
+
         spawner.ConnectTargetScene(this, new Dictionary {
             { "fire", nameof(_On_Spawner_Fire) }
         });

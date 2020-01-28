@@ -15,13 +15,21 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
     [Export] public float fireTime = 1.0f;
 
     // On ready
+    [BindNode]
     protected AnimationPlayer animationPlayer;
+    [BindNode]
     protected CollisionShape2D collisionShape;
+    [BindNode]
     protected Position2D muzzle;
+    [BindNode("FireTimer")]
     protected Timer fireTimer;
+    [BindNode]
     protected BulletSystem bulletSystem;
+    [BindNode("ExplosionSound")]
     protected AudioStreamPlayer2D explosionSound;
+    [BindNode]
     protected Sprite sprite;
+    [BindNodeRoot]
     protected GameState gameState;
 
     // Data
@@ -31,17 +39,8 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
     protected float acc = 0.0f;
     protected bool isFiring = false;
 
-    public override void _Ready()
-    {
-        // On ready
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
-        muzzle = GetNode<Position2D>("Position2D");
-        fireTimer = GetNode<Timer>("FireTimer");
-        bulletSystem = GetNode<BulletSystem>("BulletSystem");
-        explosionSound = GetNode<AudioStreamPlayer2D>("ExplosionSound");
-        sprite = GetNode<Sprite>("Sprite");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+    public override void _Ready() {
+        this.BindNodes();
 
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));

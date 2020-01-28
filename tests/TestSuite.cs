@@ -1,14 +1,15 @@
 using Godot;
 
 public class TestSuite : Control {
+    [BindNodeRoot]
     private FXCamera fXCamera;
+    [BindNodeRoot]
     private GameState gameState;
+    [BindNodeRoot]
     private Debug debug;
 
     public override void _Ready() {
-        fXCamera = GetTree().Root.GetNode<FXCamera>("FXCamera");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
-        debug = GetTree().Root.GetNode<Debug>("Debug");
+        this.BindNodes();
 
         var runner = GetNode("SceneRunner");
         runner.Connect("scene_loaded", this, nameof(_On_SceneLoaded));

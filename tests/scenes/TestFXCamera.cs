@@ -1,14 +1,15 @@
 using Godot;
 
 public class TestFXCamera : Control {
+    [BindNode]
     private Timer timer;
-    private FXCamera camera;
+    [BindNode]
     private Player player;
+    [BindNodeRoot]
+    private FXCamera camera;
 
     public override void _Ready() {
-        timer = GetNode<Timer>("Timer");
-        player = GetNode<Player>("Player");
-        camera = GetTree().Root.GetNode<FXCamera>("FXCamera");
+        this.BindNodes();
 
         timer.Connect("timeout", this, nameof(_On_Timeout));
         player.Connect("fire", this, nameof(_On_Fire));

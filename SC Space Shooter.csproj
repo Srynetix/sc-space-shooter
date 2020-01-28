@@ -86,6 +86,7 @@
     <Compile Include="ui\Debug.cs" />
     <Compile Include="ui\HUD.cs" />
     <Compile Include="utils\GameState.cs" />
+    <Compile Include="utils\NodeExt.cs" />
     <Compile Include="utils\Transition.cs" />
     <Compile Include="utils\Utils.cs" />
     <Compile Include="utils\WaveSystem.cs" />

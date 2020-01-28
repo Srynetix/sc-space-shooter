@@ -3,15 +3,15 @@ using Godot;
 public class FXCamera : Node2D
 {
     // On ready
+    [BindNode]
     private AnimationPlayer animationPlayer;
+    [BindNode]
     private Camera2D camera;
+    [BindNodeRoot]
     private GameState gameState;
 
     public override void _Ready() {
-        // On ready
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        camera = GetNode<Camera2D>("Camera2D");
-        gameState = GetTree().Root.GetNode<GameState>("GameState");
+        this.BindNodes();
 
         VisualServer.SetDefaultClearColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 

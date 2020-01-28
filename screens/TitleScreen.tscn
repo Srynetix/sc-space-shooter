@@ -119,9 +119,10 @@ __meta__ = {
 }
 
 [node name="Buttons" type="VBoxContainer" parent="Margin/All"]
-margin_top = 614.0
+visible = false
+margin_top = 460.0
 margin_right = 520.0
-margin_bottom = 917.0
+margin_bottom = 686.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
@@ -149,16 +150,16 @@ custom_fonts/font = SubResource( 6 )
 text = "MENU_TESTS"
 
 [node name="OptionsButtons" type="VBoxContainer" parent="Margin/All"]
-visible = false
-margin_top = 690.0
+margin_top = 614.0
 margin_right = 520.0
-margin_bottom = 916.0
+margin_bottom = 917.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
 [node name="Languages" type="OptionButton" parent="Margin/All/OptionsButtons"]
 margin_right = 520.0
 margin_bottom = 33.0
+mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 7 )
 text = "English"
 items = [ "English", null, false, 0, null, "French", null, false, 1, null ]
@@ -168,6 +169,7 @@ selected = 0
 margin_top = 73.0
 margin_right = 520.0
 margin_bottom = 106.0
+mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 8 )
 text = "Back"
 
