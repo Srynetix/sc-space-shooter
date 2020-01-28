@@ -16,7 +16,6 @@ float aa_circle(vec2 _st, float _radius, float _border) {
     vec2 center = vec2(0.5);
     float dist = length(_st - center);
     float t = 1.0 + smoothstep(_radius, _radius + _border, dist) - smoothstep(_radius - _border, _radius, dist);
-    
     return 1.0 - t;
 }
 
@@ -24,10 +23,16 @@ float rand(vec2 uv) {
     return texture(noise, uv).r;
 }
 
+vec2 apply_sine(vec2 uv, float freq, float sine_depth, float time) {
+    uv.x += sin(uv.y * freq + time) * sine_depth;
+    uv.x = clamp(uv.x, 0.0, 1.0);
+    uv.y += cos(uv.x * freq + time * 2.0) * sine_depth;
+    uv.y = clamp(uv.y, 0.0, 1.0);
+    return uv;
+}
+
 void fragment() {
-    vec2 uv = UV;
-    uv.x += sin(uv.y * frequency + TIME) * depth;
-	uv.x = clamp(uv.x, 0.0, 1.0);
+    vec2 uv = apply_sine(UV, frequency, depth, TIME);
     float frg = aa_circle(uv, radius, border);
     
     vec3 bg = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0).rgb;
@@ -36,7 +41,7 @@ void fragment() {
     }
     
     vec3 color = clamp(vec3(1.0) - bg, vec3(0.0), vec3(1.0));
-    COLOR = vec4(mix(color, waveColor.rgb, 0.5), waveColor.a);
+    COLOR = vec4(mix(color, waveColor.rgb, 0.5), waveColor.a * frg);
 }"
 
 [sub_resource type="OpenSimplexNoise" id=2]
@@ -49,7 +54,7 @@ shader = SubResource( 1 )
 shader_param/resolution = Vector2( 512, 512 )
 shader_param/waveColor = Color( 0.266667, 0.94902, 1, 1 )
 shader_param/radius = 0.0
-shader_param/border = 0.005
+shader_param/border = 0.01
 shader_param/frequency = 60.0
-shader_param/depth = 0.01
+shader_param/depth = 0.005
 shader_param/noise = SubResource( 3 )

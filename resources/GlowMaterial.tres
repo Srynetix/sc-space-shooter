@@ -17,7 +17,7 @@ vec4 blur(sampler2D tex, vec2 uv, vec2 ps) {
 }
 
 vec4 sample_glow_pixel(sampler2D tex, vec2 uv) {
-    return max(textureLod(tex, uv, 3.0) - hdrThreshold, vec4(0.0));
+    return max(textureLod(tex, uv, 4.0) - hdrThreshold, vec4(0.0));
 }
 
 vec4 glow(sampler2D tex, vec2 uv, vec2 ps) {
@@ -46,5 +46,5 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/enableBlur = false
 shader_param/enableGlow = true
-shader_param/hdrThreshold = 0.4
-shader_param/blurScale = 1.0
+shader_param/hdrThreshold = 0.2
+shader_param/blurScale = 24.0
