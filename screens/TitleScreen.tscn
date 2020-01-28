@@ -119,10 +119,9 @@ __meta__ = {
 }
 
 [node name="Buttons" type="VBoxContainer" parent="Margin/All"]
-visible = false
-margin_top = 460.0
+margin_top = 614.0
 margin_right = 520.0
-margin_bottom = 686.0
+margin_bottom = 917.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
@@ -150,6 +149,7 @@ custom_fonts/font = SubResource( 6 )
 text = "MENU_TESTS"
 
 [node name="OptionsButtons" type="VBoxContainer" parent="Margin/All"]
+visible = false
 margin_top = 614.0
 margin_right = 520.0
 margin_bottom = 917.0
