@@ -105,6 +105,7 @@ public class BulletSystem : Node2D
     public void FireBomb(Vector2 pos) {
         if (bombAvailable) {
             bombAvailable = false;
+            canShoot = true;
             EmitSignal("bomb_used");
             _Fire(pos, Bullet.BulletType.Bomb);
             Debug.GetInstance(this).GetLogger(GetType().Name).Info("Bomb fired at", pos);

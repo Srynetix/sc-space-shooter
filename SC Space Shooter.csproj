@@ -55,8 +55,6 @@
   <ItemGroup>
     <Compile Include="objects\Bullet.cs" />
     <Compile Include="objects\BulletSystem.cs" />
-    <Compile Include="objects\IExplodable.cs" />
-    <Compile Include="objects\IHittable.cs" />
     <Compile Include="objects\BossEnemy.cs" />
     <Compile Include="objects\Enemy.cs" />
     <Compile Include="objects\FXCamera.cs" />
@@ -88,6 +86,8 @@
     <Compile Include="ui\Debug.cs" />
     <Compile Include="ui\HUD.cs" />
     <Compile Include="utils\GameState.cs" />
+    <Compile Include="utils\IExplodable.cs" />
+    <Compile Include="utils\IHittable.cs" />
     <Compile Include="utils\NodeExt.cs" />
     <Compile Include="utils\Transition.cs" />
     <Compile Include="utils\Utils.cs" />

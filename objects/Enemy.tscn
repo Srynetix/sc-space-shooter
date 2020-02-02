@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://objects/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemyBlack1.png" type="Texture" id=2]
@@ -100,7 +100,13 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.466667, 0.466667, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=11]
 size = 10
 font_data = ExtResource( 6 )
 
@@ -136,6 +142,7 @@ anims/tint = SubResource( 9 )
 position = Vector2( -0.382614, 53.2522 )
 
 [node name="FireTimer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="BulletSystem" parent="." instance=ExtResource( 4 )]
@@ -152,8 +159,11 @@ margin_left = -34.0869
 margin_top = 18.7486
 margin_right = 33.9131
 margin_bottom = 32.7486
-custom_fonts/font = SubResource( 10 )
-value = 100.0
+custom_styles/fg = SubResource( 12 )
+custom_styles/bg = SubResource( 13 )
+custom_fonts/font = SubResource( 11 )
+value = 50.0
+rounded = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

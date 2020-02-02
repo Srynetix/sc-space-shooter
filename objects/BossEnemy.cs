@@ -4,7 +4,7 @@ public class BossEnemy : Enemy
 {
     // Constants
     public const int BOSS_BASE_HIT_POINTS = 50;
-    public const float BOSS_BASE_FIRE_TIME = 1.0f;
+    public const float BOSS_BASE_FIRE_TIME = 0.5f;
 
     [BindNode("WeaponSwap")]
     private Timer weaponSwap;
@@ -16,11 +16,14 @@ public class BossEnemy : Enemy
         base._Ready();
         this.BindNodes();
 
+        fireTimer.WaitTime = BOSS_BASE_FIRE_TIME;
+        fireTimer.Start();
+
         weaponSwap.Connect("timeout", this, nameof(_On_WeaponSwap_Timeout));
         weaponSwap.Start();
 
-        SetFireTimeFactor(1.0f);
-        SetHitPointsFactor(1.0f);
+        SetFireTimeFactor(0.0f);
+        SetHitPointsFactor(0.0f);
     }
 
     public override void Prepare(Vector2 pos, float speed, float scale) {

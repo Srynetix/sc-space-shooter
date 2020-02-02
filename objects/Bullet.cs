@@ -172,9 +172,9 @@ public class Bullet : Area2D
                 bombTimer.Stop();
                 _TriggerWave(Position);
             }
-        }
 
-        QueueFree();
+            QueueFree();
+        }
     }
 
     private void _On_VisibilityNotifier2D_ScreenExited() {

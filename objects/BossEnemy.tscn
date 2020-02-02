@@ -45,13 +45,13 @@ shader_param/noise = SubResource( 3 )
 
 [node name="BossEnemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-fireTime = 0.5
 
 [node name="Sprite" parent="." index="0"]
 material = SubResource( 4 )
 
 [node name="BulletSystem" parent="." index="6"]
 fireCooldown = 0.1
+fireSpeed = 300.0
 bulletType = 2
 bulletAutomatic = true
 

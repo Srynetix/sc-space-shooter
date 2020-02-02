@@ -43,8 +43,8 @@ public class Enemy : Area2D, IHittable, IExplodable
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
         statusToast.Connect("message_all_shown", this, nameof(_On_MessageAllShown));
 
-        SetFireTimeFactor(1.0f);
-        SetHitPointsFactor(1.0f);
+        SetFireTimeFactor(0.0f);
+        SetHitPointsFactor(0.0f);
     }
 
     public override void _Process(float delta) {
@@ -74,13 +74,13 @@ public class Enemy : Area2D, IHittable, IExplodable
     }
 
     public void SetHitPointsFactor(float factor) {
-        hitPoints = Mathf.CeilToInt(_CalculateBaseHitPoints() * factor);
+        hitPoints = Mathf.CeilToInt(_CalculateBaseHitPoints() + factor);
         progressBar.MaxValue = hitPoints;
         progressBar.Value = hitPoints;
     }
 
     public void SetFireTimeFactor(float factor) {
-        fireTime = Mathf.CeilToInt(_CalculateBaseFireTime() * factor);
+        fireTime = Mathf.CeilToInt(_CalculateBaseFireTime() + factor);
         fireTimer.WaitTime = fireTime;
         fireTimer.Start();
     }
