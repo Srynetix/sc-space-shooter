@@ -8,6 +8,9 @@ public class Player : Area2D, IHittable {
         Dead
     }
 
+    // Consts
+    private const float MESSAGE_SPEED = 0.05f;
+
     // Signals
     [Signal] public delegate void fire(Bullet.FireData fireData);
     [Signal] public delegate void dead();
@@ -30,17 +33,14 @@ public class Player : Area2D, IHittable {
     [BindNode]
     private BulletSystem bulletSystem;
     [BindNode]
-    private Label statusLabel;
-    [BindNodeRoot]
-    private GameState gameState;
+    private StatusToast statusToast;
+    [BindNode] private TouchController touchController;
+    [BindNodeRoot] private GameState gameState;
 
     // Data
     private Vector2 initialPosition = new Vector2();
     private Vector2 velocity = new Vector2();
     private State state = State.Idle;
-    private bool isTouching = false;
-    private Vector2 lastTouchPosition = new Vector2();
-    private Vector2 touchDistance = new Vector2();
     private Vector2 moveSpeed = new Vector2(500, 500);
     private float damping = 0.9f;
     private float spawnTime = 3.0f;
@@ -53,14 +53,16 @@ public class Player : Area2D, IHittable {
         spawnTimer.WaitTime = spawnTime;
         spawnTimer.Connect("timeout", this, nameof(_On_SpawningTimer_Timeout));
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
-        bulletSystem.Connect("type_switch", this, nameof(_On_BulletSystem_TypeChanged));
-        statusLabel.Text = "";
+        bulletSystem.Connect("bomb_available", this, nameof(_On_BombAvailable));
+        bulletSystem.Connect("bomb_used", this, nameof(_On_BombUsed));
 
         var gameSize = gameState.GetGameSize();
         initialPosition = new Vector2(gameSize.x / 2.0f, gameSize.y - gameSize.y / 8.0f);
         Position = initialPosition;
 
         bulletSystem.SwitchType(initialBulletType);
+
+        statusToast.ShowPriorityMessage(Tr("Let's go!"));
     }
 
     public override void _Process(float delta) {
@@ -75,35 +77,17 @@ public class Player : Area2D, IHittable {
             velocity = movement * moveSpeed;
         }
 
-        if (isTouching) {
+        if (touchController.Touching) {
             velocity = new Vector2();
-            Position = lastTouchPosition + touchDistance;
+            Position = touchController.ComputedPosition;
+        } else {
+            velocity = new Vector2();
         }
 
         _HandleFire();
 
         Position += velocity * delta;
         _ClampPosition();
-    }
-
-    public override void _Input(InputEvent @event) {
-        if (state == State.Dead) {
-            return;
-        }
-
-        if (@event is InputEventScreenTouch touch) {
-            lastTouchPosition = touch.Position;
-            isTouching = touch.Pressed;
-            touchDistance = Position - touch.Position;
-
-            if (!isTouching) {
-                velocity = new Vector2();
-            }
-        }
-
-        else if (@event is InputEventScreenDrag drag) {
-            lastTouchPosition = drag.Position;
-        }
     }
 
     public void Respawn() {
@@ -114,6 +98,10 @@ public class Player : Area2D, IHittable {
 
     public BulletSystem GetBulletSystem() {
         return bulletSystem;
+    }
+
+    public StatusToast GetStatusToast() {
+        return statusToast;
     }
 
     public void Hit() {
@@ -140,10 +128,13 @@ public class Player : Area2D, IHittable {
             case State.Dead:
                 // Reset state
                 velocity = new Vector2();
-                isTouching = false;
+                touchController.ResetState();
+                touchController.SetProcess(false);
+                touchController.SetProcessInput(false);
 
                 collisionShape.SetDeferred("disabled", true);
                 animationPlayer.Play("explode");
+                statusToast.Stop();
                 EmitSignal("dead");
 
                 await ToSignal(animationPlayer, "animation_finished");
@@ -152,12 +143,24 @@ public class Player : Area2D, IHittable {
             case State.Idle:
                 collisionShape.SetDeferred("disabled", false);
                 animationPlayer.Play("idle");
+                statusToast.ShowPriorityMessage(Tr("Let's go!"));
                 break;
             case State.Spawning:
+                touchController.SetProcess(true);
+                touchController.SetProcessInput(true);
                 spawnTimer.Start();
                 animationPlayer.Play("spawning");
                 break;
         }
+    }
+
+    public bool CanUpgradeWeapon() {
+        return bulletSystem.CanUpgradeWeapon();
+    }
+
+    public void UpgradeWeapon() {
+        bulletSystem.UpgradeWeapon();
+        statusToast.ShowMessage(Tr("Weapon upgrade!"));
     }
 
     private Vector2 _HandleMovement() {
@@ -180,7 +183,11 @@ public class Player : Area2D, IHittable {
     }
 
     private void _HandleFire() {
-        if (Input.IsActionPressed("player_shoot") || isTouching) {
+        if (Input.IsActionJustPressed("player_bomb") || touchController.DoubleTouching) {
+            bulletSystem.FireBomb(muzzle.GlobalPosition);
+        }
+
+        else if (Input.IsActionPressed("player_shoot") || touchController.Touching) {
             bulletSystem.Fire(muzzle.GlobalPosition);
         }
     }
@@ -202,15 +209,13 @@ public class Player : Area2D, IHittable {
         EmitSignal("fire", fireData);
     }
 
-    private void _On_BulletSystem_TypeChanged(Bullet.BulletType prevType, Bullet.BulletType newType) {
-        if (newType == Bullet.BulletType.Bomb && newType != prevType) {
-            // Bomb tint
-            sprite.Modulate = Colors.Yellow;
-        }
+    private void _On_BombAvailable() {
+        sprite.Modulate = Colors.Green;
+        statusToast.ShowMessage(Tr("Bomb picked!"));
+    }
 
-        else if (prevType == Bullet.BulletType.Bomb && newType != prevType) {
-            // Reset tint
-            sprite.Modulate = Colors.White;
-        }
+    private void _On_BombUsed() {
+        sprite.Modulate = Colors.White;
+        statusToast.ShowMessage(Tr("Bomb fired!"));
     }
 }

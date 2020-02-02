@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/Debug.cs" type="Script" id=1]
-[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/JetBrainsMono-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://objects/TouchController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/Console.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 12
-outline_size = 2
-outline_color = Color( 1, 0, 0, 1 )
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
@@ -38,9 +40,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Margin/VBox"]
+[node name="Stats" type="Label" parent="Margin/VBox"]
 margin_right = 500.0
-margin_bottom = 920.0
+margin_bottom = 458.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
 text = "Debug"
@@ -48,3 +50,16 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Console" parent="Margin/VBox" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 462.0
+margin_right = 500.0
+margin_bottom = 920.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_active = false
+
+[node name="TouchController" parent="." instance=ExtResource( 3 )]

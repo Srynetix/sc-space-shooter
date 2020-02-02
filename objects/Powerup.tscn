@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/textures/powerupRed_bolt.png" type="Texture" id=2]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=3]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 

@@ -2,8 +2,9 @@
 
 [ext_resource path="res://screens/TitleScreen.cs" type="Script" id=1]
 [ext_resource path="res://objects/Starfield.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/fonts/Righteous-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=4]
+[ext_resource path="res://resources/GameTheme.tres" type="Theme" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -34,10 +35,6 @@ size = 24
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=8]
-size = 24
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=9]
 size = 14
 font_data = ExtResource( 3 )
 
@@ -81,16 +78,16 @@ __meta__ = {
 
 [node name="HSTitle" type="Label" parent="Margin/All/Top"]
 margin_right = 520.0
-margin_bottom = 27.0
+margin_bottom = 31.0
 custom_fonts/font = SubResource( 1 )
 text = "HIGHSCORE"
 align = 1
 valign = 1
 
 [node name="HSValue" type="Label" parent="Margin/All/Top"]
-margin_top = 31.0
+margin_top = 35.0
 margin_right = 520.0
-margin_bottom = 54.0
+margin_bottom = 61.0
 custom_fonts/font = SubResource( 2 )
 text = "0"
 align = 1
@@ -127,64 +124,64 @@ custom_constants/separation = 40
 
 [node name="StartGame" type="Button" parent="Margin/All/Buttons"]
 margin_right = 520.0
-margin_bottom = 33.0
+margin_bottom = 37.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 4 )
 text = "MENU_START_GAME"
 
 [node name="Options" type="Button" parent="Margin/All/Buttons"]
-margin_top = 73.0
+margin_top = 77.0
 margin_right = 520.0
-margin_bottom = 106.0
+margin_bottom = 114.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 5 )
 text = "MENU_OPTIONS"
 
 [node name="Tests" type="Button" parent="Margin/All/Buttons"]
-margin_top = 146.0
+margin_top = 154.0
 margin_right = 520.0
-margin_bottom = 179.0
+margin_bottom = 191.0
 mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 6 )
 text = "MENU_TESTS"
 
 [node name="OptionsButtons" type="VBoxContainer" parent="Margin/All"]
 visible = false
-margin_top = 614.0
+margin_top = 690.0
 margin_right = 520.0
-margin_bottom = 917.0
+margin_bottom = 916.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
 [node name="Languages" type="OptionButton" parent="Margin/All/OptionsButtons"]
 margin_right = 520.0
-margin_bottom = 33.0
+margin_bottom = 37.0
 mouse_default_cursor_shape = 2
-custom_fonts/font = SubResource( 7 )
+theme = ExtResource( 5 )
 text = "English"
 items = [ "English", null, false, 0, null, "French", null, false, 1, null ]
 selected = 0
 
 [node name="BackButton" type="Button" parent="Margin/All/OptionsButtons"]
-margin_top = 73.0
+margin_top = 77.0
 margin_right = 520.0
-margin_bottom = 106.0
+margin_bottom = 114.0
 mouse_default_cursor_shape = 2
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 text = "Back"
 
 [node name="Bottom" type="VBoxContainer" parent="Margin/All"]
 margin_top = 921.0
 margin_right = 520.0
-margin_bottom = 938.0
+margin_bottom = 939.0
 
 [node name="Version" type="Label" parent="Margin/All/Bottom"]
-margin_left = 349.0
+margin_left = 390.0
 margin_right = 520.0
-margin_bottom = 17.0
+margin_bottom = 18.0
 size_flags_horizontal = 8
 size_flags_vertical = 8
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 8 )
 text = "Version [VERSION]"
 align = 2
 valign = 1

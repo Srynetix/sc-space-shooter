@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://screens/GameScreen.cs" type="Script" id=1]
-[ext_resource path="res://assets/fonts/kenvector_future.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/Righteous-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://objects/Starfield.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/Spawner.tscn" type="PackedScene" id=5]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/sounds/alarm.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/sounds/ambient.wav" type="AudioStream" id=12]
 [ext_resource path="res://ui/HUD.tscn" type="PackedScene" id=13]
+[ext_resource path="res://objects/BombPowerup.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -75,6 +76,12 @@ speed = 250.0
 randScale = Vector2( 1, 1 )
 element = ExtResource( 8 )
 disabled = true
+
+[node name="BombPowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
+frequency = 20.0
+speed = 300.0
+randScale = Vector2( 1, 1 )
+element = ExtResource( 14 )
 
 [node name="EnemySpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 7.0
@@ -141,7 +148,7 @@ __meta__ = {
 [node name="VBox" type="VBoxContainer" parent="CanvasLayer/PopupPanel/Margin"]
 margin_left = 40.0
 margin_top = 40.0
-margin_right = 480.0
+margin_right = 294.0
 margin_bottom = 200.0
 custom_constants/separation = 40
 __meta__ = {

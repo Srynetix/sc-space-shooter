@@ -38,6 +38,10 @@ public class GameState : Node
     private Dictionary currentGameSave = null;
     private Dictionary configuration = new Dictionary();
 
+    public static GameState Instance(Node origin) {
+        return (GameState)origin.GetTree().Root.GetNode("GameState");
+    }
+
     public void LoadScreen(Screens screen) {
         _ChangeScene(SCREEN_MAP[screen]);
     }

@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://objects/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemyBlack1.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://objects/BulletSystem.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/fonts/Righteous-Regular.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://objects/StatusToast.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 24.3777
@@ -67,6 +69,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 0.0, 1.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("ProgressBar:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 
@@ -85,6 +99,10 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.466667, 0.466667, 1 ), Color( 1, 1, 1, 1 ) ]
 }
+
+[sub_resource type="DynamicFont" id=10]
+size = 10
+font_data = ExtResource( 6 )
 
 [node name="Enemy" type="Area2D" groups=[
 "enemies",
@@ -115,7 +133,7 @@ anims/idle = SubResource( 8 )
 anims/tint = SubResource( 9 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 1.52588e-05, 41.7735 )
+position = Vector2( -0.382614, 53.2522 )
 
 [node name="FireTimer" type="Timer" parent="."]
 autostart = true
@@ -128,3 +146,17 @@ bulletTarget = 1
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 volume_db = -15.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = -34.0869
+margin_top = 18.7486
+margin_right = 33.9131
+margin_bottom = 32.7486
+custom_fonts/font = SubResource( 10 )
+value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatusToast" parent="." instance=ExtResource( 7 )]
+ToastDirection = 1

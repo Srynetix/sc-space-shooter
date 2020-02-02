@@ -5,28 +5,25 @@ public class Debug : CanvasLayer
     private const int MAX_TAP_COUNT = 10;
     private const float TAP_TIME_LIMIT_MS = 500;
 
-    [BindNode("Margin/VBox/Label")]
-    private Label label;
-    [BindNodeRoot]
-    private GameState gameState;
+    [BindNode("Margin/VBox/Stats")] private Label stats;
+    [BindNode("Margin/VBox/Console")] private Console console;
+    [BindNode] private TouchController touchController;
+    [BindNodeRoot] private GameState gameState;
 
-    private Vector2 touchPosition;
-    private bool isTouching;
-    private Vector2 dragPosition;
-    private Vector2 dragRelative;
     private uint lastTime;
     private int tapCount;
     private bool enabled;
 
+    public static Debug GetInstance(Node origin) {
+        return (Debug)origin.GetTree().Root.GetNode("Debug");
+    }
+
     public override void _Ready() {
         this.BindNodes();
 
-        touchPosition = new Vector2();
-        dragPosition = new Vector2();
-        dragRelative = new Vector2();
-
         lastTime = OS.GetTicksMsec();
         tapCount = 0;
+
         DisableDebugMode();
     }
 
@@ -36,11 +33,12 @@ public class Debug : CanvasLayer
         }
     }
 
+    public Console.Logger GetLogger(string name) {
+        return console.GetLogger(name);
+    }
+
     public override void _Input(InputEvent @event) {
         if (@event is InputEventScreenTouch touchEvent) {
-            touchPosition = touchEvent.Position;
-            isTouching = touchEvent.Pressed;
-
             // Register tap
             if (touchEvent.Pressed) {
                 var time = OS.GetTicksMsec();
@@ -65,37 +63,41 @@ public class Debug : CanvasLayer
                 }
             }
         }
-
-        else if (@event is InputEventScreenDrag dragEvent) {
-            dragPosition = dragEvent.Position;
-            dragRelative = dragEvent.Relative;
-        }
     }
 
     private void _ShowDebugData(float delta) {
-        label.Text = _GenerateDebugData(delta);
+        stats.Text = _GenerateDebugData(delta);
     }
 
     public void DisableDebugMode() {
         enabled = false;
-        label.Text = "";
+        stats.Visible = false;
+        console.Visible = false;
     }
 
     public void EnableDebugMode() {
         enabled = true;
+        stats.Visible = true;
+        console.Visible = true;
     }
 
     private string _GenerateDebugData(float delta) {
         string data = "";
 
-        data += "Resolution: " + gameState.GetGameSize().ToString();
+        data += "[Perf]";
+        data += "\nResolution: " + gameState.GetGameSize().ToString();
         data += "\nFPS: " + Mathf.RoundToInt(1.0f / delta);
         data += "\n";
-        data += "\nTouch position: " + touchPosition.ToString();
-        data += "\nIs touching: " + isTouching.ToString();
-        data += "\nDrag position: " + dragPosition.ToString();
-        data += "\nDrag relative: " + dragRelative.ToString();
+        data += "\n[Input]";
+        data += "\nTouch position: " + touchController.LastTouchPosition.ToString();
+        data += "\nIs touching: " + touchController.Touching.ToString();
+        data += "\nIs double touching: " + touchController.DoubleTouching.ToString();
+        data += "\nTouch distance: " + touchController.TouchDistance.ToString();
         data += "\n";
+        data += "\n[Debug]";
+        data += "\nLog level: " + console.LogLevelFilter;
+        data += "\n";
+        data += "\n[Game]";
         data += "\nPlayer position: ";
         var player = _GetPlayer();
         if (player != null) {

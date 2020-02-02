@@ -1,9 +1,9 @@
 using Godot;
 
-public class Powerup : Area2D, IPreparable
-{
+public class Powerup : Area2D {
     public enum PowerupType {
-        Weapon,
+        WeaponUpgrade,
+        Bomb,
         Life
     }
 
@@ -21,7 +21,7 @@ public class Powerup : Area2D, IPreparable
     [Signal] public delegate void powerup();
 
     // Exports
-    [Export] public PowerupType powerupType = PowerupType.Weapon;
+    [Export] public PowerupType powerupType = PowerupType.WeaponUpgrade;
 
     // Data
     private Vector2 velocity = new Vector2();

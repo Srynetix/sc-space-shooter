@@ -4,6 +4,9 @@ using Dictionary = Godot.Collections.Dictionary;
 
 public class Spawner : Node2D
 {
+    // Signals
+    [Signal] public delegate void spawn(Node node);
+
     // On ready
     [BindNode]
     private Timer timer;
@@ -56,10 +59,10 @@ public class Spawner : Node2D
         timer.WaitTime = freq;
     }
 
-    public void SpawnAtPosition(Vector2 pos) {
+    public Node SpawnAtPosition(Vector2 pos) {
         var instance = element.Instance();
 
-        ((IPreparable)instance).Prepare(pos, speed, (float)GD.RandRange(randScale.x, randScale.y));
+        PrepareInstance(instance, pos);
 
         foreach (string signalName in signals.Keys) {
             var fnName = (string)signals[signalName];
@@ -67,15 +70,21 @@ public class Spawner : Node2D
         }
 
         elements.AddChild(instance);
+        EmitSignal("spawn", instance);
+        return instance;
     }
 
-    public void Spawn() {
+    private void PrepareInstance(Node instance, Vector2 pos) {
+        instance.Call("Prepare", pos, speed, (float)GD.RandRange(randScale.x, randScale.y));
+    }
+
+    public Node Spawn() {
         var gameSize = gameState.GetGameSize();
         var minPos = gameSize.x / 4.0f;
         var maxPos = gameSize.x - gameSize.x / 4.0f;
         var pos = new Vector2((int)GD.RandRange(minPos, maxPos), -50.0f);
 
-        SpawnAtPosition(pos);
+        return SpawnAtPosition(pos);
     }
 
     private void _On_Timer_Timeout() {

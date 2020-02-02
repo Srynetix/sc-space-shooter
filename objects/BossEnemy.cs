@@ -3,7 +3,8 @@ using Godot;
 public class BossEnemy : Enemy
 {
     // Constants
-    private const int BOSS_BASE_HIT_POINTS = 50;
+    public const int BOSS_BASE_HIT_POINTS = 50;
+    public const float BOSS_BASE_FIRE_TIME = 1.0f;
 
     [BindNode("WeaponSwap")]
     private Timer weaponSwap;
@@ -17,6 +18,9 @@ public class BossEnemy : Enemy
 
         weaponSwap.Connect("timeout", this, nameof(_On_WeaponSwap_Timeout));
         weaponSwap.Start();
+
+        SetFireTimeFactor(1.0f);
+        SetHitPointsFactor(1.0f);
     }
 
     public override void Prepare(Vector2 pos, float speed, float scale) {
@@ -25,8 +29,14 @@ public class BossEnemy : Enemy
         Scale = new Vector2(scale * 2, scale * 2);
         moveSpeed *= 1.5f;
         velocity = new Vector2(moveSpeed, downSpeed);
+    }
 
-        hitPoints = (int)Mathf.Ceil(scale * BOSS_BASE_HIT_POINTS);
+    protected override int _CalculateBaseHitPoints() {
+        return BOSS_BASE_HIT_POINTS;
+    }
+
+    protected override float _CalculateBaseFireTime() {
+        return BOSS_BASE_FIRE_TIME;
     }
 
     protected override void _Move(float delta) {

@@ -1,6 +1,6 @@
 using Godot;
 
-public class Enemy : Area2D, IHittable, IPreparable, IExplodable
+public class Enemy : Area2D, IHittable, IExplodable
 {
     // Signals
     [Signal] public delegate void exploded();
@@ -8,36 +8,32 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
 
     // Constants
     public const int BASE_HIT_POINTS = 5;
+    public const float BASE_FIRE_TIME = 0.5f;
 
     // Exports
     [Export] public float moveSpeed = 150.0f;
     [Export] public float downSpeed = 50.0f;
-    [Export] public float fireTime = 1.0f;
+    [Export] public float fireTime = BASE_FIRE_TIME;
+    [Export] public int hitPoints = BASE_HIT_POINTS;
 
     // On ready
-    [BindNode]
-    protected AnimationPlayer animationPlayer;
-    [BindNode]
-    protected CollisionShape2D collisionShape;
-    [BindNode]
-    protected Position2D muzzle;
-    [BindNode("FireTimer")]
-    protected Timer fireTimer;
-    [BindNode]
-    protected BulletSystem bulletSystem;
-    [BindNode("ExplosionSound")]
-    protected AudioStreamPlayer2D explosionSound;
-    [BindNode]
-    protected Sprite sprite;
-    [BindNodeRoot]
-    protected GameState gameState;
+    [BindNode] protected AnimationPlayer animationPlayer;
+    [BindNode] protected CollisionShape2D collisionShape;
+    [BindNode] protected Position2D muzzle;
+    [BindNode("FireTimer")] protected Timer fireTimer;
+    [BindNode] protected BulletSystem bulletSystem;
+    [BindNode] protected StatusToast statusToast;
+    [BindNode("ExplosionSound")] protected AudioStreamPlayer2D explosionSound;
+    [BindNode] protected Sprite sprite;
+    [BindNode] protected ProgressBar progressBar;
+    [BindNodeRoot] protected GameState gameState;
 
     // Data
-    protected int hitPoints = 0;
     protected int hitCount = 0;
     protected bool hasExploded = false;
     protected float acc = 0.0f;
     protected bool isFiring = false;
+    protected bool showingMessage = false;
 
     public override void _Ready() {
         this.BindNodes();
@@ -45,6 +41,10 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
         bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
+        statusToast.Connect("message_all_shown", this, nameof(_On_MessageAllShown));
+
+        SetFireTimeFactor(1.0f);
+        SetHitPointsFactor(1.0f);
     }
 
     public override void _Process(float delta) {
@@ -52,24 +52,52 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
 
         _Move(delta);
         _HandleState();
+
+        if (!showingMessage) {
+            showingMessage = true;
+            statusToast.ShowMessageWithColor(Tr("Fire!"), Colors.Red);
+        }
     }
 
     public virtual void Prepare(Vector2 pos, float speed, float scale) {
         Position = pos;
         downSpeed = speed;
         Scale = new Vector2(scale, scale);
+    }
 
-        hitPoints = (int)Mathf.Ceil(scale * BASE_HIT_POINTS);
+    protected virtual int _CalculateBaseHitPoints() {
+        return BASE_HIT_POINTS;
+    }
+
+    protected virtual float _CalculateBaseFireTime() {
+        return BASE_FIRE_TIME;
+    }
+
+    public void SetHitPointsFactor(float factor) {
+        hitPoints = Mathf.CeilToInt(_CalculateBaseHitPoints() * factor);
+        progressBar.MaxValue = hitPoints;
+        progressBar.Value = hitPoints;
+    }
+
+    public void SetFireTimeFactor(float factor) {
+        fireTime = Mathf.CeilToInt(_CalculateBaseFireTime() * factor);
+        fireTimer.WaitTime = fireTime;
+        fireTimer.Start();
     }
 
     public void Hit() {
         if (!hasExploded) {
             animationPlayer.Play("tint");
             hitCount += 1;
+            _UpdateProgressBar();
             if (hitCount == hitPoints) {
                 Explode();
             }
         }
+    }
+
+    private void _UpdateProgressBar() {
+        progressBar.Value = hitPoints - hitCount;
     }
 
     private Node2D _DetectPlayer() {
@@ -88,6 +116,7 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
 
         EmitSignal(nameof(exploded));
         _DisableCollisions();
+        statusToast.Stop();
         explosionSound.Play();
         animationPlayer.Play("explode");
 
@@ -122,5 +151,9 @@ public class Enemy : Area2D, IHittable, IPreparable, IExplodable
 
     private void _On_BulletSystem_Fire(Bullet.FireData fireData) {
         EmitSignal("fire", fireData);
+    }
+
+    private void _On_MessageAllShown() {
+        showingMessage = false;
     }
 }

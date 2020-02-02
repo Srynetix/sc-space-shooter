@@ -1,7 +1,7 @@
 using Godot;
 
-public class Rock : Area2D, IExplodable, IHittable, IPreparable
-{
+public class Rock : Area2D, IExplodable, IHittable {
+
     // On ready
     [BindNode("Sprite/Trail")]
     private Particles2D trail;

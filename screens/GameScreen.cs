@@ -29,6 +29,8 @@ public class GameScreen : Control
     private Spawner enemySpawner;
     [BindNode("Spawners/LifePowerupSpawner")]
     private Spawner lifeSpawner;
+    [BindNode("Spawners/BombPowerupSpawner")]
+    private Spawner bombPowerupSpawner;
     [BindNodeRoot]
     private FXCamera camera;
     [BindNodeRoot]
@@ -54,13 +56,16 @@ public class GameScreen : Control
             { "exploded", nameof(_On_Enemy_Exploded) },
             { "fire", nameof(_On_Fire) }
         });
+        bombPowerupSpawner.ConnectTargetScene(this, new Dictionary {
+            { "powerup", nameof(_On_Powerup_Powerup) }
+        });
 
+        enemySpawner.Connect("spawn", this, nameof(_On_Enemy_Spawned));
         pausePopup.GetNode<Label>("Margin/VBox/Label").Text = Tr("Game is paused.\nPress Resume\nto continue.").CEscape();
         pausePopup.GetNode<Button>("Margin/VBox/Button").Connect("pressed", this, nameof(_ResumeGame));
 
         waveSystem.Connect("timeout", this, nameof(_On_WaveSystem_Timeout));
         lifeSpawner.disabled = true;
-
 
         gameState.ResetGameState();
         gameState.UpdateHUD(hud);
@@ -88,6 +93,7 @@ public class GameScreen : Control
         rockSpawner.Reset();
         enemySpawner.Reset();
         powerupSpawner.Reset();
+        bombPowerupSpawner.Reset();
 
         hud.ShowMessage(Tr("WAVE") + " " + waveSystem.GetCurrentWave().ToString());
     }
@@ -106,12 +112,13 @@ public class GameScreen : Control
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
 
         var bossInstance = (BossEnemy)bossScene.Instance();
-        bossInstance.fireTime = 0.25f + 0.25f * waveSystem.GetCurrentWave();
         bossInstance.Connect("exploded", this, nameof(_On_Boss_Exploded));
         bossInstance.Connect("fire", this, nameof(_On_Fire));
         bossInstance.Prepare(new Vector2(gameSize.x / 2.0f, -100.0f), 100.0f, 1.0f);
-
         AddChild(bossInstance);
+
+        bossInstance.SetHitPointsFactor(1 + (waveSystem.GetCurrentWave() - 1) * 20);
+        bossInstance.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
     }
 
     private void _On_Fire(Bullet.FireData fireData) {
@@ -150,6 +157,12 @@ public class GameScreen : Control
         gameState.UpdateHUD(hud);
     }
 
+    private void _On_Enemy_Spawned(Node node) {
+        var enemy = (Enemy)node;
+        enemy.SetHitPointsFactor(1 + (waveSystem.GetCurrentWave() - 1) * 2);
+        enemy.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
+    }
+
     async private void _On_Boss_Exploded() {
         gameState.AddScore(2000 * waveSystem.GetCurrentWave());
         gameState.UpdateHUD(hud);
@@ -163,11 +176,19 @@ public class GameScreen : Control
     }
 
     private void _On_Powerup_Powerup(Powerup.PowerupType powerupType) {
-        if (powerupType == Powerup.PowerupType.Weapon) {
-            player.GetBulletSystem().UpgradeWeapon();
+        if (powerupType == Powerup.PowerupType.WeaponUpgrade) {
+            if (player.CanUpgradeWeapon()) {
+                player.UpgradeWeapon();
+            } else {
+                gameState.AddScore(200);
+                gameState.UpdateHUD(hud);
+            }
         } else if (powerupType == Powerup.PowerupType.Life) {
             gameState.AddLife();
             gameState.UpdateHUD(hud);
+            player.GetStatusToast().ShowMessage(Tr("1-UP!"));
+        } else if (powerupType == Powerup.PowerupType.Bomb) {
+            player.GetBulletSystem().EnableBomb();
         }
     }
 

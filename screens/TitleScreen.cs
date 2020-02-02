@@ -59,6 +59,20 @@ public class TitleScreen : Control {
         await ToSignal(tween, "tween_all_completed");
     }
 
+    private void _DisableButtons() {
+        startGameButton.Disabled = true;
+        testsButton.Disabled = true;
+        optionsButton.Disabled = true;
+        optionsBackButton.Disabled = true;
+    }
+
+    private void _EnableButtons() {
+        startGameButton.Disabled = false;
+        testsButton.Disabled = false;
+        optionsButton.Disabled = false;
+        optionsBackButton.Disabled = false;
+    }
+
     private void _ConnectButtons() {
         startGameButton.Connect("pressed", this, nameof(_LoadNext));
         testsButton.Connect("pressed", this, nameof(_LoadTests));
@@ -74,6 +88,8 @@ public class TitleScreen : Control {
     }
 
     async private void _ShowOptions() {
+        _DisableButtons();
+
         tween.InterpolateProperty(buttons, "modulate", null, Colors.Transparent, 1.0f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
         tween.Start();
         await ToSignal(tween, "tween_all_completed");
@@ -85,9 +101,13 @@ public class TitleScreen : Control {
         tween.InterpolateProperty(optionsButtons, "modulate", null, Colors.White, 1.0f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
         tween.Start();
         await ToSignal(tween, "tween_all_completed");
+
+        _EnableButtons();
     }
 
     async private void _HideOptions() {
+        _DisableButtons();
+
         tween.InterpolateProperty(optionsButtons, "modulate", null, Colors.Transparent, 1.0f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
         tween.Start();
         await ToSignal(tween, "tween_all_completed");
@@ -99,13 +119,20 @@ public class TitleScreen : Control {
         tween.InterpolateProperty(buttons, "modulate", null, Colors.White, 1.0f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
         tween.Start();
         await ToSignal(tween, "tween_all_completed");
+
+        _EnableButtons();
     }
 
     private void _LoadNext() {
+        _LoadScreen(GameState.Screens.GAME);
+    }
+
+    private void _LoadScreen(GameState.Screens screen) {
+        _DisableButtons();
         sound.Play();
         SetProcess(false);
         SetProcessInput(false);
-        gameState.LoadScreen(GameState.Screens.GAME);
+        gameState.LoadScreen(screen);
     }
 
     private void _ChangeLanguage(int selected) {
@@ -119,9 +146,6 @@ public class TitleScreen : Control {
     }
 
     private void _LoadTests() {
-        sound.Play();
-        SetProcess(false);
-        SetProcessInput(false);
-        gameState.LoadScreen(GameState.Screens.TESTS);
+        _LoadScreen(GameState.Screens.TESTS);
     }
 }

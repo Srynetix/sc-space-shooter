@@ -5,8 +5,6 @@ public class TestSuite : Control {
     private FXCamera fXCamera;
     [BindNodeRoot]
     private GameState gameState;
-    [BindNodeRoot]
-    private Debug debug;
 
     public override void _Ready() {
         this.BindNodes();
@@ -18,12 +16,6 @@ public class TestSuite : Control {
 
     private void _On_SceneLoaded(string name) {
         fXCamera.Reset();
-
-        if (name == "TestGameState") {
-            debug.EnableDebugMode();
-        } else {
-            debug.DisableDebugMode();
-        }
     }
 
     private void _On_GoBack() {
