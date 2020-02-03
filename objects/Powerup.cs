@@ -47,7 +47,7 @@ public class Powerup : Area2D {
         if (area.IsInGroup("player")) {
             collisionShape.SetDeferred("disabled", true);
             sound.Play();
-            EmitSignal("powerup", powerupType);
+            EmitSignal("powerup", this);
             animationPlayer.Play("fade");
 
             await ToSignal(sound, "finished");
