@@ -3,7 +3,7 @@ using Godot;
 public class Enemy : Area2D, IHittable, IExplodable
 {
     // Signals
-    [Signal] public delegate void exploded();
+    [Signal] public delegate void exploded(Node2D node);
     [Signal] public delegate void fire(Bullet.FireData fireData);
 
     // Constants
@@ -114,7 +114,7 @@ public class Enemy : Area2D, IHittable, IExplodable
         isFiring = false;
         fireTimer.Stop();
 
-        EmitSignal(nameof(exploded));
+        EmitSignal(nameof(exploded), this);
         _DisableCollisions();
         statusToast.Stop();
         explosionSound.Play();

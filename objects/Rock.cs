@@ -18,7 +18,7 @@ public class Rock : Area2D, IExplodable, IHittable {
 
     // Signals
     [Signal]
-    public delegate void exploded();
+    public delegate void exploded(Node2D node);
 
     // Constants
     private const int BASE_HIT_POINTS = 3;
@@ -68,7 +68,7 @@ public class Rock : Area2D, IExplodable, IHittable {
     }
 
     async private void _Explode() {
-        EmitSignal(nameof(exploded));
+        EmitSignal(nameof(exploded), this);
         CallDeferred(nameof(_DisableShape));
         explosionSound.Play();
         animationPlayer.Play("explode");
