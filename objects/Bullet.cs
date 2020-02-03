@@ -146,8 +146,6 @@ public class Bullet : Area2D
     }
 
     private void _TriggerWave(Vector2 position) {
-        Debug.GetInstance(this).GetLogger(GetType().Name).Info("Bomb exploded");
-
         var wave = (FXWave)fxWaveScene.Instance();
         GetParent().AddChild(wave);
         wave.StartThenFree(position, 0.35f);

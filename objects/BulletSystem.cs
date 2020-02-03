@@ -108,7 +108,6 @@ public class BulletSystem : Node2D
             canShoot = true;
             EmitSignal("bomb_used");
             _Fire(pos, Bullet.BulletType.Bomb);
-            Debug.GetInstance(this).GetLogger(GetType().Name).Info("Bomb fired at", pos);
         }
     }
 

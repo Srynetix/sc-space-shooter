@@ -6,6 +6,7 @@ public class GameScreen : Control
 {
     // Static
     private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
+    private static PackedScene statusToastScene = (PackedScene)GD.Load("res://objects/StatusToast.tscn");
 
     [BindNode]
     private Player player;
@@ -147,14 +148,35 @@ public class GameScreen : Control
         }
     }
 
-    private void _On_Rock_Exploded() {
+    private void _On_Rock_Exploded(Node2D node) {
         gameState.AddScore(100);
         gameState.UpdateHUD(hud);
+
+        _Show_Score_Message(node, 100);
     }
 
-    private void _On_Enemy_Exploded() {
+    private void _On_Enemy_Exploded(Node2D node) {
         gameState.AddScore(200);
         gameState.UpdateHUD(hud);
+
+        _Show_Score_Message(node, 200);
+    }
+
+    async private void _Show_Score_Message(Node2D node, int score) {
+        var toastInstance = (StatusToast)statusToastScene.Instance();
+        toastInstance.Position = node.Position + new Vector2(0, 20.0f);
+        toastInstance.Scale = node.Scale * 1.5f;
+        toastInstance.MessageVisibleTime = 0.5f;
+        toastInstance.MessageOffset = new Vector2(0, 0);
+        AddChild(toastInstance);
+
+        var message = (score > 0) ? "+" + score.ToString() : "-" + score.ToString();
+        var color = (score > 0) ? Colors.Green : Colors.Red;
+
+        toastInstance.ShowMessageWithColor(message, color);
+        await ToSignal(toastInstance, "message_shown");
+
+        toastInstance.QueueFree();
     }
 
     private void _On_Enemy_Spawned(Node node) {
@@ -163,9 +185,11 @@ public class GameScreen : Control
         enemy.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
     }
 
-    async private void _On_Boss_Exploded() {
-        gameState.AddScore(2000 * waveSystem.GetCurrentWave());
+    async private void _On_Boss_Exploded(Node2D node) {
+        int scoreToAdd = 2000 * waveSystem.GetCurrentWave();
+        gameState.AddScore(scoreToAdd);
         gameState.UpdateHUD(hud);
+        _Show_Score_Message(node, scoreToAdd);
         camera.Shake();
 
         var gameSize = gameState.GetGameSize();
@@ -175,13 +199,15 @@ public class GameScreen : Control
         _LoadNextWave();
     }
 
-    private void _On_Powerup_Powerup(Powerup.PowerupType powerupType) {
+    private void _On_Powerup_Powerup(Powerup powerup) {
+        var powerupType = powerup.powerupType;
         if (powerupType == Powerup.PowerupType.WeaponUpgrade) {
             if (player.CanUpgradeWeapon()) {
                 player.UpgradeWeapon();
             } else {
                 gameState.AddScore(200);
                 gameState.UpdateHUD(hud);
+                _Show_Score_Message(powerup, 200);
             }
         } else if (powerupType == Powerup.PowerupType.Life) {
             gameState.AddLife();
