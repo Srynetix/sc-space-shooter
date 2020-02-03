@@ -17,9 +17,6 @@ public class StatusToast : Node2D
         FadeOut
     }
 
-    private const float MESSAGE_ANIM_SPEED = 0.5f;
-    private const float MESSAGE_VISIBLE_TIME = 1.0f;
-
     [Signal] public delegate void message_shown(string message);
     [Signal] public delegate void message_all_shown();
 
@@ -29,6 +26,8 @@ public class StatusToast : Node2D
 
     [Export] public StatusToastDirection ToastDirection = StatusToastDirection.Up;
     [Export] public Vector2 MessageOffset = new Vector2(0.0f, -60.0f);
+    [Export] public float MessageVisibleTime = 1.0f;
+    [Export] public float MessageAnimSpeed = 0.5f;
 
     private Queue messageQueue = new Queue();
     private bool running = false;
@@ -40,7 +39,7 @@ public class StatusToast : Node2D
 
         label.Text = "";
 
-        timer.WaitTime = MESSAGE_VISIBLE_TIME;
+        timer.WaitTime = MessageVisibleTime;
         initialLabelPosition = label.RectPosition;
         animStep = AnimStep.None;
 
@@ -97,15 +96,15 @@ public class StatusToast : Node2D
 
         animStep = AnimStep.FadeIn;
 
-        tween.InterpolateProperty(label, "modulate", Colors.Transparent, color, MESSAGE_ANIM_SPEED);
-        tween.InterpolateProperty(label, "rect_position", label.RectPosition, label.RectPosition + computedMessageOffset, MESSAGE_ANIM_SPEED);
+        tween.InterpolateProperty(label, "modulate", Colors.Transparent, color, MessageAnimSpeed);
+        tween.InterpolateProperty(label, "rect_position", label.RectPosition, label.RectPosition + computedMessageOffset, MessageAnimSpeed);
         tween.Start();
     }
 
     private void _MessageFadeOut() {
         animStep = AnimStep.FadeOut;
 
-        tween.InterpolateProperty(label, "modulate", label.Modulate, Colors.Transparent, MESSAGE_ANIM_SPEED);
+        tween.InterpolateProperty(label, "modulate", label.Modulate, Colors.Transparent, MessageAnimSpeed);
         tween.Start();
     }
 
