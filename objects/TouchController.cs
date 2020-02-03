@@ -1,7 +1,6 @@
 using Godot;
 
-public class TouchController : Node2D
-{
+public class TouchController : Node2D {
     public bool Touching { get; set; }
     public bool DoubleTouching { get; set; }
     public Vector2 LastTouchPosition { get; set; }
@@ -32,9 +31,7 @@ public class TouchController : Node2D
             else if (touch.Index == 1) {
                 DoubleTouching = touch.Pressed;
             }
-        }
-
-        else if (@event is InputEventScreenDrag drag) {
+        } else if (@event is InputEventScreenDrag drag) {
             if (drag.Index == 0) {
                 LastTouchPosition = drag.Position;
             }

@@ -1,7 +1,6 @@
 using Godot;
 
-public class TestConsoleLog : Control
-{
+public class TestConsoleLog : Control {
     [BindNodeRoot] private Debug debug;
 
     private Console.Logger logger;

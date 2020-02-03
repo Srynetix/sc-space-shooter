@@ -2,8 +2,7 @@ using Godot;
 
 using Dictionary = Godot.Collections.Dictionary;
 
-public class Spawner : Node2D
-{
+public class Spawner : Node2D {
     // Signals
     [Signal] public delegate void spawn(Node node);
 

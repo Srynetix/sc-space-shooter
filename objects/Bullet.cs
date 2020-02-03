@@ -1,7 +1,6 @@
 using Godot;
 
-public class Bullet : Area2D
-{
+public class Bullet : Area2D {
     public enum BulletType {
         Simple,
         Double,
@@ -16,7 +15,7 @@ public class Bullet : Area2D
         Player
     }
 
-    public class FireData: Resource {
+    public class FireData : Resource {
         public PackedScene bullet;
         public Vector2 pos;
         public float speed;

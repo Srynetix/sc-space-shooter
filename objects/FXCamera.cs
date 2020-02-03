@@ -1,7 +1,6 @@
 using Godot;
 
-public class FXCamera : Node2D
-{
+public class FXCamera : Node2D {
     // On ready
     [BindNode]
     private AnimationPlayer animationPlayer;

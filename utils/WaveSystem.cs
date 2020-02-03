@@ -3,8 +3,7 @@ using Godot;
 using Array = Godot.Collections.Array;
 using Dictionary = Godot.Collections.Dictionary;
 
-public class WaveSystem : Control
-{
+public class WaveSystem : Control {
     [Signal]
     public delegate void timeout();
 

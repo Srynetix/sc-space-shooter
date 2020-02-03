@@ -1,7 +1,6 @@
 using Godot;
 
-public class Transition : CanvasLayer
-{
+public class Transition : CanvasLayer {
     [BindNode]
     private AnimationPlayer animationPlayer;
 

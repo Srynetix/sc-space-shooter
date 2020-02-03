@@ -8,8 +8,7 @@ public enum StatusToastDirection {
     Down
 }
 
-public class StatusToast : Node2D
-{
+public class StatusToast : Node2D {
     private enum AnimStep {
         None,
         FadeIn,
@@ -145,9 +144,7 @@ public class StatusToast : Node2D
         if (animStep == AnimStep.FadeIn) {
             // Start wait
             _MessageWait();
-        }
-
-        else if (animStep == AnimStep.FadeOut) {
+        } else if (animStep == AnimStep.FadeOut) {
             // End
             _MessageEnd();
         }

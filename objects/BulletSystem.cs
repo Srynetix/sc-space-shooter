@@ -1,7 +1,6 @@
 using Godot;
 
-public class BulletSystem : Node2D
-{
+public class BulletSystem : Node2D {
     // Signals
     [Signal] public delegate void fire(Bullet.FireData fireData);
     [Signal] public delegate void type_switch(Bullet.BulletType prevType, Bullet.BulletType newType);

@@ -1,7 +1,6 @@
 using Godot;
 
-public class TestStatusToast : Control
-{
+public class TestStatusToast : Control {
     [BindNode] private Player player;
     [BindNodeRoot] private Debug debug;
 

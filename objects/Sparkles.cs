@@ -1,7 +1,6 @@
 using Godot;
 
-public class Sparkles : Node2D
-{
+public class Sparkles : Node2D {
     [BindNode]
     private Particles2D particles;
     [BindNode]

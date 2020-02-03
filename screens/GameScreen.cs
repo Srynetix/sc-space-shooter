@@ -2,8 +2,7 @@ using Godot;
 
 using Dictionary = Godot.Collections.Dictionary;
 
-public class GameScreen : Control
-{
+public class GameScreen : Control {
     // Static
     private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
     private static PackedScene statusToastScene = (PackedScene)GD.Load("res://objects/StatusToast.tscn");
@@ -77,9 +76,7 @@ public class GameScreen : Control
     public override void _Notification(int what) {
         if (what == MainLoop.NotificationWmGoBackRequest) {
             gameState.LoadScreen(GameState.Screens.TITLE);
-        }
-
-        else if (what == MainLoop.NotificationWmFocusOut) {
+        } else if (what == MainLoop.NotificationWmFocusOut) {
             _PauseGame();
         }
     }
