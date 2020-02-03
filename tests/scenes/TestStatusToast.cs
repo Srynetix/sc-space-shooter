@@ -39,7 +39,7 @@ public class TestStatusToast : Control {
     }
 
     private void _On_Fire(Bullet.FireData fireData) {
-        var instance = (Bullet)fireData.bullet.Instance();
+        var instance = fireData.bullet.InstanceAs<Bullet>();
         instance.Prepare(fireData);
         AddChild(instance);
     }

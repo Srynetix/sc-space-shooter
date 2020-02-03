@@ -37,7 +37,7 @@ public class GameState : Node {
     private Dictionary currentGameSave = null;
     private Dictionary configuration = new Dictionary();
 
-    public static GameState Instance(Node origin) {
+    public static GameState GetInstance(Node origin) {
         return (GameState)origin.GetTree().Root.GetNode("GameState");
     }
 

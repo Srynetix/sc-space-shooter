@@ -145,13 +145,13 @@ public class Bullet : Area2D {
     }
 
     private void _TriggerWave(Vector2 position) {
-        var wave = (FXWave)fxWaveScene.Instance();
+        var wave = fxWaveScene.InstanceAs<FXWave>();
         GetParent().AddChild(wave);
         wave.StartThenFree(position, 0.35f);
     }
 
     private void _TriggerSparkles(Vector2 position) {
-        var sparkles = (Sparkles)sparklesScene.Instance();
+        var sparkles = sparklesScene.InstanceAs<Sparkles>();
         sparkles.Position = position;
         sparkles.ZIndex = 10;
         GetParent().AddChild(sparkles);

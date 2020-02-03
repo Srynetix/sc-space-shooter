@@ -130,7 +130,7 @@ public class StatusToast : Node2D {
             var messageArgs = (Array)messageQueue.Dequeue();
             var newMessage = (string)messageArgs[0];
             var newColor = (Color)messageArgs[1];
-            CallDeferred("_ShowMessageWithColor", newMessage, newColor, false);
+            CallDeferred(nameof(_ShowMessageWithColor), newMessage, newColor, false);
         } else {
             EmitSignal("message_all_shown");
         }

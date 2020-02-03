@@ -109,7 +109,7 @@ public class GameScreen : Control {
         alarm.Play();
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
 
-        var bossInstance = (BossEnemy)bossScene.Instance();
+        var bossInstance = bossScene.InstanceAs<BossEnemy>();
         bossInstance.Connect("exploded", this, nameof(_On_Boss_Exploded));
         bossInstance.Connect("fire", this, nameof(_On_Fire));
         bossInstance.Prepare(new Vector2(gameSize.x / 2.0f, -100.0f), 100.0f, 1.0f);
@@ -120,7 +120,7 @@ public class GameScreen : Control {
     }
 
     private void _On_Fire(Bullet.FireData fireData) {
-        var instance = (Bullet)fireData.bullet.Instance();
+        var instance = fireData.bullet.InstanceAs<Bullet>();
         instance.Prepare(fireData);
         bullets.AddChild(instance);
     }
@@ -160,7 +160,7 @@ public class GameScreen : Control {
     }
 
     async private void _Show_Score_Message(Node2D node, int score) {
-        var toastInstance = (StatusToast)statusToastScene.Instance();
+        var toastInstance = statusToastScene.InstanceAs<StatusToast>();
         toastInstance.Position = node.Position + new Vector2(0, 20.0f);
         toastInstance.Scale = node.Scale * 1.5f;
         toastInstance.MessageVisibleTime = 0.5f;
@@ -182,13 +182,17 @@ public class GameScreen : Control {
         enemy.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
     }
 
-    async private void _On_Boss_Exploded(Node2D node) {
+    private void _On_Boss_Exploded(Node2D node) {
         int scoreToAdd = 2000 * waveSystem.GetCurrentWave();
         gameState.AddScore(scoreToAdd);
         gameState.UpdateHUD(hud);
         _Show_Score_Message(node, scoreToAdd);
         camera.Shake();
 
+        CallDeferred(nameof(_Start_Wave_Transition));
+    }
+
+    async private void _Start_Wave_Transition() {
         var gameSize = gameState.GetGameSize();
         lifeSpawner.SpawnAtPosition(new Vector2(gameSize.x / 2.0f, -50.0f));
 

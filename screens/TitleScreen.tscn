@@ -125,7 +125,6 @@ custom_constants/separation = 40
 [node name="StartGame" type="Button" parent="Margin/All/Buttons"]
 margin_right = 520.0
 margin_bottom = 37.0
-mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 4 )
 text = "MENU_START_GAME"
 
@@ -133,7 +132,6 @@ text = "MENU_START_GAME"
 margin_top = 77.0
 margin_right = 520.0
 margin_bottom = 114.0
-mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 5 )
 text = "MENU_OPTIONS"
 
@@ -141,7 +139,6 @@ text = "MENU_OPTIONS"
 margin_top = 154.0
 margin_right = 520.0
 margin_bottom = 191.0
-mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 6 )
 text = "MENU_TESTS"
 
@@ -156,7 +153,6 @@ custom_constants/separation = 40
 [node name="Languages" type="OptionButton" parent="Margin/All/OptionsButtons"]
 margin_right = 520.0
 margin_bottom = 37.0
-mouse_default_cursor_shape = 2
 theme = ExtResource( 5 )
 text = "English"
 items = [ "English", null, false, 0, null, "French", null, false, 1, null ]
@@ -166,7 +162,6 @@ selected = 0
 margin_top = 77.0
 margin_right = 520.0
 margin_bottom = 114.0
-mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 7 )
 text = "Back"
 

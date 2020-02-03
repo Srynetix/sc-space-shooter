@@ -172,7 +172,6 @@ __meta__ = {
 margin_top = 127.0
 margin_right = 254.0
 margin_bottom = 160.0
-mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 4 )
 text = "Resume"
 __meta__ = {
