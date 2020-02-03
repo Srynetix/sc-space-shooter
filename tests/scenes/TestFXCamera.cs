@@ -20,7 +20,7 @@ public class TestFXCamera : Control {
     }
 
     private void _On_Fire(Bullet.FireData fireData) {
-        var bullet = (Bullet)fireData.bullet.Instance();
+        var bullet = fireData.bullet.InstanceAs<Bullet>();
         bullet.Prepare(fireData);
         AddChild(bullet);
     }

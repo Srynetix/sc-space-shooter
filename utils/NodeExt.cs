@@ -55,4 +55,8 @@ public static class NodeExt {
             }
         }
     }
+
+    public static T InstanceAs<T>(this PackedScene packed, PackedScene.GenEditState editState = PackedScene.GenEditState.Disabled) where T : Node {
+        return (T)packed.Instance(editState);
+    }
 }

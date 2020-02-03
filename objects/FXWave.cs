@@ -86,7 +86,7 @@ public class FXWave : Area2D {
     private void _On_Area_Entered(Area2D area) {
         if (area.IsInGroup("rocks") || area.IsInGroup("enemies")) {
             var sparklesPosition = Position;
-            var sparkles = (Sparkles)sparklesScene.Instance();
+            var sparkles = sparklesScene.InstanceAs<Sparkles>();
             sparkles.Position = sparklesPosition;
             sparkles.ZIndex = 10;
 

@@ -12,7 +12,7 @@ public class TestFXWave : Control {
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
 
         while (true) {
-            var wave = (FXWave)fxWaveScene.Instance();
+            var wave = fxWaveScene.InstanceAs<FXWave>();
             AddChild(wave);
             wave.Start(gameState.GetGameSize() / 2, 0.35f);
 
