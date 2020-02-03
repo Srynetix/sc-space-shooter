@@ -4,6 +4,7 @@ public class Debug : CanvasLayer
 {
     private const int MAX_TAP_COUNT = 10;
     private const float TAP_TIME_LIMIT_MS = 500;
+    private const string DEFAULT_LOGGER_NAME = "Default";
 
     [BindNode("Margin/VBox/Stats")] private Label stats;
     [BindNode("Margin/VBox/Console")] private Console console;
@@ -35,6 +36,10 @@ public class Debug : CanvasLayer
 
     public Console.Logger GetLogger(string name) {
         return console.GetLogger(name);
+    }
+
+    public Console.Logger GetDefaultLogger() {
+        return console.GetLogger(DEFAULT_LOGGER_NAME);
     }
 
     public override void _Input(InputEvent @event) {
