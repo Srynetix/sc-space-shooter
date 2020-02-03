@@ -1,7 +1,6 @@
 using Godot;
 
-public class Starfield : Control
-{
+public class Starfield : Control {
     // On ready
     [BindNode]
     private Particles2D particles;

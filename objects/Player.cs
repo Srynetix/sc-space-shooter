@@ -185,9 +185,7 @@ public class Player : Area2D, IHittable {
     private void _HandleFire() {
         if (Input.IsActionJustPressed("player_bomb") || touchController.DoubleTouching) {
             bulletSystem.FireBomb(muzzle.GlobalPosition);
-        }
-
-        else if (Input.IsActionPressed("player_shoot") || touchController.Touching) {
+        } else if (Input.IsActionPressed("player_shoot") || touchController.Touching) {
             bulletSystem.Fire(muzzle.GlobalPosition);
         }
     }

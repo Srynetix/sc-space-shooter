@@ -1,8 +1,7 @@
 using Godot;
 using System;
 
-public class HUD : Control
-{
+public class HUD : Control {
     [BindNode("MarginContainer/HBoxContainer/VBoxContainer/ScoreValue")]
     private Label scoreValue;
     [BindNode("MarginContainer/HBoxContainer/VBoxContainer2/HighValue")]

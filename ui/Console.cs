@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 using Queue = System.Collections.Queue;
 
-public class Console : RichTextLabel
-{
+public class Console : RichTextLabel {
     public class Logger {
         private Console console;
         private string name;
@@ -133,14 +132,11 @@ public class Console : RichTextLabel
     private string _FormatLogLevelColor(LogLevel level) {
         if (level == LogLevel.Error) {
             return "red";
-        }
-        else if (level == LogLevel.Warn) {
+        } else if (level == LogLevel.Warn) {
             return "yellow";
-        }
-        else if (level == LogLevel.Info) {
+        } else if (level == LogLevel.Info) {
             return "blue";
-        }
-        else if (level == LogLevel.Debug) {
+        } else if (level == LogLevel.Debug) {
             return "lime";
         }
 

@@ -1,7 +1,6 @@
 using Godot;
 
-public class Debug : CanvasLayer
-{
+public class Debug : CanvasLayer {
     private const int MAX_TAP_COUNT = 10;
     private const float TAP_TIME_LIMIT_MS = 500;
     private const string DEFAULT_LOGGER_NAME = "Default";

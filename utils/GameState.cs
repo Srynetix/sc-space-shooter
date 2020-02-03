@@ -4,8 +4,7 @@ using System;
 
 using Array = Godot.Collections.Array;
 
-public class GameState : Node
-{
+public class GameState : Node {
     public enum Screens {
         BOOT,
         TITLE,
@@ -134,7 +133,7 @@ public class GameState : Node
             var loadedScores = (Array)gameSave["high_scores"];
             var newScores = new Array();
             foreach (Array entry in loadedScores) {
-                newScores.Add(new Array { (string)entry[0], (int)(float)entry[1] } );
+                newScores.Add(new Array { (string)entry[0], (int)(float)entry[1] });
             }
             gameSave["high_scores"] = newScores;
 

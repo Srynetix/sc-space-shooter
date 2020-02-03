@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 
 [AttributeUsage(AttributeTargets.Field)]
-public class BindNodeBase: Attribute {
+public class BindNodeBase : Attribute {
     public string Path { set; get; }
     public bool Root { set; get; }
 
@@ -32,13 +32,13 @@ public class BindNodeBase: Attribute {
 }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class BindNode: BindNodeBase {
-    public BindNode(string path = ""): base(path, false) {}
+public class BindNode : BindNodeBase {
+    public BindNode(string path = "") : base(path, false) { }
 }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class BindNodeRoot: BindNodeBase {
-    public BindNodeRoot(string path = ""): base(path, true) {}
+public class BindNodeRoot : BindNodeBase {
+    public BindNodeRoot(string path = "") : base(path, true) { }
 }
 
 public static class NodeExt {

@@ -1,7 +1,6 @@
 using Godot;
 
-public class Enemy : Area2D, IHittable, IExplodable
-{
+public class Enemy : Area2D, IHittable, IExplodable {
     // Signals
     [Signal] public delegate void exploded(Node2D node);
     [Signal] public delegate void fire(Bullet.FireData fireData);

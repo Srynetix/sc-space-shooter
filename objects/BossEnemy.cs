@@ -1,7 +1,6 @@
 using Godot;
 
-public class BossEnemy : Enemy
-{
+public class BossEnemy : Enemy {
     // Constants
     public const int BOSS_BASE_HIT_POINTS = 50;
     public const float BOSS_BASE_FIRE_TIME = 0.5f;
