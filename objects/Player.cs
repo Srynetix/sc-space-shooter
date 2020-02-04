@@ -117,7 +117,7 @@ public class Player : Area2D, IHittable {
         );
     }
 
-    async private void _SetState(State newState) {
+    private void _SetState(State newState) {
         if (state == newState) {
             return;
         }
@@ -127,31 +127,48 @@ public class Player : Area2D, IHittable {
         switch (newState) {
             case State.Dead:
                 // Reset state
-                velocity = new Vector2();
-                touchController.ResetState();
-                touchController.SetProcess(false);
-                touchController.SetProcessInput(false);
-
-                collisionShape.SetDeferred("disabled", true);
-                animationPlayer.Play("explode");
-                statusToast.Stop();
-                EmitSignal("dead");
-
-                await ToSignal(animationPlayer, "animation_finished");
-                EmitSignal("respawn");
+                _SetStateDead();
                 break;
             case State.Idle:
-                collisionShape.SetDeferred("disabled", false);
-                animationPlayer.Play("idle");
-                statusToast.ShowPriorityMessage(Tr("Let's go!"));
+                _SetStateIdle();
                 break;
             case State.Spawning:
-                touchController.SetProcess(true);
-                touchController.SetProcessInput(true);
-                spawnTimer.Start();
-                animationPlayer.Play("spawning");
+                _SetStateSpawning();
                 break;
         }
+    }
+
+    private void _SetStateDead() {
+        velocity = new Vector2();
+        touchController.ResetState();
+        touchController.SetProcess(false);
+        touchController.SetProcessInput(false);
+
+        statusToast.Stop();
+        collisionShape.SetDeferred("disabled", true);
+
+        EmitSignal("dead");
+        CallDeferred(nameof(_PlayExplosion));
+    }
+
+    async private void _PlayExplosion() {
+        animationPlayer.Play("explode");
+        await ToSignal(animationPlayer, "animation_finished");
+
+        EmitSignal("respawn");
+    }
+
+    private void _SetStateIdle() {
+        collisionShape.SetDeferred("disabled", false);
+        animationPlayer.Play("idle");
+        statusToast.ShowPriorityMessage(Tr("Let's go!"));
+    }
+
+    private void _SetStateSpawning() {
+        touchController.SetProcess(true);
+        touchController.SetProcessInput(true);
+        spawnTimer.Start();
+        animationPlayer.Play("spawning");
     }
 
     public bool CanUpgradeWeapon() {
