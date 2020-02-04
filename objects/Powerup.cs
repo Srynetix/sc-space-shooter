@@ -43,15 +43,19 @@ public class Powerup : Area2D {
         velocity = new Vector2(0, speed);
     }
 
-    async private void _On_Area_Entered(Area2D area) {
-        if (area.IsInGroup("player_body")) {
-            collisionShape.SetDeferred("disabled", true);
-            sound.Play();
-            EmitSignal("powerup", this);
-            animationPlayer.Play("fade");
+    async public void Consume() {
+        collisionShape.SetDeferred("disabled", true);
+        sound.Play();
+        EmitSignal("powerup", this);
+        animationPlayer.Play("fade");
 
-            await ToSignal(sound, "finished");
-            QueueFree();
+        await ToSignal(sound, "finished");
+        QueueFree();
+    }
+
+    private void _On_Area_Entered(Area2D area) {
+        if (area.IsInGroup("player_body")) {
+            Consume();
         }
     }
 

@@ -161,9 +161,6 @@ public class Bullet : Area2D {
         if (area.IsInGroup("rocks") || area.IsInGroup("enemies") || area.IsInGroup("player")) {
             _TriggerSparkles(Position);
 
-            var hittable = (IHittable)area;
-            hittable.Hit();
-
             if (bulletType == BulletType.Bomb) {
                 // Explode
                 bombTimer.Stop();

@@ -1,6 +1,6 @@
 using Godot;
 
-public class Enemy : Area2D, IHittable, IExplodable {
+public class Enemy : Area2D {
     // Signals
     [Signal] public delegate void exploded(Node2D node);
 
@@ -35,6 +35,8 @@ public class Enemy : Area2D, IHittable, IExplodable {
 
     public override void _Ready() {
         this.BindNodes();
+
+        Connect("area_entered", this, nameof(_On_Area_Entered));
 
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
@@ -150,5 +152,13 @@ public class Enemy : Area2D, IHittable, IExplodable {
 
     private void _On_MessageAllShown() {
         showingMessage = false;
+    }
+
+    private void _On_Area_Entered(Area2D area) {
+        if (area.IsInGroup("wave")) {
+            Explode();
+        } else if (area.IsInGroup("bullets")) {
+            Hit();
+        }
     }
 }

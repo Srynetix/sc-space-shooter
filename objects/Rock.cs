@@ -1,6 +1,6 @@
 using Godot;
 
-public class Rock : Area2D, IExplodable, IHittable {
+public class Rock : Area2D {
 
     // On ready
     [BindNode("Sprite/Trail")]
@@ -32,6 +32,8 @@ public class Rock : Area2D, IExplodable, IHittable {
 
     public override void _Ready() {
         this.BindNodes();
+
+        Connect("area_entered", this, nameof(_On_Area_Entered));
 
         ((ParticlesMaterial)trail.ProcessMaterial).Scale = Scale.x;
     }
@@ -94,6 +96,14 @@ public class Rock : Area2D, IExplodable, IHittable {
 
         if (Position.y - sprite.Texture.GetSize().y > gameSize.y) {
             QueueFree();
+        }
+    }
+
+    private void _On_Area_Entered(Area2D area) {
+        if (area.IsInGroup("player") || area.IsInGroup("wave")) {
+            Explode();
+        } else if (area.IsInGroup("bullets")) {
+            Hit();
         }
     }
 }
