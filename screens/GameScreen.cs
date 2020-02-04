@@ -39,7 +39,6 @@ public class GameScreen : Control {
     public override void _Ready() {
         this.BindNodes();
 
-        player.Connect("fire", this, nameof(_On_Fire));
         player.Connect("dead", this, nameof(_On_Player_Dead));
         player.Connect("respawn", this, nameof(_On_Player_Respawn));
 
@@ -54,7 +53,6 @@ public class GameScreen : Control {
         });
         enemySpawner.ConnectTargetScene(this, new Dictionary {
             { "exploded", nameof(_On_Enemy_Exploded) },
-            { "fire", nameof(_On_Fire) }
         });
         bombPowerupSpawner.ConnectTargetScene(this, new Dictionary {
             { "powerup", nameof(_On_Powerup_Powerup) }
@@ -111,18 +109,11 @@ public class GameScreen : Control {
 
         var bossInstance = bossScene.InstanceAs<BossEnemy>();
         bossInstance.Connect("exploded", this, nameof(_On_Boss_Exploded));
-        bossInstance.Connect("fire", this, nameof(_On_Fire));
         bossInstance.Prepare(new Vector2(gameSize.x / 2.0f, -100.0f), 100.0f, 1.0f);
         AddChild(bossInstance);
 
         bossInstance.SetHitPointsFactor(1 + (waveSystem.GetCurrentWave() - 1) * 20);
         bossInstance.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
-    }
-
-    private void _On_Fire(Bullet.FireData fireData) {
-        var instance = fireData.bullet.InstanceAs<Bullet>();
-        instance.Prepare(fireData);
-        bullets.AddChild(instance);
     }
 
     private void _On_Player_Dead() {

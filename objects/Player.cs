@@ -12,7 +12,6 @@ public class Player : Area2D, IHittable {
     private const float MESSAGE_SPEED = 0.05f;
 
     // Signals
-    [Signal] public delegate void fire(Bullet.FireData fireData);
     [Signal] public delegate void dead();
     [Signal] public delegate void respawn();
 
@@ -52,9 +51,9 @@ public class Player : Area2D, IHittable {
 
         spawnTimer.WaitTime = spawnTime;
         spawnTimer.Connect("timeout", this, nameof(_On_SpawningTimer_Timeout));
-        bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
         bulletSystem.Connect("bomb_available", this, nameof(_On_BombAvailable));
         bulletSystem.Connect("bomb_used", this, nameof(_On_BombUsed));
+        bulletSystem.TargetContainer = GetParent();
 
         var gameSize = gameState.GetGameSize();
         initialPosition = new Vector2(gameSize.x / 2.0f, gameSize.y - gameSize.y / 8.0f);
@@ -218,10 +217,6 @@ public class Player : Area2D, IHittable {
         } else if (area.IsInGroup("enemies")) {
             _SetState(State.Dead);
         }
-    }
-
-    private void _On_BulletSystem_Fire(Bullet.FireData fireData) {
-        EmitSignal("fire", fireData);
     }
 
     private void _On_BombAvailable() {
