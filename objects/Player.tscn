@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://objects/Player.cs" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
@@ -172,6 +172,10 @@ scale = 10.0
 scale_curve = SubResource( 13 )
 color_ramp = SubResource( 11 )
 
+[sub_resource type="CapsuleShape2D" id=15]
+radius = 37.7195
+height = 50.3803
+
 [node name="Player" type="Area2D" groups=[
 "player",
 ]]
@@ -221,3 +225,12 @@ fireSpeed = 600.0
 [node name="StatusToast" parent="." instance=ExtResource( 5 )]
 
 [node name="TouchController" parent="." instance=ExtResource( 6 )]
+
+[node name="FullBody" type="Area2D" parent="." groups=[
+"player_body",
+]]
+collision_mask = 8
+
+[node name="FullShape" type="CollisionShape2D" parent="FullBody"]
+rotation = 1.5708
+shape = SubResource( 15 )

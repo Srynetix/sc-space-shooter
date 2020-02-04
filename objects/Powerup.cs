@@ -44,7 +44,7 @@ public class Powerup : Area2D {
     }
 
     async private void _On_Area_Entered(Area2D area) {
-        if (area.IsInGroup("player")) {
+        if (area.IsInGroup("player_body")) {
             collisionShape.SetDeferred("disabled", true);
             sound.Play();
             EmitSignal("powerup", this);
