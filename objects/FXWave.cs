@@ -91,8 +91,6 @@ public class FXWave : Area2D {
             sparkles.ZIndex = 10;
 
             GetParent().AddChild(sparkles);
-            var explodable = (IExplodable)area;
-            explodable.Explode();
         }
     }
 }
