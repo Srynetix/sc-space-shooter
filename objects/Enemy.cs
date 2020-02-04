@@ -3,7 +3,6 @@ using Godot;
 public class Enemy : Area2D, IHittable, IExplodable {
     // Signals
     [Signal] public delegate void exploded(Node2D node);
-    [Signal] public delegate void fire(Bullet.FireData fireData);
 
     // Constants
     public const int BASE_HIT_POINTS = 5;
@@ -39,8 +38,9 @@ public class Enemy : Area2D, IHittable, IExplodable {
 
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
-        bulletSystem.Connect("fire", this, nameof(_On_BulletSystem_Fire));
         statusToast.Connect("message_all_shown", this, nameof(_On_MessageAllShown));
+
+        bulletSystem.TargetContainer = GetParent();
 
         SetFireTimeFactor(0.0f);
         SetHitPointsFactor(0.0f);
@@ -146,10 +146,6 @@ public class Enemy : Area2D, IHittable, IExplodable {
 
     private void _On_FireTimer_Timeout() {
         isFiring = !isFiring;
-    }
-
-    private void _On_BulletSystem_Fire(Bullet.FireData fireData) {
-        EmitSignal("fire", fireData);
     }
 
     private void _On_MessageAllShown() {

@@ -13,7 +13,6 @@ public class TestStatusToast : Control {
         logger = debug.GetLogger("TestStatusToast");
         logger.LogLevelFilter = Console.LogLevel.Error;
 
-        player.Connect("fire", this, nameof(_On_Fire));
         player.Connect("respawn", this, nameof(_On_Respawn));
 
         player.GetStatusToast().ShowPriorityMessage("Hello World!");
@@ -36,12 +35,6 @@ public class TestStatusToast : Control {
 
     public override void _ExitTree() {
         debug.DisableDebugMode();
-    }
-
-    private void _On_Fire(Bullet.FireData fireData) {
-        var instance = fireData.bullet.InstanceAs<Bullet>();
-        instance.Prepare(fireData);
-        AddChild(instance);
     }
 
     private void _On_Respawn() {

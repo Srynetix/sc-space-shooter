@@ -8,15 +8,5 @@ public class TestEnemies : Control {
 
     public override void _Ready() {
         this.BindNodes();
-
-        spawner.ConnectTargetScene(this, new Dictionary {
-            { "fire", nameof(_On_Spawner_Fire) }
-        });
-    }
-
-    private void _On_Spawner_Fire(Bullet.FireData fireData) {
-        var instance = fireData.bullet.InstanceAs<Bullet>();
-        instance.Prepare(fireData);
-        AddChild(instance);
     }
 }

@@ -12,16 +12,9 @@ public class TestFXCamera : Control {
         this.BindNodes();
 
         timer.Connect("timeout", this, nameof(_On_Timeout));
-        player.Connect("fire", this, nameof(_On_Fire));
     }
 
     private void _On_Timeout() {
         camera.Shake();
-    }
-
-    private void _On_Fire(Bullet.FireData fireData) {
-        var bullet = fireData.bullet.InstanceAs<Bullet>();
-        bullet.Prepare(fireData);
-        AddChild(bullet);
     }
 }

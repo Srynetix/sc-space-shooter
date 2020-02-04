@@ -19,21 +19,11 @@ public class TestBullets : Node2D {
         enemyBullets.Position = new Vector2(gameSize.x / 2, gameSize.y / 2);
         laserBullets.Position = new Vector2(gameSize.x / 2 + gameSize.x / 4, gameSize.y / 2);
 
-        playerBullets.Connect("fire", this, nameof(_On_Fire));
-        enemyBullets.Connect("fire", this, nameof(_On_Fire));
-        laserBullets.Connect("fire", this, nameof(_On_Fire));
-
         while (true) {
             playerBullets.Fire(playerBullets.Position);
             enemyBullets.Fire(enemyBullets.Position);
             laserBullets.Fire(laserBullets.Position);
             await ToSignal(GetTree().CreateTimer(0.25f), "timeout");
         }
-    }
-
-    private void _On_Fire(Bullet.FireData fireData) {
-        var instance = fireData.bullet.InstanceAs<Bullet>();
-        instance.Prepare(fireData);
-        AddChild(instance);
     }
 }

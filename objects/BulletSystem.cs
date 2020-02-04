@@ -2,7 +2,6 @@ using Godot;
 
 public class BulletSystem : Node2D {
     // Signals
-    [Signal] public delegate void fire(Bullet.FireData fireData);
     [Signal] public delegate void type_switch(Bullet.BulletType prevType, Bullet.BulletType newType);
     [Signal] public delegate void bomb_available();
     [Signal] public delegate void bomb_used();
@@ -15,12 +14,11 @@ public class BulletSystem : Node2D {
     [Export] public Bullet.BulletTarget bulletTarget = Bullet.BulletTarget.Enemy;
     [Export] public bool bulletAutomatic = false;
     [Export] public bool bombAvailable = false;
+    [Export] public Node TargetContainer = null;
 
     // On ready
-    [BindNode("FireTimer")]
-    private Timer fireTimer;
-    [BindNode("Sound")]
-    private AudioStreamPlayer2D sound;
+    [BindNode("FireTimer")] private Timer fireTimer;
+    [BindNode("Sound")] private AudioStreamPlayer2D sound;
 
     // Data
     private bool canShoot = true;
@@ -115,18 +113,28 @@ public class BulletSystem : Node2D {
             canShoot = false;
 
             if (bType == Bullet.BulletType.Double) {
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
             } else if (bType == Bullet.BulletType.Triple) {
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos - new Vector2(0, 40), fireSpeed, bType, bulletTarget, bulletAutomatic));
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos - new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos - new Vector2(0, 40), fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos + new Vector2(20, 0), fireSpeed, bType, bulletTarget, bulletAutomatic));
             } else {
-                EmitSignal("fire", new Bullet.FireData(bulletModel, pos, fireSpeed, bType, bulletTarget, bulletAutomatic));
+                _SpawnBullet(new Bullet.FireData(bulletModel, pos, fireSpeed, bType, bulletTarget, bulletAutomatic));
             }
 
             sound.Play();
             fireTimer.Start();
+        }
+    }
+
+    private void _SpawnBullet(Bullet.FireData fireData) {
+        var instance = fireData.bullet.InstanceAs<Bullet>();
+        instance.Prepare(fireData);
+        if (TargetContainer != null) {
+            TargetContainer.AddChild(instance);
+        } else {
+            GetParent().AddChild(instance);
         }
     }
 
