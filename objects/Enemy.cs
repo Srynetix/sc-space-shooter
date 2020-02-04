@@ -7,6 +7,8 @@ public class Enemy : Area2D {
     // Constants
     public const int BASE_HIT_POINTS = 5;
     public const float BASE_FIRE_TIME = 0.5f;
+    public const float BOMB_HIT_TIME = 0.1f;
+    public const int BOMB_HIT_COUNT = 2;
 
     // Exports
     [Export] public float moveSpeed = 150.0f;
@@ -24,6 +26,7 @@ public class Enemy : Area2D {
     [BindNode("ExplosionSound")] protected AudioStreamPlayer2D explosionSound;
     [BindNode] protected Sprite sprite;
     [BindNode] protected ProgressBar progressBar;
+    [BindNode("BombHitTimer")] protected Timer bombHitTimer;
     [BindNodeRoot] protected GameState gameState;
 
     // Data
@@ -32,14 +35,18 @@ public class Enemy : Area2D {
     protected float acc = 0.0f;
     protected bool isFiring = false;
     protected bool showingMessage = false;
+    protected bool currentlyInBomb = false;
 
     public override void _Ready() {
         this.BindNodes();
 
         Connect("area_entered", this, nameof(_On_Area_Entered));
+        Connect("area_exited", this, nameof(_On_Area_Exited));
 
         fireTimer.WaitTime = fireTime;
         fireTimer.Connect("timeout", this, nameof(_On_FireTimer_Timeout));
+        bombHitTimer.WaitTime = BOMB_HIT_TIME;
+        bombHitTimer.Connect("timeout", this, nameof(_On_BombHitTimer_Timeout));
         statusToast.Connect("message_all_shown", this, nameof(_On_MessageAllShown));
 
         bulletSystem.TargetContainer = GetParent();
@@ -86,12 +93,12 @@ public class Enemy : Area2D {
         fireTimer.Start();
     }
 
-    public void Hit() {
+    public void Hit(int count = 1) {
         if (!hasExploded) {
             animationPlayer.Play("tint");
-            hitCount += 1;
+            hitCount += count;
             _UpdateProgressBar();
-            if (hitCount == hitPoints) {
+            if (hitCount >= hitPoints) {
                 Explode();
             }
         }
@@ -150,15 +157,30 @@ public class Enemy : Area2D {
         isFiring = !isFiring;
     }
 
+    private void _On_BombHitTimer_Timeout() {
+        if (currentlyInBomb) {
+            Hit(BOMB_HIT_COUNT);
+            bombHitTimer.Start();
+        }
+    }
+
     private void _On_MessageAllShown() {
         showingMessage = false;
     }
 
     private void _On_Area_Entered(Area2D area) {
         if (area.IsInGroup("wave")) {
-            Explode();
+            currentlyInBomb = true;
+            Hit(BOMB_HIT_COUNT);
+            bombHitTimer.Start();
         } else if (area.IsInGroup("bullets")) {
             Hit();
+        }
+    }
+
+    private void _On_Area_Exited(Area2D area) {
+        if (area.IsInGroup("wave")) {
+            currentlyInBomb = false;
         }
     }
 }
