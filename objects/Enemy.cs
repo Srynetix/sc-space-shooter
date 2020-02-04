@@ -53,6 +53,8 @@ public class Enemy : Area2D {
 
         SetFireTimeFactor(0.0f);
         SetHitPointsFactor(0.0f);
+
+        _ScanPlayer();
     }
 
     public override void _Process(float delta) {
@@ -182,5 +184,16 @@ public class Enemy : Area2D {
         if (area.IsInGroup("wave")) {
             currentlyInBomb = false;
         }
+    }
+
+    private void _ScanPlayer() {
+        var players = GetTree().GetNodesInGroup("player");
+        foreach (Player player in players) {
+            player.Connect("dead", this, nameof(_TauntPlayer));
+        }
+    }
+
+    private void _TauntPlayer() {
+        statusToast.ShowPriorityMessageWithColor(Tr("Hahaha!"), Colors.Red);
     }
 }
