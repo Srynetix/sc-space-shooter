@@ -144,9 +144,9 @@ text = "MENU_TESTS"
 
 [node name="OptionsButtons" type="VBoxContainer" parent="Margin/All"]
 visible = false
-margin_top = 690.0
+margin_top = 614.0
 margin_right = 520.0
-margin_bottom = 916.0
+margin_bottom = 917.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
@@ -158,10 +158,17 @@ text = "English"
 items = [ "English", null, false, 0, null, "French", null, false, 1, null ]
 selected = 0
 
-[node name="BackButton" type="Button" parent="Margin/All/OptionsButtons"]
+[node name="HowToPlay" type="Button" parent="Margin/All/OptionsButtons"]
 margin_top = 77.0
 margin_right = 520.0
 margin_bottom = 114.0
+theme = ExtResource( 5 )
+text = "How to play"
+
+[node name="BackButton" type="Button" parent="Margin/All/OptionsButtons"]
+margin_top = 154.0
+margin_right = 520.0
+margin_bottom = 191.0
 custom_fonts/font = SubResource( 7 )
 text = "Back"
 

@@ -7,34 +7,19 @@ public class GameScreen : Control {
     private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
     private static PackedScene statusToastScene = (PackedScene)GD.Load("res://objects/StatusToast.tscn");
 
-    [BindNode]
-    private Player player;
-    [BindNode("Bullets")]
-    private Node2D bullets;
-    [BindNode("CanvasLayer/HUD")]
-    private HUD hud;
-    [BindNode("CanvasLayer/PopupPanel")]
-    private PopupPanel pausePopup;
-    [BindNode]
-    private AnimationPlayer animationPlayer;
-    [BindNode]
-    private WaveSystem waveSystem;
-    [BindNode("Alarm")]
-    private AudioStreamPlayer alarm;
-    [BindNode("Spawners/RockSpawner")]
-    private Spawner rockSpawner;
-    [BindNode("Spawners/PowerupSpawner")]
-    private Spawner powerupSpawner;
-    [BindNode("Spawners/EnemySpawner")]
-    private Spawner enemySpawner;
-    [BindNode("Spawners/LifePowerupSpawner")]
-    private Spawner lifeSpawner;
-    [BindNode("Spawners/BombPowerupSpawner")]
-    private Spawner bombPowerupSpawner;
-    [BindNodeRoot]
-    private FXCamera camera;
-    [BindNodeRoot]
-    private GameState gameState;
+    [BindNode] private Player player;
+    [BindNode("Bullets")] private Node2D bullets;
+    [BindNode("CanvasLayer/HUD")] private HUD hud;
+    [BindNode] private AnimationPlayer animationPlayer;
+    [BindNode] private WaveSystem waveSystem;
+    [BindNode("Alarm")] private AudioStreamPlayer alarm;
+    [BindNode("Spawners/RockSpawner")] private Spawner rockSpawner;
+    [BindNode("Spawners/PowerupSpawner")] private Spawner powerupSpawner;
+    [BindNode("Spawners/EnemySpawner")] private Spawner enemySpawner;
+    [BindNode("Spawners/LifePowerupSpawner")] private Spawner lifeSpawner;
+    [BindNode("Spawners/BombPowerupSpawner")] private Spawner bombPowerupSpawner;
+    [BindNodeRoot] private FXCamera camera;
+    [BindNodeRoot] private GameState gameState;
 
     public override void _Ready() {
         this.BindNodes();
@@ -59,8 +44,6 @@ public class GameScreen : Control {
         });
 
         enemySpawner.Connect("spawn", this, nameof(_On_Enemy_Spawned));
-        pausePopup.GetNode<Label>("Margin/VBox/Label").Text = Tr("Game is paused.\nPress Resume\nto continue.").CEscape();
-        pausePopup.GetNode<Button>("Margin/VBox/Button").Connect("pressed", this, nameof(_ResumeGame));
 
         waveSystem.Connect("timeout", this, nameof(_On_WaveSystem_Timeout));
         lifeSpawner.disabled = true;
@@ -74,8 +57,6 @@ public class GameScreen : Control {
     public override void _Notification(int what) {
         if (what == MainLoop.NotificationWmGoBackRequest) {
             gameState.LoadScreen(GameState.Screens.TITLE);
-        } else if (what == MainLoop.NotificationWmFocusOut) {
-            _PauseGame();
         }
     }
 
@@ -208,18 +189,6 @@ public class GameScreen : Control {
         } else if (powerupType == Powerup.PowerupType.Bomb) {
             player.GetBulletSystem().EnableBomb();
         }
-    }
-
-    private void _PauseGame() {
-        var tree = GetTree();
-        pausePopup.PopupCentered();
-        tree.Paused = true;
-    }
-
-    private void _ResumeGame() {
-        var tree = GetTree();
-        pausePopup.Hide();
-        tree.Paused = false;
     }
 
     private void _On_WaveSystem_Timeout() {

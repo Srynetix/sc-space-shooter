@@ -1,5 +1,6 @@
 using Godot;
 
+using Array = Godot.Collections.Array;
 using Dictionary = Godot.Collections.Dictionary;
 
 public class Spawner : Node2D {
@@ -49,6 +50,11 @@ public class Spawner : Node2D {
         timer.Start();
     }
 
+    public void ResetThenSpawn() {
+        Reset();
+        Spawn();
+    }
+
     public void Disable() {
         disabled = true;
     }
@@ -73,6 +79,13 @@ public class Spawner : Node2D {
         return instance;
     }
 
+    public Node SpawnCentered() {
+        var gameSize = gameState.GetGameSize();
+        var pos = new Vector2(gameSize.x / 2, -50.0f);
+
+        return SpawnAtPosition(pos);
+    }
+
     private void PrepareInstance(Node instance, Vector2 pos) {
         instance.Call("Prepare", pos, speed, (float)GD.RandRange(randScale.x, randScale.y));
     }
@@ -86,11 +99,15 @@ public class Spawner : Node2D {
         return SpawnAtPosition(pos);
     }
 
+    public Array GetElements() {
+        return elements.GetChildren();
+    }
+
     private void _On_Timer_Timeout() {
         if (disabled) {
             return;
         }
 
-        Spawn();
+        CallDeferred(nameof(Spawn));
     }
 }

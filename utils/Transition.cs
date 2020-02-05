@@ -8,6 +8,10 @@ public class Transition : CanvasLayer {
         this.BindNodes();
     }
 
+    public static Transition GetInstance(Node origin) {
+        return (Transition)origin.GetTree().Root.GetNode(nameof(Transition));
+    }
+
     async public void FadeToScene(string scenePath, float transitionSpeed = 1.0f) {
         var scene = GD.Load<PackedScene>(scenePath);
 

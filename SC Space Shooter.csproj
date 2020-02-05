@@ -71,6 +71,7 @@
     <Compile Include="screens\BootScreen.cs" />
     <Compile Include="screens\GameOverScreen.cs" />
     <Compile Include="screens\GameScreen.cs" />
+    <Compile Include="screens\HowToPlayScreen.cs" />
     <Compile Include="screens\ScoreScreen.cs" />
     <Compile Include="screens\TitleScreen.cs" />
     <Compile Include="tests\scenes\TestBoss.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="ui\Console.cs" />
     <Compile Include="ui\Debug.cs" />
     <Compile Include="ui\HUD.cs" />
+    <Compile Include="ui\Pause.cs" />
     <Compile Include="utils\GameState.cs" />
     <Compile Include="utils\NodeExt.cs" />
     <Compile Include="utils\Transition.cs" />

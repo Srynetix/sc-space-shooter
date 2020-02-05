@@ -22,6 +22,7 @@ public class BulletSystem : Node2D {
 
     // Data
     private bool canShoot = true;
+    private bool weaponLocked = false;
     private Bullet.BulletType previousBulletType = Bullet.BulletType.Simple;
 
     public override void _Ready() {
@@ -37,12 +38,19 @@ public class BulletSystem : Node2D {
     }
 
     public void ResetWeapons() {
-        previousBulletType = Bullet.BulletType.Simple;
         bombAvailable = false;
-        SwitchType(Bullet.BulletType.Simple);
+
+        if (!weaponLocked) {
+            previousBulletType = Bullet.BulletType.Simple;
+            SwitchType(Bullet.BulletType.Simple);
+        }
     }
 
     public void UpgradeWeapon() {
+        if (weaponLocked) {
+            return;
+        }
+
         if (bulletType == Bullet.BulletType.Simple) {
             SwitchType(Bullet.BulletType.Double);
         } else if (bulletType == Bullet.BulletType.Double) {
@@ -89,6 +97,14 @@ public class BulletSystem : Node2D {
                 SwitchType(Bullet.BulletType.SlowFast);
                 break;
         }
+    }
+
+    public void LockWeapon() {
+        weaponLocked = true;
+    }
+
+    public void UnlockWeapon() {
+        weaponLocked = false;
     }
 
     public bool CanUpgradeWeapon() {
