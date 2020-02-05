@@ -49,19 +49,19 @@ public class TitleScreen : Control {
     }
 
     private void _DisableButtons() {
-        startGameButton.Disabled = true;
-        testsButton.Disabled = true;
-        optionsButton.Disabled = true;
-        optionsBackButton.Disabled = true;
-        howToPlayButton.Disabled = true;
+        startGameButton.MouseFilter = MouseFilterEnum.Ignore;
+        testsButton.MouseFilter = MouseFilterEnum.Ignore;
+        optionsButton.MouseFilter = MouseFilterEnum.Ignore;
+        optionsBackButton.MouseFilter = MouseFilterEnum.Ignore;
+        howToPlayButton.MouseFilter = MouseFilterEnum.Ignore;
     }
 
     private void _EnableButtons() {
-        startGameButton.Disabled = false;
-        testsButton.Disabled = false;
-        optionsButton.Disabled = false;
-        optionsBackButton.Disabled = false;
-        howToPlayButton.Disabled = false;
+        startGameButton.MouseFilter = MouseFilterEnum.Pass;
+        testsButton.MouseFilter = MouseFilterEnum.Pass;
+        optionsButton.MouseFilter = MouseFilterEnum.Pass;
+        optionsBackButton.MouseFilter = MouseFilterEnum.Pass;
+        howToPlayButton.MouseFilter = MouseFilterEnum.Pass;
     }
 
     private void _ConnectButtons() {

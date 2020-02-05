@@ -116,4 +116,5 @@ func _load_prev_scene():
     self._load_current_scene()
 
 func _go_back():
+    back_button.mouse_filter = MOUSE_FILTER_IGNORE
     emit_signal("go_back")
