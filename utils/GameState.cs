@@ -8,6 +8,7 @@ public class GameState : Node {
     public enum Screens {
         BOOT,
         TITLE,
+        TUTORIAL,
         GAME,
         GAMEOVER,
         SCORE,
@@ -16,6 +17,9 @@ public class GameState : Node {
 
     private const int MAX_HIGH_SCORES = 5;
     private const string YOUR_NAME = "YOU";
+    private const string VERSION_KEY = "version";
+    private const string TUTORIAL_SHOWN_KEY = "tutorial_shown";
+    private const string HIGH_SCORES_KEY = "high_scores";
 
     private Array DEFAULT_HIGH_SCORES = new Array {
         new Array { "ZZZ", 30000 },
@@ -25,6 +29,7 @@ public class GameState : Node {
     private Dictionary<Screens, string> SCREEN_MAP = new Dictionary<Screens, string> {
         {Screens.BOOT, "res://screens/BootScreen.tscn"},
         {Screens.TITLE, "res://screens/TitleScreen.tscn"},
+        {Screens.TUTORIAL, "res://screens/HowToPlayScreen.tscn"},
         {Screens.GAME, "res://screens/GameScreen.tscn"},
         {Screens.GAMEOVER, "res://screens/GameOverScreen.tscn"},
         {Screens.SCORE, "res://screens/ScoreScreen.tscn"},
@@ -92,8 +97,22 @@ public class GameState : Node {
         }
     }
 
+    public bool WasTutorialShown() {
+        if (currentGameSave.Contains(TUTORIAL_SHOWN_KEY)) {
+            return (bool)currentGameSave[TUTORIAL_SHOWN_KEY];
+        }
+
+        // Key not present, first time
+        return true;
+    }
+
+    public void SetTutorialShown() {
+        currentGameSave[TUTORIAL_SHOWN_KEY] = false;
+        _SaveGameSave(currentGameSave);
+    }
+
     public string GetVersionNumber() {
-        return (string)configuration["version"];
+        return (string)configuration[VERSION_KEY];
     }
 
     public Vector2 GetGameSize() {
@@ -101,16 +120,11 @@ public class GameState : Node {
     }
 
     public void SaveGameOver() {
-        GD.Print("Trying to save at game over");
-
         if (_HasHighScore()) {
             int idx = _GetHighScorePos();
-            GD.Print("High score found at position", idx);
             _InsertHighScore(idx);
             currentGameSave["high_scores"] = highScores;
             _SaveGameSave(currentGameSave);
-        } else {
-            GD.Print("No new high score found");
         }
     }
 
@@ -130,12 +144,12 @@ public class GameState : Node {
             gameSave = currentLine;
 
             // Handle game save
-            var loadedScores = (Array)gameSave["high_scores"];
+            var loadedScores = (Array)gameSave[HIGH_SCORES_KEY];
             var newScores = new Array();
             foreach (Array entry in loadedScores) {
                 newScores.Add(new Array { (string)entry[0], (int)(float)entry[1] });
             }
-            gameSave["high_scores"] = newScores;
+            gameSave[HIGH_SCORES_KEY] = newScores;
 
             break;
         }
@@ -156,19 +170,19 @@ public class GameState : Node {
     }
 
     private void _ApplyGameSave(Dictionary gameSave) {
-        highScores = (Array)gameSave["high_scores"];
+        highScores = (Array)gameSave[HIGH_SCORES_KEY];
         currentGameSave = gameSave;
     }
 
 
     private Dictionary _LoadEmptyGameSave() {
         return new Dictionary {
-            {"high_scores", DEFAULT_HIGH_SCORES}
+            {HIGH_SCORES_KEY, DEFAULT_HIGH_SCORES}
         };
     }
 
     private void _ChangeScene(string path, float transitionSpeed = 1.0f) {
-        var transition = GetTree().Root.GetNode<Transition>("Transition");
+        var transition = Transition.GetInstance(this);
         transition.FadeToScene(path, transitionSpeed);
     }
 

@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://screens/HowToPlayScreen.cs" type="Script" id=1]
+[ext_resource path="res://objects/Starfield.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/StatusToast.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Rock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/Spawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/Enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/Powerup.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/BossEnemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/BombPowerup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/LifePowerup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resources/GameTheme.tres" type="Theme" id=12]
+[ext_resource path="res://ui/Pause.tscn" type="PackedScene" id=13]
+
+[node name="HowToPlayScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Starfield" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="StatusToast" parent="." instance=ExtResource( 4 )]
+
+[node name="RockSpawner" parent="." instance=ExtResource( 6 )]
+frequency = 1.0
+speed = 200.0
+randScale = Vector2( 0.75, 1.25 )
+element = ExtResource( 5 )
+disabled = true
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
+frequency = 3.0
+element = ExtResource( 7 )
+disabled = true
+
+[node name="PowerupSpawner" parent="." instance=ExtResource( 6 )]
+speed = 150.0
+randScale = Vector2( 1, 1 )
+element = ExtResource( 8 )
+disabled = true
+
+[node name="BossSpawner" parent="." instance=ExtResource( 6 )]
+randScale = Vector2( 1, 1 )
+element = ExtResource( 9 )
+disabled = true
+
+[node name="LifeSpawner" parent="." instance=ExtResource( 6 )]
+randScale = Vector2( 1, 1 )
+element = ExtResource( 11 )
+disabled = true
+
+[node name="BombSpawner" parent="." instance=ExtResource( 6 )]
+randScale = Vector2( 1, 1 )
+element = ExtResource( 10 )
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Margin" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CanvasLayer/Margin"]
+margin_left = 361.0
+margin_top = 20.0
+margin_right = 520.0
+margin_bottom = 57.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource( 12 )
+text = "Skip Tutorial"
+align = 2
+
+[node name="Pause" parent="." instance=ExtResource( 13 )]

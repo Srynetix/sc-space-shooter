@@ -32,6 +32,8 @@ public class StatusToast : Node2D {
     private bool running = false;
     private Vector2 initialLabelPosition;
     private AnimStep animStep;
+    private DynamicFont initialFont = null;
+    private DynamicFont overridenFont = null;
 
     public override void _Ready() {
         this.BindNodes();
@@ -45,6 +47,12 @@ public class StatusToast : Node2D {
         timer.Connect("timeout", this, nameof(_On_TimerTimeout));
         tween.Connect("tween_all_completed", this, nameof(_On_TweenAllCompleted));
         label.RectMinSize = new Vector2(GetViewport().Size.x, 8);
+
+        initialFont = label.GetDynamicFont("font");
+    }
+
+    public void SetMessageVisibleTime(float time) {
+        timer.WaitTime = time;
     }
 
     public void Stop() {
@@ -68,6 +76,14 @@ public class StatusToast : Node2D {
 
     public void ShowPriorityMessageWithColor(string message, Color color) {
         _ShowMessageWithColor(message, color, true);
+    }
+
+    public void SetTextSize(int textSize) {
+        overridenFont = new DynamicFont();
+        overridenFont.FontData = initialFont.FontData;
+        overridenFont.Size = textSize;
+
+        label.AddFontOverride("font", overridenFont);
     }
 
     public void _ShowMessageWithColor(string message, Color color, bool priority) {

@@ -42,6 +42,13 @@ public class BindNodeRoot : BindNodeBase {
 }
 
 public static class NodeExt {
+    /// <summary>
+    /// Automatically bind nodes with a BindNodeBase attribute.
+    /// BindNodeBase implementations are <c>BindNode</c> and <c>BindNodeRoot</c>.
+    /// <c>BindNode</c> will get a node corresponding to the type name, unless a path is explicitly given.
+    /// <c>BindNodeRoot</c> will get a node from the root element corresponding to the type name,
+    /// unless a path is explicitly given.
+    /// </summary>
     public static void BindNodes<T>(this T node) where T : Node {
         var fields = typeof(T).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
         foreach (var field in fields) {
@@ -56,7 +63,17 @@ public static class NodeExt {
         }
     }
 
+    /// <summary>
+    /// Instantiate a PackedScene with a known Node type.
+    /// </summary>
     public static T InstanceAs<T>(this PackedScene packed, PackedScene.GenEditState editState = PackedScene.GenEditState.Disabled) where T : Node {
         return (T)packed.Instance(editState);
+    }
+
+    /// <summary>
+    /// Get a DynamicFont from a Control node.
+    /// </summary>
+    public static DynamicFont GetDynamicFont(this Control control, string name, string type = "") {
+        return (DynamicFont)control.GetFont(name, type);
     }
 }

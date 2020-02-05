@@ -2,30 +2,19 @@ using Godot;
 
 public class TitleScreen : Control {
 
-    [BindNode("Margin/All/Top/HSValue")]
-    private Label highScore;
-    [BindNode("Margin/All/Buttons")]
-    private VBoxContainer buttons;
-    [BindNode("Margin/All/Buttons/StartGame")]
-    private Button startGameButton;
-    [BindNode("Margin/All/Buttons/Options")]
-    private Button optionsButton;
-    [BindNode("Margin/All/Buttons/Tests")]
-    private Button testsButton;
-    [BindNode("Margin/All/OptionsButtons")]
-    private VBoxContainer optionsButtons;
-    [BindNode("Margin/All/OptionsButtons/BackButton")]
-    private Button optionsBackButton;
-    [BindNode("Margin/All/OptionsButtons/Languages")]
-    private OptionButton languagesButton;
-    [BindNode("Sound")]
-    private AudioStreamPlayer sound;
-    [BindNode("Margin/All/Bottom/Version")]
-    private Label version;
-    [BindNode]
-    private Tween tween;
-    [BindNodeRoot]
-    private GameState gameState;
+    [BindNode("Margin/All/Top/HSValue")] private Label highScore;
+    [BindNode("Margin/All/Buttons")] private VBoxContainer buttons;
+    [BindNode("Margin/All/Buttons/StartGame")] private Button startGameButton;
+    [BindNode("Margin/All/Buttons/Options")] private Button optionsButton;
+    [BindNode("Margin/All/Buttons/Tests")] private Button testsButton;
+    [BindNode("Margin/All/OptionsButtons")] private VBoxContainer optionsButtons;
+    [BindNode("Margin/All/OptionsButtons/BackButton")] private Button optionsBackButton;
+    [BindNode("Margin/All/OptionsButtons/HowToPlay")] private Button howToPlayButton;
+    [BindNode("Margin/All/OptionsButtons/Languages")] private OptionButton languagesButton;
+    [BindNode("Sound")] private AudioStreamPlayer sound;
+    [BindNode("Margin/All/Bottom/Version")] private Label version;
+    [BindNode] private Tween tween;
+    [BindNodeRoot] private GameState gameState;
 
     async public override void _Ready() {
         this.BindNodes();
@@ -64,6 +53,7 @@ public class TitleScreen : Control {
         testsButton.Disabled = true;
         optionsButton.Disabled = true;
         optionsBackButton.Disabled = true;
+        howToPlayButton.Disabled = true;
     }
 
     private void _EnableButtons() {
@@ -71,6 +61,7 @@ public class TitleScreen : Control {
         testsButton.Disabled = false;
         optionsButton.Disabled = false;
         optionsBackButton.Disabled = false;
+        howToPlayButton.Disabled = false;
     }
 
     private void _ConnectButtons() {
@@ -79,6 +70,7 @@ public class TitleScreen : Control {
         optionsButton.Connect("pressed", this, nameof(_ShowOptions));
         optionsBackButton.Connect("pressed", this, nameof(_HideOptions));
         languagesButton.Connect("item_selected", this, nameof(_ChangeLanguage));
+        howToPlayButton.Connect("pressed", this, nameof(_LoadTutorial));
     }
 
     public override void _Notification(int what) {
@@ -124,7 +116,11 @@ public class TitleScreen : Control {
     }
 
     private void _LoadNext() {
-        _LoadScreen(GameState.Screens.GAME);
+        if (gameState.WasTutorialShown()) {
+            _LoadScreen(GameState.Screens.TUTORIAL);
+        } else {
+            _LoadScreen(GameState.Screens.GAME);
+        }
     }
 
     private void _LoadScreen(GameState.Screens screen) {
@@ -133,6 +129,10 @@ public class TitleScreen : Control {
         SetProcess(false);
         SetProcessInput(false);
         gameState.LoadScreen(screen);
+    }
+
+    private void _LoadTutorial() {
+        _LoadScreen(GameState.Screens.TUTORIAL);
     }
 
     private void _ChangeLanguage(int selected) {
