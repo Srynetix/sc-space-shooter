@@ -72,7 +72,7 @@ public class GameScreen : Control {
         powerupSpawner.Reset();
         bombPowerupSpawner.Reset();
 
-        hud.ShowMessage(Tr("WAVE") + " " + waveSystem.GetCurrentWave().ToString());
+        hud.ShowMessage(Tr("HUD_WAVE") + " " + waveSystem.GetCurrentWave().ToString());
     }
 
     async private void _LoadBoss() {
@@ -81,7 +81,7 @@ public class GameScreen : Control {
 
         var gameSize = gameState.GetGameSize();
         animationPlayer.Play("warning");
-        hud.ShowMessage(Tr("WARNING"));
+        hud.ShowMessage(Tr("HUD_WARNING"));
 
         alarm.Play();
         await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
@@ -103,14 +103,14 @@ public class GameScreen : Control {
 
     private void _On_Player_Respawn() {
         var lives = gameState.GetLives();
-        if (lives > 1) {
+        if (lives > 0) {
             gameState.RemoveLife();
             gameState.UpdateHUD(hud);
             lives = gameState.GetLives();
 
             player.Respawn();
-            if (lives == 1) {
-                hud.ShowMessage(Tr("LASTLIFE"));
+            if (lives == 0) {
+                hud.ShowMessage(Tr("HUD_LASTLIFE"));
             }
         } else {
             gameState.LoadScreen(GameState.Screens.GAMEOVER);
@@ -185,7 +185,7 @@ public class GameScreen : Control {
         } else if (powerupType == Powerup.PowerupType.Life) {
             gameState.AddLife();
             gameState.UpdateHUD(hud);
-            player.GetStatusToast().ShowMessage(Tr("1-UP!"));
+            player.GetStatusToast().ShowMessage(Tr("PLAYER_LIFE_MSG"));
         } else if (powerupType == Powerup.PowerupType.Bomb) {
             player.GetBulletSystem().EnableBomb();
         }

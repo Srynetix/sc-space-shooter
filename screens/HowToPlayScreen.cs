@@ -67,7 +67,8 @@ public class HowToPlayScreen : Control {
         statusToast.ShowMessage(Tr("TUTORIAL_STEP1_MSG2"));
         await ToSignal(statusToast, "message_shown");
 
-        statusToast.ShowMessage(Tr("TUTORIAL_STEP1_MSG3"));
+        var msg = "TUTORIAL_STEP1_MSG3_" + (Utils.IsMobilePlatform() ? "MOBILE" : "PC");
+        statusToast.ShowMessage(Tr(msg));
         await ToSignal(statusToast, "message_shown");
 
         statusToast.ShowMessage(Tr("TUTORIAL_STEP1_MSG4"));
@@ -92,9 +93,9 @@ public class HowToPlayScreen : Control {
         }
 
         statusToast.ShowPriorityMessage(Tr("TUTORIAL_STEP2_MSG1"));
-        await ToSignal(statusToast, "message_shown");
+        await ToSignal(statusToast, "message_all_shown");
 
-        statusToast.ShowPriorityMessage(Tr("TUTORIAL_STEP2_MSG2"));
+        statusToast.ShowMessage(Tr("TUTORIAL_STEP2_MSG2"));
         await ToSignal(statusToast, "message_shown");
 
         currentStep = Step.EnemyStart;
@@ -116,7 +117,7 @@ public class HowToPlayScreen : Control {
         }
 
         statusToast.ShowPriorityMessage(Tr("TUTORIAL_STEP3_MSG1"));
-        await ToSignal(statusToast, "message_shown");
+        await ToSignal(statusToast, "message_all_shown");
 
         statusToast.ShowMessage(Tr("TUTORIAL_STEP3_MSG2"));
         await ToSignal(statusToast, "message_shown");
@@ -162,7 +163,8 @@ public class HowToPlayScreen : Control {
 
         await ToSignal(GetTree().CreateTimer(2.0f), "timeout");
 
-        statusToast.ShowMessage(Tr("TUTORIAL_STEP3_MSG10"));
+        var msg = "TUTORIAL_STEP3_MSG10_" + (Utils.IsMobilePlatform() ? "MOBILE" : "PC");
+        statusToast.ShowMessage(Tr(msg));
         await ToSignal(statusToast, "message_shown");
 
         await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
@@ -189,8 +191,8 @@ public class HowToPlayScreen : Control {
     async private void _StartStep4() {
         currentStep = Step.End;
 
-        statusToast.ShowMessage(Tr("TUTORIAL_STEP4_MSG1"));
-        await ToSignal(statusToast, "message_shown");
+        statusToast.ShowPriorityMessage(Tr("TUTORIAL_STEP4_MSG1"));
+        await ToSignal(statusToast, "message_all_shown");
 
         statusToast.ShowMessage(Tr("TUTORIAL_STEP4_MSG2"));
         await ToSignal(statusToast, "message_shown");
@@ -241,7 +243,7 @@ public class HowToPlayScreen : Control {
         if (powerup.powerupType == Powerup.PowerupType.WeaponUpgrade) {
             player.UpgradeWeapon();
         } else if (powerup.powerupType == Powerup.PowerupType.Life) {
-            player.GetStatusToast().ShowMessage(Tr("1-UP!"));
+            player.GetStatusToast().ShowMessage(Tr("PLAYER_LIFE_MSG"));
         } else if (powerup.powerupType == Powerup.PowerupType.Bomb) {
             player.GetBulletSystem().EnableBomb();
         }

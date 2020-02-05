@@ -61,7 +61,7 @@ public class Player : Area2D {
 
         bulletSystem.SwitchType(initialBulletType);
 
-        statusToast.ShowPriorityMessage(Tr("Let's go!"));
+        statusToast.ShowPriorityMessage(Tr("PLAYER_SPAWN_MSG"));
     }
 
     public override void _Process(float delta) {
@@ -160,7 +160,7 @@ public class Player : Area2D {
     private void _SetStateIdle() {
         collisionShape.SetDeferred("disabled", false);
         animationPlayer.Play("idle");
-        statusToast.ShowPriorityMessage(Tr("Let's go!"));
+        statusToast.ShowPriorityMessage(Tr("PLAYER_SPAWN_MSG"));
     }
 
     private void _SetStateSpawning() {
@@ -176,7 +176,7 @@ public class Player : Area2D {
 
     public void UpgradeWeapon() {
         bulletSystem.UpgradeWeapon();
-        statusToast.ShowMessage(Tr("Weapon upgrade!"));
+        statusToast.ShowMessage(Tr("PLAYER_WEAPON_UPGRADE_MSG"));
     }
 
     private Vector2 _HandleMovement() {
@@ -218,11 +218,11 @@ public class Player : Area2D {
 
     private void _On_BombAvailable() {
         sprite.Modulate = Colors.Green;
-        statusToast.ShowMessage(Tr("Bomb picked!"));
+        statusToast.ShowMessage(Tr("PLAYER_BOMB_PICKED_MSG"));
     }
 
     private void _On_BombUsed() {
         sprite.Modulate = Colors.White;
-        statusToast.ShowMessage(Tr("Bomb fired!"));
+        statusToast.ShowMessage(Tr("PLAYER_BOMB_FIRED_MSG"));
     }
 }
