@@ -25,7 +25,7 @@ public class HowToPlayScreen : Control {
     [BindNode("BombSpawner")] private Spawner bombSpawner;
     [BindNode("CanvasLayer/Margin/Button")] private Button skipButton;
 
-    private string initialStep = nameof(_StartStep3);
+    private string initialStep = nameof(_StartStep1);
     private Step currentStep;
     private bool supportMessageShown = false;
 
