@@ -19,7 +19,7 @@ public class TitleScreen : Control {
     async public override void _Ready() {
         this.BindNodes();
 
-        version.Text = Tr("VERSION") + " " + gameState.GetVersionNumber();
+        version.Text = Tr("TITLE_VERSION") + " " + gameState.GetVersionNumber();
 
         var highScoreEntry = gameState.GetHighScore();
         highScore.Text = $"{highScoreEntry[0]} {highScoreEntry[1]}";

@@ -65,7 +65,7 @@ public class Enemy : Area2D {
 
         if (!showingMessage) {
             showingMessage = true;
-            statusToast.ShowMessageWithColor(Tr("Fire!"), Colors.Red);
+            statusToast.ShowMessageWithColor(Tr("ENEMY_FIRE_MSG"), Colors.Red);
         }
     }
 
@@ -194,6 +194,6 @@ public class Enemy : Area2D {
     }
 
     private void _TauntPlayer() {
-        statusToast.ShowPriorityMessageWithColor(Tr("Hahaha!"), Colors.Red);
+        statusToast.ShowPriorityMessageWithColor(Tr("ENEMY_TAUNT_MSG"), Colors.Red);
     }
 }

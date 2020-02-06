@@ -76,14 +76,14 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="CanvasLayer/Margin"]
-margin_left = 361.0
+margin_left = 260.0
 margin_top = 20.0
 margin_right = 520.0
 margin_bottom = 57.0
 size_flags_horizontal = 8
 size_flags_vertical = 0
 theme = ExtResource( 12 )
-text = "Skip Tutorial"
+text = "BTN_SKIP_TUTORIAL"
 align = 2
 
 [node name="Pause" parent="." instance=ExtResource( 13 )]

@@ -74,7 +74,7 @@ size_flags_horizontal = 3
 margin_right = 192.0
 margin_bottom = 44.0
 custom_fonts/font = SubResource( 1 )
-text = "SCORE"
+text = "HUD_SCORE"
 
 [node name="ScoreValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 48.0
@@ -92,7 +92,7 @@ margin_bottom = 860.0
 margin_right = 168.0
 margin_bottom = 27.0
 custom_fonts/font = SubResource( 3 )
-text = "HIGHSCORE"
+text = "HUD_HIGHSCORE"
 align = 1
 
 [node name="HighValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
@@ -113,7 +113,7 @@ size_flags_horizontal = 3
 margin_right = 192.0
 margin_bottom = 44.0
 custom_fonts/font = SubResource( 5 )
-text = "LIVES"
+text = "HUD_LIVES"
 align = 2
 
 [node name="LivesValue" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer3"]

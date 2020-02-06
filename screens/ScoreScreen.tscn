@@ -36,7 +36,7 @@ margin_right = 600.0
 margin_bottom = 900.0
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-text = "HIGHSCORES"
+text = "TITLE_HIGHSCORES"
 align = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginTop"]

@@ -29,5 +29,5 @@ margin_top = 462.0
 margin_right = 540.0
 margin_bottom = 498.0
 custom_fonts/font = SubResource( 1 )
-text = "GAMEOVER"
+text = "TITLE_GAMEOVER"
 align = 1

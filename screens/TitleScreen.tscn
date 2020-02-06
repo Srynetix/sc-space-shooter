@@ -80,7 +80,7 @@ __meta__ = {
 margin_right = 520.0
 margin_bottom = 31.0
 custom_fonts/font = SubResource( 1 )
-text = "HIGHSCORE"
+text = "HUD_HIGHSCORE"
 align = 1
 valign = 1
 
@@ -144,9 +144,9 @@ text = "MENU_TESTS"
 
 [node name="OptionsButtons" type="VBoxContainer" parent="Margin/All"]
 visible = false
-margin_top = 614.0
+margin_top = 690.0
 margin_right = 520.0
-margin_bottom = 917.0
+margin_bottom = 916.0
 size_flags_vertical = 3
 custom_constants/separation = 40
 
@@ -154,8 +154,8 @@ custom_constants/separation = 40
 margin_right = 520.0
 margin_bottom = 37.0
 theme = ExtResource( 5 )
-text = "English"
-items = [ "English", null, false, 0, null, "French", null, false, 1, null ]
+text = "LANGUAGE_ENGLISH"
+items = [ "LANGUAGE_ENGLISH", null, false, 0, null, "LANGUAGE_FRENCH", null, false, 1, null ]
 selected = 0
 
 [node name="HowToPlay" type="Button" parent="Margin/All/OptionsButtons"]
@@ -163,14 +163,14 @@ margin_top = 77.0
 margin_right = 520.0
 margin_bottom = 114.0
 theme = ExtResource( 5 )
-text = "How to play"
+text = "BTN_HOW_TO_PLAY"
 
 [node name="BackButton" type="Button" parent="Margin/All/OptionsButtons"]
 margin_top = 154.0
 margin_right = 520.0
 margin_bottom = 191.0
 custom_fonts/font = SubResource( 7 )
-text = "Back"
+text = "BTN_BACK"
 
 [node name="Bottom" type="VBoxContainer" parent="Margin/All"]
 margin_top = 921.0

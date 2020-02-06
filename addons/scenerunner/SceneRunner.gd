@@ -56,7 +56,7 @@ func _notification(what):
 
 func _load_first_scene():
     if len(self.known_scenes) == 0:
-        self.scene_name.text = "[NO SCENE FOUND]"
+        self.scene_name.text = tr("SCENE_RUNNER_NO_SCENE")
         return
 
     self._load_current_scene()
