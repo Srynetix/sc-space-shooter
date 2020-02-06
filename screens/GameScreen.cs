@@ -60,6 +60,12 @@ public class GameScreen : Control {
         }
     }
 
+    public override void _Process(float delta) {
+        if (Input.IsActionJustPressed("ui_cancel")) {
+            gameState.LoadScreen(GameState.Screens.TITLE);
+        }
+    }
+
     private void _LoadNextWave() {
         var waveInfo = waveSystem.LoadNextWave();
 
