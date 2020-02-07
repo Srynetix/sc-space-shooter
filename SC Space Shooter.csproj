@@ -83,6 +83,7 @@
     <Compile Include="tests\scenes\TestNeon.cs" />
     <Compile Include="tests\scenes\TestStatusToast.cs" />
     <Compile Include="tests\TestSuite.cs" />
+    <Compile Include="ui\AnimatedText.cs" />
     <Compile Include="ui\Console.cs" />
     <Compile Include="ui\Debug.cs" />
     <Compile Include="ui\HUD.cs" />
