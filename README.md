@@ -3,7 +3,7 @@
 Shoot rocks and enemy ships.
 Now with C#.
 
-> Made with Godot 3.2 RC1
+> Made with Godot 3.2
 
 <p style="text-align: center">
   <img src="./assets/sc-space-shooter.gif" alt="SC Space Shooter" />
