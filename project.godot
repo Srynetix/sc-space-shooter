@@ -107,6 +107,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_4="powerups"
 2d_physics/layer_5="enemies"
 2d_physics/layer_6="enemybullets"
+2d_physics/layer_7="wave"
 
 [locale]
 
