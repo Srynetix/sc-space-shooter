@@ -18,6 +18,7 @@ public class GameScreen : Control {
     [BindNode("Spawners/EnemySpawner")] private Spawner enemySpawner;
     [BindNode("Spawners/LifePowerupSpawner")] private Spawner lifeSpawner;
     [BindNode("Spawners/BombPowerupSpawner")] private Spawner bombPowerupSpawner;
+    [BindNode] private Starfield starfield;
     [BindNodeRoot] private FXCamera camera;
     [BindNodeRoot] private GameState gameState;
 
@@ -78,12 +79,15 @@ public class GameScreen : Control {
         powerupSpawner.Reset();
         bombPowerupSpawner.Reset();
 
+        starfield.Velocity = 100 * waveSystem.GetCurrentWave();
+
         hud.ShowMessage(Tr("HUD_WAVE") + " " + waveSystem.GetCurrentWave().ToString());
     }
 
     async private void _LoadBoss() {
         rockSpawner.disabled = true;
         enemySpawner.disabled = true;
+        starfield.EnableRadialAccel = true;
 
         var gameSize = gameState.GetGameSize();
         animationPlayer.Play("warning");
@@ -166,6 +170,8 @@ public class GameScreen : Control {
         gameState.UpdateHUD(hud);
         _Show_Score_Message(node, scoreToAdd);
         camera.Shake();
+
+        starfield.EnableRadialAccel = false;
 
         CallDeferred(nameof(_Start_Wave_Transition));
     }

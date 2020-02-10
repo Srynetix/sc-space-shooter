@@ -35,9 +35,9 @@ anchor_bottom = 0.0
 margin_top = 414.0
 margin_right = 540.0
 margin_bottom = 445.0
+AnimatedTextValue = "BOOT_LOADING"
 AnimatedStyle = 3
 WSeparation = 5.0
-AnimatedTextValue = "BOOT_LOADING"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "show"

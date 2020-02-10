@@ -19,12 +19,15 @@ curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
 emission_shape = 2
-emission_box_extents = Vector3( 650, 300, 1 )
+emission_box_extents = Vector3( 270, 430, 1 )
 flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
+initial_velocity = 500.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+radial_accel_random = 1.0
 tangential_accel = 3.0
 scale = 5.0
 scale_random = 1.0
@@ -52,8 +55,7 @@ __meta__ = {
 }
 
 [node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 300, 225 )
-rotation = 1.5708
+position = Vector2( 270, -70 )
 amount = 48
 lifetime = 2.0
 process_material = SubResource( 5 )
