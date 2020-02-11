@@ -9,6 +9,7 @@
 [ext_resource path="res://nodes/ui/StatusToast.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
+resource_local_to_scene = true
 radius = 24.3777
 height = 18.0338
 
@@ -27,6 +28,7 @@ _data = [ Vector2( 0.00195375, 0.9824 ), 0.0, 0.0, 0, 0, Vector2( 0.474676, 2 ),
 curve = SubResource( 4 )
 
 [sub_resource type="ParticlesMaterial" id=6]
+resource_local_to_scene = true
 emission_shape = 1
 emission_sphere_radius = 15.0
 flag_disable_z = true

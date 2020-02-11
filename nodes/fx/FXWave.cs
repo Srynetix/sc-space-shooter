@@ -6,20 +6,13 @@ public class FXWave : Area2D {
     private static PackedScene sparklesScene = (PackedScene)GD.Load("res://nodes/fx/Sparkles.tscn");
 
     // On ready
-    [BindNode]
-    private Tween tween;
-    [BindNode]
-    private Sprite sprite;
-    [BindNode]
-    private CollisionShape2D collisionShape;
-    [BindNode]
-    private Particles2D particles;
-    [BindNode]
-    private AudioStreamPlayer sound;
-    [BindNodeRoot]
-    private FXCamera fXCamera;
-    [BindNodeRoot]
-    private GameState gameState;
+    [BindNode] private Tween tween;
+    [BindNode] private Sprite sprite;
+    [BindNode] private CollisionShape2D collisionShape;
+    [BindNode] private Particles2D particles;
+    [BindNode] private AudioStreamPlayer sound;
+    [BindNodeRoot] private FXCamera fXCamera;
+    [BindNodeRoot] private GameState gameState;
 
     private Shape2D shape;
     private ParticlesMaterial particlesMaterial;
@@ -50,7 +43,7 @@ public class FXWave : Area2D {
         var finalParticlesVelocity = maxv * 20 * force;
 
         tween.InterpolateProperty(shaderMaterial, "shader_param/radius", 0, force, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
-        tween.InterpolateProperty(shaderMaterial, "shader_param/waveColor", Colors.Transparent, Colors.DeepSkyBlue, 2.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
+        tween.InterpolateProperty(shaderMaterial, "shader_param/waveColor", Colors.Transparent, Color.Color8(0, 255, 255, 128), 2.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
         tween.InterpolateProperty(shape, "radius", 0, maxv * 1.75f, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
         tween.InterpolateProperty(particlesMaterial, "initial_velocity", 10, finalParticlesVelocity, 3.0f, Tween.TransitionType.Expo, Tween.EaseType.Out);
         tween.Start();
@@ -64,7 +57,7 @@ public class FXWave : Area2D {
 
         tween.InterpolateProperty(shaderMaterial, "shader_param/radius", force, 0, 1.0f, Tween.TransitionType.Elastic, Tween.EaseType.Out);
         tween.InterpolateProperty(shape, "radius", maxv * 1.75f, 0, 1.0f, Tween.TransitionType.Elastic, Tween.EaseType.Out);
-        tween.InterpolateProperty(shaderMaterial, "shader_param/waveColor", Colors.DeepSkyBlue, Colors.Transparent, 1.0f, Tween.TransitionType.Expo, Tween.EaseType.In);
+        tween.InterpolateProperty(shaderMaterial, "shader_param/waveColor", Color.Color8(0, 255, 255, 128), Colors.Transparent, 1.0f, Tween.TransitionType.Expo, Tween.EaseType.In);
         tween.InterpolateProperty(particlesMaterial, "initial_velocity", particlesMaterial.InitialVelocity, 0, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.InOut);
         tween.InterpolateProperty(particlesMaterial, "orbit_velocity", particlesMaterial.OrbitVelocity, 0, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.InOut);
         tween.InterpolateProperty(particles, "amount", 64, 1, 0.5f, Tween.TransitionType.Linear, Tween.EaseType.InOut);
