@@ -7,7 +7,7 @@ public class TestBoss : Node2D {
     [BindNode] private Player player;
     [BindNode("BombSpawner")] private Spawner spawner;
 
-    private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
+    private static PackedScene bossScene = (PackedScene)GD.Load("res://nodes/objects/BossEnemy.tscn");
 
     public override void _Ready() {
         this.BindNodes();

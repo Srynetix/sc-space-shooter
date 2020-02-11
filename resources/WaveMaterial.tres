@@ -50,6 +50,7 @@ void fragment() {
 noise = SubResource( 2 )
 
 [resource]
+resource_local_to_scene = true
 shader = SubResource( 1 )
 shader_param/resolution = Vector2( 512, 512 )
 shader_param/waveColor = Color( 0.266667, 0.94902, 1, 1 )

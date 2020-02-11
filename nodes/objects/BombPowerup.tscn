@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://nodes/objects/Powerup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/textures/powerupGreen_bolt.png" type="Texture" id=2]
+
+[node name="BombPowerup" instance=ExtResource( 1 )]
+powerupType = 1
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Particles2D" parent="." index="2"]
+modulate = Color( 0.0313726, 0.996078, 0.180392, 1 )

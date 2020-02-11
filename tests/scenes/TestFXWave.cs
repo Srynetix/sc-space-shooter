@@ -1,7 +1,7 @@
 using Godot;
 
 public class TestFXWave : Control {
-    private static PackedScene fxWaveScene = (PackedScene)GD.Load("res://objects/FXWave.tscn");
+    private static PackedScene fxWaveScene = (PackedScene)GD.Load("res://nodes/fx/FXWave.tscn");
 
     [BindNodeRoot]
     private GameState gameState;

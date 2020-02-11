@@ -53,20 +53,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="objects\Bullet.cs" />
-    <Compile Include="objects\BulletSystem.cs" />
-    <Compile Include="objects\BossEnemy.cs" />
-    <Compile Include="objects\Enemy.cs" />
-    <Compile Include="objects\FXCamera.cs" />
-    <Compile Include="objects\FXWave.cs" />
-    <Compile Include="objects\Sparkles.cs" />
-    <Compile Include="objects\Player.cs" />
-    <Compile Include="objects\Powerup.cs" />
-    <Compile Include="objects\Rock.cs" />
-    <Compile Include="objects\Spawner.cs" />
-    <Compile Include="objects\Starfield.cs" />
-    <Compile Include="objects\StatusToast.cs" />
-    <Compile Include="objects\TouchController.cs" />
+    <Compile Include="nodes\objects\Bullet.cs" />
+    <Compile Include="nodes\objects\BulletSystem.cs" />
+    <Compile Include="nodes\objects\BossEnemy.cs" />
+    <Compile Include="nodes\objects\Enemy.cs" />
+    <Compile Include="nodes\fx\FXCamera.cs" />
+    <Compile Include="nodes\fx\FXWave.cs" />
+    <Compile Include="nodes\fx\Sparkles.cs" />
+    <Compile Include="nodes\objects\Player.cs" />
+    <Compile Include="nodes\objects\Powerup.cs" />
+    <Compile Include="nodes\objects\Rock.cs" />
+    <Compile Include="nodes\objects\Spawner.cs" />
+    <Compile Include="nodes\fx\Starfield.cs" />
+    <Compile Include="nodes\ui\StatusToast.cs" />
+    <Compile Include="nodes\input\TouchController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="screens\BootScreen.cs" />
     <Compile Include="screens\GameOverScreen.cs" />
@@ -83,16 +83,17 @@
     <Compile Include="tests\scenes\TestNeon.cs" />
     <Compile Include="tests\scenes\TestStatusToast.cs" />
     <Compile Include="tests\TestSuite.cs" />
-    <Compile Include="ui\AnimatedText.cs" />
-    <Compile Include="ui\Console.cs" />
-    <Compile Include="ui\Debug.cs" />
-    <Compile Include="ui\HUD.cs" />
-    <Compile Include="ui\Pause.cs" />
-    <Compile Include="utils\GameState.cs" />
-    <Compile Include="utils\NodeExt.cs" />
-    <Compile Include="utils\Transition.cs" />
-    <Compile Include="utils\Utils.cs" />
-    <Compile Include="utils\WaveSystem.cs" />
+    <Compile Include="nodes\ui\AnimatedProgressBar.cs" />
+    <Compile Include="nodes\ui\AnimatedText.cs" />
+    <Compile Include="nodes\ui\Console.cs" />
+    <Compile Include="nodes\ui\Debug.cs" />
+    <Compile Include="nodes\ui\HUD.cs" />
+    <Compile Include="nodes\ui\Pause.cs" />
+    <Compile Include="nodes\GameState.cs" />
+    <Compile Include="nodes\NodeExt.cs" />
+    <Compile Include="nodes\fx\Transition.cs" />
+    <Compile Include="nodes\Utils.cs" />
+    <Compile Include="nodes\objects\WaveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

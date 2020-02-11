@@ -4,8 +4,8 @@ using Dictionary = Godot.Collections.Dictionary;
 
 public class GameScreen : Control {
     // Static
-    private static PackedScene bossScene = (PackedScene)GD.Load("res://objects/BossEnemy.tscn");
-    private static PackedScene statusToastScene = (PackedScene)GD.Load("res://objects/StatusToast.tscn");
+    private static PackedScene bossScene = (PackedScene)GD.Load("res://nodes/objects/BossEnemy.tscn");
+    private static PackedScene statusToastScene = (PackedScene)GD.Load("res://nodes/ui/StatusToast.tscn");
 
     [BindNode] private Player player;
     [BindNode("Bullets")] private Node2D bullets;
@@ -21,6 +21,8 @@ public class GameScreen : Control {
     [BindNode] private Starfield starfield;
     [BindNodeRoot] private FXCamera camera;
     [BindNodeRoot] private GameState gameState;
+
+    #region Overrides
 
     public override void _Ready() {
         this.BindNodes();
@@ -67,6 +69,10 @@ public class GameScreen : Control {
         }
     }
 
+    #endregion
+
+    #region Private methods
+
     private void _LoadNextWave() {
         var waveInfo = waveSystem.LoadNextWave();
 
@@ -107,6 +113,35 @@ public class GameScreen : Control {
         bossInstance.SetFireTimeFactor(1 + (waveSystem.GetCurrentWave() - 1) * 0.25f);
     }
 
+    async private void _Show_Score_Message(Node2D node, int score) {
+        var toastInstance = statusToastScene.InstanceAs<StatusToast>();
+        toastInstance.Position = node.Position + new Vector2(0, 20.0f);
+        toastInstance.Scale = node.Scale * 1.5f;
+        toastInstance.MessageVisibleTime = 0.5f;
+        toastInstance.MessageOffset = new Vector2(0, 0);
+        AddChild(toastInstance);
+
+        var message = (score > 0) ? "+" + score.ToString() : "-" + score.ToString();
+        var color = (score > 0) ? Colors.Green : Colors.Red;
+
+        toastInstance.ShowMessageWithColor(message, color);
+        await ToSignal(toastInstance, "message_shown");
+
+        toastInstance.QueueFree();
+    }
+
+    async private void _Start_Wave_Transition() {
+        var gameSize = gameState.GetGameSize();
+        lifeSpawner.SpawnAtPosition(new Vector2(gameSize.x / 2.0f, -50.0f));
+
+        await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
+        _LoadNextWave();
+    }
+
+    #endregion
+
+    #region Event handlers
+
     private void _On_Player_Dead() {
         camera.Shake();
     }
@@ -141,23 +176,6 @@ public class GameScreen : Control {
         _Show_Score_Message(node, 200);
     }
 
-    async private void _Show_Score_Message(Node2D node, int score) {
-        var toastInstance = statusToastScene.InstanceAs<StatusToast>();
-        toastInstance.Position = node.Position + new Vector2(0, 20.0f);
-        toastInstance.Scale = node.Scale * 1.5f;
-        toastInstance.MessageVisibleTime = 0.5f;
-        toastInstance.MessageOffset = new Vector2(0, 0);
-        AddChild(toastInstance);
-
-        var message = (score > 0) ? "+" + score.ToString() : "-" + score.ToString();
-        var color = (score > 0) ? Colors.Green : Colors.Red;
-
-        toastInstance.ShowMessageWithColor(message, color);
-        await ToSignal(toastInstance, "message_shown");
-
-        toastInstance.QueueFree();
-    }
-
     private void _On_Enemy_Spawned(Node node) {
         var enemy = (Enemy)node;
         enemy.SetHitPointsFactor(1 + (waveSystem.GetCurrentWave() - 1) * 2);
@@ -174,14 +192,6 @@ public class GameScreen : Control {
         starfield.EnableRadialAccel = false;
 
         CallDeferred(nameof(_Start_Wave_Transition));
-    }
-
-    async private void _Start_Wave_Transition() {
-        var gameSize = gameState.GetGameSize();
-        lifeSpawner.SpawnAtPosition(new Vector2(gameSize.x / 2.0f, -50.0f));
-
-        await ToSignal(GetTree().CreateTimer(1.0f), "timeout");
-        _LoadNextWave();
     }
 
     private void _On_Powerup_Powerup(Powerup powerup) {
@@ -206,4 +216,6 @@ public class GameScreen : Control {
     private void _On_WaveSystem_Timeout() {
         _LoadBoss();
     }
+
+    #endregion
 }
