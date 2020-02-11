@@ -9,6 +9,12 @@ Now with C#.
   <img src="./assets/sc-space-shooter.gif" alt="SC Space Shooter" />
 </p>
 
+## Download
+
+You can download the game in the [GitHub Releases](https://github.com/Srynetix/sc-space-shooter/releases) section.
+
+If your platform is not available on the Releases, but it is supported by Godot Engine, you can try to build it yourself using the official docs.
+
 ## How to play
 
 Move with arrow keys or mouse, and fire with X or left-click.

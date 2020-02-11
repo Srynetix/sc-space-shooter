@@ -69,18 +69,16 @@ public class Player : Area2D {
             return;
         }
 
-        var movement = _HandleMovement();
-        if (movement.x == 0 && movement.y == 0) {
-            velocity *= damping;
-        } else {
-            velocity = movement * moveSpeed;
-        }
-
         if (touchController.Touching) {
             velocity = new Vector2();
             Position = touchController.ComputedPosition;
         } else {
-            velocity = new Vector2();
+            var movement = _HandleMovement();
+            if (movement.x == 0 && movement.y == 0) {
+                velocity *= damping;
+            } else {
+                velocity = movement * moveSpeed;
+            }
         }
 
         _HandleFire();
