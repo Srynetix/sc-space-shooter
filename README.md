@@ -17,7 +17,7 @@ If your platform is not available on the Releases, but it is supported by Godot 
 
 ## How to play
 
-Move with arrow keys or mouse, and fire with X or left-click.
+Move with arrow keys or mouse, and fire with X or left-click. Fire bombs with W or right-click.
 
 ## Debug info
 
