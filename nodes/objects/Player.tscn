@@ -8,8 +8,8 @@
 [ext_resource path="res://nodes/input/TouchController.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 11.9289
-height = 50.806
+radius = 8.59639
+height = 11.5416
 
 [sub_resource type="Animation" id=2]
 resource_name = "explode"
@@ -190,6 +190,7 @@ texture = ExtResource( 2 )
 position = Vector2( 0, -37.2706 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -5.79525 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -234,3 +235,6 @@ collision_mask = 8
 [node name="FullShape" type="CollisionShape2D" parent="FullBody"]
 rotation = 1.5708
 shape = SubResource( 15 )
+__meta__ = {
+"_edit_lock_": true
+}

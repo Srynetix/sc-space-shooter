@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://screens/ScoreScreen.cs" type="Script" id=1]
+[ext_resource path="res://nodes/screens/ScoreScreen.cs" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Righteous-Regular.ttf" type="DynamicFontData" id=2]
 
 

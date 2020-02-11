@@ -16,7 +16,7 @@ _global_script_classes=[  ]
 [application]
 
 config/name="SC Space Shooter"
-run/main_scene="res://screens/BootScreen.tscn"
+run/main_scene="res://nodes/screens/BootScreen.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
