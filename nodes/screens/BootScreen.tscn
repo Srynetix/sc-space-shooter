@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://nodes/ui/AnimatedText.tscn" type="PackedScene" id=1]
-[ext_resource path="res://nodes/screens/BootScreen.cs" type="Script" id=2]
+[ext_resource path="res://nodes/screens/BootScreen.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "show"
@@ -10,9 +10,6 @@ resource_name = "show"
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -25,9 +22,6 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AnimatedText" parent="MarginContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
@@ -35,9 +29,10 @@ anchor_bottom = 0.0
 margin_top = 414.0
 margin_right = 540.0
 margin_bottom = 445.0
-AnimatedStyle = 3
-WSeparation = 5.0
-AnimatedTextValue = "BOOT_LOADING"
+size_flags_horizontal = 5
+animated_text_value = "BOOT_LOADING"
+animated_style = 3
+w_separation = 5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "show"
