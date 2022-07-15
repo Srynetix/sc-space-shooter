@@ -450,5 +450,6 @@ translations=PoolStringArray( "res://locales/translations.en.translation", "res:
 
 quality/driver/driver_name="GLES2"
 2d/snapping/use_gpu_pixel_snap=true
+vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"
 quality/2d/use_pixel_snap=true

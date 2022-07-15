@@ -8,6 +8,8 @@ Shoot rocks and enemy ships.
   <img src="./docs/sc-space-shooter.gif" alt="SC Space Shooter" />
 </p>
 
+**:rocket: [Play it here!](https://srynetix.github.io/sc-space-shooter/)**
+
 ## Download
 
 You can download the game in the [GitHub Releases](https://github.com/Srynetix/sc-space-shooter/releases) section.
