@@ -3,12 +3,19 @@
 [ext_resource path="res://nodes/ui/AnimatedText.tscn" type="PackedScene" id=1]
 
 [node name="TestLetters" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -270.0
+margin_top = -430.0
+margin_right = 270.0
+margin_bottom = 430.0
 
 [node name="AnimatedText" parent="." instance=ExtResource( 1 )]
-AnimatedTextValue = "BOOT_LOADING"
-AnimatedStyle = 3
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -15.5
+margin_bottom = 15.5
+animated_text_value = "BOOT_LOADING"
+animated_style = 3

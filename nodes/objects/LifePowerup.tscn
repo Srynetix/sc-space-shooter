@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/textures/playerLife1_orange.png" type="Texture" id=2]
 
 [node name="Powerup" instance=ExtResource( 1 )]
-powerupType = 2
+powerup_type = 2
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )

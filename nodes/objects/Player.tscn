@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://nodes/objects/Player.cs" type="Script" id=1]
+[ext_resource path="res://nodes/objects/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/playerShip2_orange.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://nodes/objects/BulletSystem.tscn" type="PackedScene" id=4]
@@ -121,56 +121,16 @@ tracks/2/keys = {
 offsets = PoolRealArray( 0, 0.75814, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 1, 0.445313, 0, 1, 1, 0.375, 0, 0.00368627 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
-
 [sub_resource type="Curve" id=7]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.845893, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-emission_shape = 2
-emission_box_extents = Vector3( 1, 8, 1 )
-flag_disable_z = true
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 75.0
-angular_velocity = 45.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 5.0
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 6 )
 
 [sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0.362791, 0.67907, 1 )
 colors = PoolColorArray( 1, 0.210938, 0, 1, 0.879461, 0.933594, 0.240692, 1, 1, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
-
 [sub_resource type="Curve" id=12]
 max_value = 2.0
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.495782, 2 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=13]
-curve = SubResource( 12 )
-
-[sub_resource type="ParticlesMaterial" id=14]
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 200.0
-initial_velocity_random = 1.0
-angular_velocity = 50.0
-angular_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 10.0
-scale_curve = SubResource( 13 )
-color_ramp = SubResource( 11 )
 
 [sub_resource type="CapsuleShape2D" id=15]
 radius = 37.7195
@@ -199,29 +159,49 @@ anims/explode = SubResource( 2 )
 anims/idle = SubResource( 3 )
 anims/spawning = SubResource( 4 )
 
-[node name="EngineParticles" type="Particles2D" parent="."]
+[node name="EngineParticles" type="CPUParticles2D" parent="."]
 show_behind_parent = true
 position = Vector2( -0.736099, 20.9789 )
 rotation = 1.5708
 z_index = -1
 amount = 40
 lifetime = 0.5
-process_material = SubResource( 9 )
+emission_shape = 2
+emission_rect_extents = Vector2( 1, 8 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 75.0
+angular_velocity = 45.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_amount = 5.0
+scale_amount_curve = SubResource( 7 )
+color_ramp = SubResource( 5 )
 
-[node name="ExplosionParticles" type="Particles2D" parent="."]
+[node name="ExplosionParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 40
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 14 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 1.0
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_amount = 10.0
+scale_amount_curve = SubResource( 12 )
+color_ramp = SubResource( 10 )
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="SpawningTimer" type="Timer" parent="Timers"]
 
 [node name="BulletSystem" parent="." instance=ExtResource( 4 )]
-fireSpeed = 600.0
+fire_speed = 600.0
 
 [node name="StatusToast" parent="." instance=ExtResource( 5 )]
 

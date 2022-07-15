@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://nodes/screens/GameScreen.cs" type="Script" id=1]
+[ext_resource path="res://nodes/screens/GameScreen.gd" type="Script" id=1]
 [ext_resource path="res://nodes/ui/Pause.tscn" type="PackedScene" id=2]
 [ext_resource path="res://nodes/fx/Starfield.tscn" type="PackedScene" id=3]
 [ext_resource path="res://nodes/objects/Player.tscn" type="PackedScene" id=4]
@@ -38,17 +38,16 @@ tracks/0/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 
 [node name="Starfield" parent="." instance=ExtResource( 3 )]
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
+[node name="PlayerContainer" type="Node2D" parent="."]
 
-[node name="Bullets" type="Node2D" parent="."]
+[node name="Player" parent="PlayerContainer" instance=ExtResource( 4 )]
+
+[node name="EnemyContainer" type="Node2D" parent="."]
 
 [node name="Spawners" type="Node2D" parent="."]
 
@@ -59,26 +58,27 @@ element = ExtResource( 6 )
 [node name="PowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 12.0
 speed = 150.0
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 7 )
 
 [node name="LifePowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 50.0
 speed = 250.0
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 8 )
 disabled = true
 
 [node name="BombPowerupSpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 20.0
 speed = 300.0
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 14 )
 
 [node name="EnemySpawner" parent="Spawners" instance=ExtResource( 5 )]
 frequency = 7.0
-randScale = Vector2( 0.75, 1.5 )
+rand_scale = Vector2( 0.75, 1.5 )
 element = ExtResource( 9 )
+target_container_path = NodePath("../../EnemyContainer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 1 )

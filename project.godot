@@ -9,9 +9,344 @@
 config_version=4
 
 _global_script_class_icons={
-
+"AnimatedProgressBar": "",
+"AnimatedText": "",
+"BootScreen": "",
+"BossEnemy": "",
+"Bullet": "",
+"BulletSystem": "",
+"Enemy": "",
+"FXWave": "",
+"GameOverScreen": "",
+"GameScreen": "",
+"HUD": "",
+"HowToPlayScreen": "",
+"Pause": "",
+"Player": "",
+"Powerup": "",
+"Rock": "",
+"ScoreScreen": "",
+"Sparkles": "",
+"Spawner": "",
+"Starfield": "",
+"StatusToast": "",
+"SxAudioMultiStreamPlayer": "",
+"SxBetterBlur": "",
+"SxBuffer": "",
+"SxColor": "",
+"SxDebugInfo": "",
+"SxDebugPanel": "",
+"SxFAButton": "",
+"SxFAFont": "",
+"SxFALabel": "",
+"SxFXCamera": "",
+"SxFadingRichTextLabel": "",
+"SxGameData": "",
+"SxGlobalAudioFxPlayer": "",
+"SxGlobalMusicPlayer": "",
+"SxInput": "",
+"SxJson": "",
+"SxLoadCache": "",
+"SxLog": "",
+"SxLogPanel": "",
+"SxMath": "",
+"SxMotionBlur": "",
+"SxOS": "",
+"SxSceneRunner": "",
+"SxSceneTransitioner": "",
+"SxShader": "",
+"SxShockwave": "",
+"SxText": "",
+"SxTileMap": "",
+"SxVignette": "",
+"SxVirtualButton": "",
+"SxVirtualControls": "",
+"SxVirtualJoystick": "",
+"TitleScreen": "",
+"TouchController": "",
+"WaveSystem": ""
 }
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "ProgressBar",
+"class": "AnimatedProgressBar",
+"language": "GDScript",
+"path": "res://nodes/ui/AnimatedProgressBar.gd"
+}, {
+"base": "Label",
+"class": "AnimatedText",
+"language": "GDScript",
+"path": "res://nodes/ui/AnimatedText.gd"
+}, {
+"base": "Control",
+"class": "BootScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/BootScreen.gd"
+}, {
+"base": "Enemy",
+"class": "BossEnemy",
+"language": "GDScript",
+"path": "res://nodes/objects/BossEnemy.gd"
+}, {
+"base": "Area2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://nodes/objects/Bullet.gd"
+}, {
+"base": "Node2D",
+"class": "BulletSystem",
+"language": "GDScript",
+"path": "res://nodes/objects/BulletSystem.gd"
+}, {
+"base": "Area2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://nodes/objects/Enemy.gd"
+}, {
+"base": "Area2D",
+"class": "FXWave",
+"language": "GDScript",
+"path": "res://nodes/fx/FXWave.gd"
+}, {
+"base": "Control",
+"class": "GameOverScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/GameOverScreen.gd"
+}, {
+"base": "Control",
+"class": "GameScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/GameScreen.gd"
+}, {
+"base": "Control",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://nodes/ui/HUD.gd"
+}, {
+"base": "Control",
+"class": "HowToPlayScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/HowToPlayScreen.gd"
+}, {
+"base": "CanvasLayer",
+"class": "Pause",
+"language": "GDScript",
+"path": "res://nodes/ui/Pause.gd"
+}, {
+"base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://nodes/objects/Player.gd"
+}, {
+"base": "Area2D",
+"class": "Powerup",
+"language": "GDScript",
+"path": "res://nodes/objects/Powerup.gd"
+}, {
+"base": "Area2D",
+"class": "Rock",
+"language": "GDScript",
+"path": "res://nodes/objects/Rock.gd"
+}, {
+"base": "Control",
+"class": "ScoreScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/ScoreScreen.gd"
+}, {
+"base": "Node2D",
+"class": "Sparkles",
+"language": "GDScript",
+"path": "res://nodes/fx/Sparkles.gd"
+}, {
+"base": "Node2D",
+"class": "Spawner",
+"language": "GDScript",
+"path": "res://nodes/objects/Spawner.gd"
+}, {
+"base": "Control",
+"class": "Starfield",
+"language": "GDScript",
+"path": "res://nodes/fx/Starfield.gd"
+}, {
+"base": "Node2D",
+"class": "StatusToast",
+"language": "GDScript",
+"path": "res://nodes/ui/StatusToast.gd"
+}, {
+"base": "Node",
+"class": "SxAudioMultiStreamPlayer",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/audio/SxAudioMultiStreamPlayer/SxAudioMultiStreamPlayer.gd"
+}, {
+"base": "Control",
+"class": "SxBetterBlur",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/fx/screen-effects/SxBetterBlur/SxBetterBlur.gd"
+}, {
+"base": "Reference",
+"class": "SxBuffer",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxBuffer.gd"
+}, {
+"base": "Reference",
+"class": "SxColor",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxColor.gd"
+}, {
+"base": "CanvasLayer",
+"class": "SxDebugInfo",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/debug/SxDebugInfo/SxDebugInfo.gd"
+}, {
+"base": "CanvasLayer",
+"class": "SxDebugPanel",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/debug/SxDebugPanel/SxDebugPanel.gd"
+}, {
+"base": "Button",
+"class": "SxFAButton",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxFontAwesome/SxFAButton.gd"
+}, {
+"base": "Reference",
+"class": "SxFAFont",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxFontAwesome/SxFAFont.gd"
+}, {
+"base": "Label",
+"class": "SxFALabel",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxFontAwesome/SxFALabel.gd"
+}, {
+"base": "Camera2D",
+"class": "SxFXCamera",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/fx/SxFXCamera/SxFXCamera.gd"
+}, {
+"base": "RichTextLabel",
+"class": "SxFadingRichTextLabel",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/ui/SxFadingRichTextLabel/SxFadingRichTextLabel.gd"
+}, {
+"base": "Node",
+"class": "SxGameData",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/utils/SxGameData/SxGameData.gd"
+}, {
+"base": "Node",
+"class": "SxGlobalAudioFxPlayer",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/audio/SxGlobalAudioFxPlayer/SxGlobalAudioFxPlayer.gd"
+}, {
+"base": "AudioStreamPlayer",
+"class": "SxGlobalMusicPlayer",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/audio/SxGlobalMusicPlayer/SxGlobalMusicPlayer.gd"
+}, {
+"base": "Reference",
+"class": "SxInput",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxInput.gd"
+}, {
+"base": "Reference",
+"class": "SxJson",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxJson.gd"
+}, {
+"base": "Node",
+"class": "SxLoadCache",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/utils/SxLoadCache/SxLoadCache.gd"
+}, {
+"base": "Reference",
+"class": "SxLog",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxLog.gd"
+}, {
+"base": "MarginContainer",
+"class": "SxLogPanel",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/debug/SxLogPanel/SxLogPanel.gd"
+}, {
+"base": "Reference",
+"class": "SxMath",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxMath.gd"
+}, {
+"base": "ColorRect",
+"class": "SxMotionBlur",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/fx/screen-effects/SxMotionBlur/SxMotionBlur.gd"
+}, {
+"base": "Reference",
+"class": "SxOS",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxOS.gd"
+}, {
+"base": "Control",
+"class": "SxSceneRunner",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxSceneRunner/SxSceneRunner.gd"
+}, {
+"base": "CanvasLayer",
+"class": "SxSceneTransitioner",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/utils/SxSceneTransitioner/SxSceneTransitioner.gd"
+}, {
+"base": "Reference",
+"class": "SxShader",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxShader.gd"
+}, {
+"base": "ColorRect",
+"class": "SxShockwave",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/fx/screen-effects/SxShockwave/SxShockwave.gd"
+}, {
+"base": "Reference",
+"class": "SxText",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxText.gd"
+}, {
+"base": "Reference",
+"class": "SxTileMap",
+"language": "GDScript",
+"path": "res://addons/sxgd/extensions/SxTileMap.gd"
+}, {
+"base": "ColorRect",
+"class": "SxVignette",
+"language": "GDScript",
+"path": "res://addons/sxgd/nodes/fx/screen-effects/SxVignette/SxVignette.gd"
+}, {
+"base": "TextureRect",
+"class": "SxVirtualButton",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxVirtualControls/SxVirtualButton.gd"
+}, {
+"base": "Control",
+"class": "SxVirtualControls",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxVirtualControls/SxVirtualControls.gd"
+}, {
+"base": "TextureRect",
+"class": "SxVirtualJoystick",
+"language": "GDScript",
+"path": "res://addons/sxgd/modules/SxVirtualControls/SxVirtualJoystick.gd"
+}, {
+"base": "Control",
+"class": "TitleScreen",
+"language": "GDScript",
+"path": "res://nodes/screens/TitleScreen.gd"
+}, {
+"base": "Node2D",
+"class": "TouchController",
+"language": "GDScript",
+"path": "res://nodes/input/TouchController.gd"
+}, {
+"base": "Control",
+"class": "WaveSystem",
+"language": "GDScript",
+"path": "res://nodes/objects/WaveSystem.gd"
+} ]
 
 [application]
 
@@ -25,12 +360,10 @@ config/quit_on_go_back=false
 
 [autoload]
 
-Debug="*res://nodes/ui/Debug.tscn"
+GameSceneTransitioner="*res://autoloads/GameSceneTransitioner.tscn"
+GameState="*res://autoloads/GameState.gd"
 FXCamera="*res://nodes/fx/FXCamera.tscn"
-FXGlow="*res://nodes/fx/FXGlow.tscn"
-GameState="*res://nodes/GameState.cs"
-Transition="*res://nodes/fx/Transition.tscn"
-Utils="*res://nodes/Utils.cs"
+GameDebugPanel="*res://autoloads/GameDebugPanel.tscn"
 
 [debug]
 
@@ -49,49 +382,49 @@ scenerunner={
 window/size/width=540
 window/size/height=860
 window/handheld/orientation="portrait"
-window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [engine]
 
-version="3.2rc3"
+version="3.4.4"
 
 [input]
 
 ui_cancel={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"unicode":0,"echo":false,"script":null)
- ]
-}
-player_down={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
- ]
-}
-player_left={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
- ]
-}
-player_right={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
- ]
-}
-player_shoot={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"unicode":0,"echo":false,"script":null)
- ]
-}
-player_up={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 player_bomb={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+player_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_shoot={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":88,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+player_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 
@@ -115,5 +448,7 @@ translations=PoolStringArray( "res://locales/translations.en.translation", "res:
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
+quality/driver/driver_name="GLES2"
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/2d/use_pixel_snap=true

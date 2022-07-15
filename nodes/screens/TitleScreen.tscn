@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://nodes/screens/TitleScreen.cs" type="Script" id=1]
+[ext_resource path="res://nodes/screens/TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://nodes/fx/Starfield.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/Righteous-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=4]
@@ -42,12 +42,8 @@ font_data = ExtResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Starfield" parent="." instance=ExtResource( 2 )]
-Velocity = 0
 
 [node name="Margin" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -57,9 +53,6 @@ custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="All" type="VBoxContainer" parent="Margin"]
 margin_left = 10.0

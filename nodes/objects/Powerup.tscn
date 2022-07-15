@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://nodes/objects/Powerup.cs" type="Script" id=1]
+[ext_resource path="res://nodes/objects/Powerup.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/powerupRed_bolt.png" type="Texture" id=2]
 [ext_resource path="res://assets/sounds/powerup.wav" type="AudioStream" id=3]
 
@@ -11,29 +11,8 @@ extents = Vector2( 16, 16 )
 offsets = PoolRealArray( 0, 0.532468, 1 )
 colors = PoolColorArray( 1, 0, 0, 1, 0.905579, 0.644531, 1, 1, 1, 0, 0.539063, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
 [sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.491559, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-emission_shape = 2
-emission_box_extents = Vector3( 16, 16, 1 )
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 30.0
-angular_velocity = 1.64205e+35
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-damping = 50.0
-scale = 3.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
 
 [sub_resource type="Animation" id=7]
 length = 0.2
@@ -103,11 +82,22 @@ texture = ExtResource( 2 )
 position = Vector2( -0.554779, -0.27739 )
 shape = SubResource( 1 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
+[node name="Particles2D" type="CPUParticles2D" parent="."]
 show_behind_parent = true
 amount = 40
 local_coords = false
-process_material = SubResource( 6 )
+emission_shape = 2
+emission_rect_extents = Vector2( 16, 16 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 30.0
+angular_velocity = 1.64205e+35
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 50.0
+scale_amount = 3.0
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 

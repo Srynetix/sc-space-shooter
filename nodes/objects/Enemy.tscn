@@ -1,6 +1,6 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://nodes/objects/Enemy.cs" type="Script" id=1]
+[ext_resource path="res://nodes/objects/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/enemyBlack1.png" type="Texture" id=2]
 [ext_resource path="res://resources/DissolveShader.tres" type="Material" id=3]
 [ext_resource path="res://nodes/objects/BulletSystem.tscn" type="PackedScene" id=4]
@@ -9,40 +9,17 @@
 [ext_resource path="res://nodes/ui/StatusToast.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
+resource_local_to_scene = true
 radius = 24.3777
 height = 18.0338
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.74026, 1 )
-colors = PoolColorArray( 0.851563, 0, 1, 1, 0.640625, 0, 0.0150146, 1, 0.803922, 0, 1, 0 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
 
 [sub_resource type="Curve" id=4]
 max_value = 2.0
 _data = [ Vector2( 0.00195375, 0.9824 ), 0.0, 0.0, 0, 0, Vector2( 0.474676, 2 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-emission_shape = 1
-emission_sphere_radius = 15.0
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 300.0
-angular_velocity = 45.0
-angular_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-damping = 100.0
-angle = 90.0
-angle_random = 1.0
-scale = 15.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.74026, 1 )
+colors = PoolColorArray( 0.851563, 0, 1, 1, 0.640625, 0, 0.0150146, 1, 0.803922, 0, 1, 0 )
 
 [sub_resource type="Animation" id=7]
 tracks/0/type = "value"
@@ -100,9 +77,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.466667, 0.466667, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="Enemy" type="Area2D" groups=[
-"enemies",
-]]
+[node name="Enemy" type="Area2D" groups=["enemies"]]
 collision_layer = 16
 collision_mask = 3
 script = ExtResource( 1 )
@@ -114,13 +89,25 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
+[node name="Particles2D" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 40
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.75
-process_material = SubResource( 6 )
+emission_shape = 1
+emission_sphere_radius = 15.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 300.0
+angular_velocity = 45.0
+angular_velocity_random = 1.0
+damping = 100.0
+angle = 90.0
+angle_random = 1.0
+scale_amount = 15.0
+scale_amount_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -129,16 +116,16 @@ anims/idle = SubResource( 8 )
 anims/tint = SubResource( 9 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( -0.382614, 53.2522 )
+position = Vector2( 0, 31 )
 
 [node name="FireTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
 [node name="BulletSystem" parent="." instance=ExtResource( 4 )]
-fireCooldown = 0.15
-fireSpeed = 600.0
-bulletTarget = 1
+fire_cooldown = 0.15
+fire_speed = 600.0
+bullet_target = 1
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
@@ -147,7 +134,7 @@ volume_db = -15.0
 [node name="AnimatedProgressBar" parent="." instance=ExtResource( 6 )]
 
 [node name="StatusToast" parent="." instance=ExtResource( 7 )]
-ToastDirection = 1
+toast_direction = 1
 
 [node name="BombHitTimer" type="Timer" parent="."]
 wait_time = 0.25

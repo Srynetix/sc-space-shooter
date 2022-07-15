@@ -1,49 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://nodes/fx/Starfield.cs" type="Script" id=1]
+[ext_resource path="res://nodes/fx/Starfield.gd" type="Script" id=1]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.8, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
 
 [sub_resource type="Curve" id=3]
 min_value = 0.99
 max_value = 2.0
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.980761, 1.99273 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=4]
-curve = SubResource( 3 )
-
-[sub_resource type="ParticlesMaterial" id=5]
-emission_shape = 2
-emission_box_extents = Vector3( 270, 430, 1 )
-flag_disable_z = true
-direction = Vector3( 0, 1, 0 )
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 500.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-radial_accel_random = 1.0
-tangential_accel = 3.0
-scale = 5.0
-scale_random = 1.0
-scale_curve = SubResource( 4 )
-color_ramp = SubResource( 2 )
-hue_variation = 1.0
-hue_variation_random = 0.5
-
 [node name="Starfield" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -54,8 +26,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Particles2D" type="Particles2D" parent="."]
+[node name="Particles2D" type="CPUParticles2D" parent="."]
 position = Vector2( 270, -70 )
 amount = 48
 lifetime = 2.0
-process_material = SubResource( 5 )
+emission_shape = 2
+emission_rect_extents = Vector2( 270, 430 )
+direction = Vector2( 0, 1 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 100.0
+radial_accel_random = 1.0
+tangential_accel = 3.0
+hue_variation = 1.0
+hue_variation_random = 0.5
+color_ramp = SubResource( 1 )
+scale_amount = 5.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 3 )

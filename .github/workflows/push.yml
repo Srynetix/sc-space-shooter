@@ -1,0 +1,40 @@
+name: Push builds
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build-web:
+    uses: ./.github/workflows/build-game.yml
+    with:
+      platform: HTML5
+      name: sc-space-shooter
+      output_name: index.html
+  build-windows:
+    uses: ./.github/workflows/build-game.yml
+    with:
+      platform: Windows Desktop
+      name: sc-space-shooter
+      output_name: SC Space Shooter.exe
+  build-mac:
+    uses: ./.github/workflows/build-game.yml
+    with:
+      platform: Mac OSX
+      name: sc-space-shooter
+      output_name: SC Space Shooter.zip
+  build-linux:
+    uses: ./.github/workflows/build-game.yml
+    with:
+      platform: Linux X11
+      name: sc-space-shooter
+      output_name: SC Space Shooter.x86_64
+  build-android-debug:
+    uses: ./.github/workflows/build-game.yml
+    with:
+      platform: Android
+      name: sc-space-shooter
+      output_name: SC Space Shooter.apk
+      debug: true

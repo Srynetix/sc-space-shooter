@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://nodes/screens/HowToPlayScreen.cs" type="Script" id=1]
+[ext_resource path="res://nodes/screens/HowToPlayScreen.gd" type="Script" id=1]
 [ext_resource path="res://nodes/fx/Starfield.tscn" type="PackedScene" id=2]
 [ext_resource path="res://nodes/objects/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://nodes/ui/StatusToast.tscn" type="PackedScene" id=4]
@@ -18,20 +18,19 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Starfield" parent="." instance=ExtResource( 2 )]
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
+[node name="PlayerContainer" type="Node2D" parent="."]
+
+[node name="Player" parent="PlayerContainer" instance=ExtResource( 3 )]
 
 [node name="StatusToast" parent="." instance=ExtResource( 4 )]
 
 [node name="RockSpawner" parent="." instance=ExtResource( 6 )]
 frequency = 1.0
 speed = 200.0
-randScale = Vector2( 0.75, 1.25 )
+rand_scale = Vector2( 0.75, 1.25 )
 element = ExtResource( 5 )
 disabled = true
 
@@ -42,22 +41,22 @@ disabled = true
 
 [node name="PowerupSpawner" parent="." instance=ExtResource( 6 )]
 speed = 150.0
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 8 )
 disabled = true
 
 [node name="BossSpawner" parent="." instance=ExtResource( 6 )]
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 9 )
 disabled = true
 
 [node name="LifeSpawner" parent="." instance=ExtResource( 6 )]
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 11 )
 disabled = true
 
 [node name="BombSpawner" parent="." instance=ExtResource( 6 )]
-randScale = Vector2( 1, 1 )
+rand_scale = Vector2( 1, 1 )
 element = ExtResource( 10 )
 disabled = true
 
@@ -76,7 +75,7 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="CanvasLayer/Margin"]
-margin_left = 260.0
+margin_left = 261.0
 margin_top = 20.0
 margin_right = 520.0
 margin_bottom = 57.0
