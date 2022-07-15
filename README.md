@@ -22,5 +22,4 @@ Move with arrow keys or mouse, and fire with X or left-click. Fire bombs with W 
 
 ## Debug info
 
-When you tap 10 times fast enough on the screen, you will see debug info on the screen.
-Do it again to hide.
+Type F12 to show debug info.
